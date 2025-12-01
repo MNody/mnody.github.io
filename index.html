@@ -401,6 +401,46 @@
         }
         .staking-input:focus{outline:1px solid var(--p)}
 
+        /* AIRDROP extra */
+        .airdrop-badge{
+            display:inline-block;
+            padding:6px 12px;
+            border-radius:999px;
+            border:1px solid rgba(250,204,21,.6);
+            font-size:.78rem;
+            text-transform:uppercase;
+            letter-spacing:.12em;
+            color:#facc15;
+            background:rgba(23,23,23,.7);
+            margin-bottom:10px;
+        }
+        .airdrop-grid{
+            display:grid;
+            grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+            gap:24px;
+            margin-top:20px;
+        }
+        .airdrop-input{
+            width:100%;
+            padding:10px 12px;
+            margin:6px 0 14px;
+            border-radius:14px;
+            border:none;
+            background:rgba(15,23,42,.96);
+            color:#e5e7eb;
+            font-size:.95rem;
+        }
+        .airdrop-input:focus{outline:1px solid var(--p)}
+        .airdrop-tasks li{
+            margin-bottom:6px;
+        }
+        .airdrop-success{
+            margin-top:10px;
+            font-size:.9rem;
+            color:#4ade80;
+            display:none;
+        }
+
         footer{
             text-align:center;
             padding:70px 20px 40px;
@@ -441,7 +481,7 @@
 <div class="bg"></div>
 <div class="bg-grid"></div>
 <div class="glow-orb"></div>
-<div another="glow-orb" class="glow-orb"></div>
+<div class="glow-orb"></div>
 <div class="glow-orb"></div>
 
 <header class="lazy">
@@ -450,13 +490,15 @@
         <h1>My Nody Cat<br/>The Cat that Farms the Chain</h1>
         <p class="hero-sub">
             Pure meme energy, real on-chain proof. Liquidity locked, 2.5B burned, 
-            3B + 2.5B long-term vesting and a <strong>500M staking reward pool (200M + 300M)</strong> for the Nody army.
+            3B + 2.5B long-term vesting and a <strong>500M staking reward pool (200M + 300M)</strong> 
+            + <strong>100M community airdrop</strong> for the Nody army.
         </p>
 
         <div class="pill-row">
             <div class="pill">25% Supply Burned (2.5B)</div>
             <div class="pill">3B + 2.5B MNODY • Long Vesting</div>
             <div class="pill">500M Staking Rewards (200M + 300M)</div>
+            <div class="pill">100M MNODY Community Airdrop</div>
         </div>
 
         <div class="live-badge">
@@ -464,11 +506,15 @@
             <span>Live • Meme Cat Yield Season</span>
         </div>
 
-        <div style="margin-top:28px;">
+        <div style="margin-top:28px;display:flex;flex-wrap:wrap;gap:10px;">
             <button class="btn" id="connectWallet">Connect MetaMask</button>
             <a href="https://quickswap.exchange/#/swap?outputCurrency=0x0bacbf5c435c3b0546f7cdf66f960770c7ad912c"
                target="_blank" class="btn buy-btn">
                 Buy MNODY on QuickSwap
+            </a>
+            <!-- NEW: Telegram hero button -->
+            <a href="https://t.me/Mynody" target="_blank" class="btn btn-outline btn-sm">
+                Join Telegram
             </a>
             <a href="#" id="buyWithWallet" class="btn btn-outline btn-sm" style="display:none">
                 1-Click Buy with Wallet
@@ -494,6 +540,7 @@
         <li><a href="#about">Home</a></li>
         <li><a href="#tokenomics">Tokenomics</a></li>
         <li><a href="#staking">Staking</a></li>
+        <li><a href="#airdrop">Airdrop</a></li>
         <li><a href="#chart">Chart</a></li>
         <li><a href="#buy">Buy</a></li>
     </ul>
@@ -509,8 +556,8 @@
                 My Nody Cat (MNODY) is a hyper-cute Polygon meme coin built with
                 serious on-chain discipline: burned supply, long-term vesting, locked
                 LP and a staking program fed by a dedicated <strong>500M MNODY reward pool</strong>
-                (200M base + 300M expansion). Meme first — but the numbers still have
-                to pass the Nody sniff test.
+                (200M base + 300M expansion), plus a <strong>100M MNODY community airdrop</strong>.
+                Meme first — but the numbers still have to pass the Nody sniff test.
             </p>
         </div>
     </section>
@@ -540,7 +587,8 @@
             </div>
         </div>
         <p style="opacity:.7;font-size:.9rem;margin-top:6px;text-align:center;">
-            *Approximate breakdown, see PolygonScan + Team Finance page for live details.
+            *Approximate breakdown, see PolygonScan + Team Finance page for live details. A separate
+            100M MNODY pool is reserved for community airdrops and campaigns.
         </p>
     </section>
 
@@ -610,7 +658,7 @@
                     <strong>Dex Pair:</strong>
                     <a href="https://dexscreener.com/polygon/0x3cEC491A74c924aaeb74DDe821653AaFEc7b94B9"
                        target="_blank" style="color:#f9a8d4;text-decoration:none;">
-                        DexScreener Live Chart
+                        DexScreener Live MNODY / USDT Chart
                     </a>
                 </p>
             </div>
@@ -693,13 +741,81 @@
         </div>
     </section>
 
+    <!-- AIRDROP SECTION -->
+    <section id="airdrop" class="card lazy">
+        <div class="card-inner">
+            <div class="airdrop-badge">100M MNODY COMMUNITY AIRDROP</div>
+            <h2 class="section-title">MNODY Airdrop Campaign</h2>
+            <p style="font-size:1rem;max-width:980px;margin:0 auto 14px;text-align:center;">
+                To reward early community members and new Nody frens, the team has reserved
+                <strong>100,000,000 MNODY</strong> for task-based airdrops, social quests and
+                loyalty rewards. No private sale, no VC – just pure meme + community.
+            </p>
+
+            <div class="airdrop-grid">
+                <!-- Left: info + tasks -->
+                <div>
+                    <h3 style="font-size:1.3rem;margin-bottom:8px;">How to Join the Airdrop</h3>
+                    <ol class="airdrop-tasks" style="font-size:.98rem;line-height:1.9;margin-left:18px;">
+                        <li>Hold a Polygon wallet (MetaMask or similar) with a valid MNODY address.</li>
+                        <li>Join the official 
+                            <b><a href="https://t.me/Mynody" target="_blank" style="color:#38bdf8;text-decoration:none;">
+                                Telegram channel
+                            </a></b> and stay active in chat.</li>
+                        <li>Follow and retweet the pinned post on the official <b>Twitter / X</b>.</li>
+                        <li>Visit this website and share it with friends (organic growth only).</li>
+                        <li>Optional booster: Hold or stake MNODY for higher tiers when snapshots happen.</li>
+                    </ol>
+                    <p style="font-size:.9rem;opacity:.8;margin-top:8px;">
+                        Winners are selected based on real activity, not just bots. Multiple wallets for
+                        the same user may be disqualified. Team reserves the right to adjust rules to
+                        protect real community members.
+                    </p>
+                </div>
+
+                <!-- Right: simple on-site form (frontend only) -->
+                <div>
+                    <h3 style="font-size:1.3rem;margin-bottom:8px;">Airdrop Registration (Phase 1)</h3>
+                    <p style="font-size:.9rem;opacity:.8;">Fill this form so the team can include you in the airdrop CSV export.</p>
+
+                    <form id="airdropForm">
+                        <label class="staking-label">Wallet address (Polygon / MNODY)</label>
+                        <input class="airdrop-input" id="air_wallet" required placeholder="0x...">
+
+                        <label class="staking-label">Telegram username</label>
+                        <input class="airdrop-input" id="air_telegram" required placeholder="@username">
+
+                        <label class="staking-label">Twitter / X username</label>
+                        <input class="airdrop-input" id="air_twitter" required placeholder="@username">
+
+                        <label class="staking-label">Why do you want MNODY airdrop? (short)</label>
+                        <input class="airdrop-input" id="air_reason" placeholder="I will meme, hold, stake and chill...">
+
+                        <button type="submit" class="btn btn-sm" style="width:100%;margin-top:4px;">
+                            Submit Airdrop Entry
+                        </button>
+                        <div id="airdropSuccess" class="airdrop-success">
+                            ✅ Submitted! Your entry is stored locally – team will export all entries for CSV airdrop.
+                        </div>
+                    </form>
+
+                    <p style="font-size:.85rem;opacity:.7;margin-top:10px;">
+                        Note: This on-site form stores your entry in the browser console for now.
+                        The team can connect a backend or Google Sheet / API later to collect all
+                        entries for distribution.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- WHITEPAPER STYLE SECTION -->
     <section id="whitepaper" class="card lazy">
         <div class="card-inner">
-            <h2 class="section-title">Whitepaper – Staking & Vesting Overview</h2>
+            <h2 class="section-title">Whitepaper – Staking, Vesting & Airdrop</h2>
             <p style="font-size:1rem;max-width:980px;margin:0 auto 12px;">
                 The MNODY economy is designed around transparent burn, long-term
-                vesting and a high-energy staking engine. Below is the concise
+                vesting and a high-energy staking + airdrop engine. Below is the concise
                 whitepaper-style summary you can reuse in documents and listings.
             </p>
             <h3 style="font-size:1.3rem;margin-top:18px;">Staking Module</h3>
@@ -711,6 +827,17 @@
                 <li><b>Fair Share:</b> User reward = (User stake / Total staked) × Daily pool reward.</li>
                 <li><b>Claiming:</b> Rewards can be claimed at any time according to pool rules;
                     principal is withdrawable after the lock / pool end.</li>
+            </ul>
+
+            <h3 style="font-size:1.3rem;margin-top:18px;">Community Airdrop Module</h3>
+            <ul style="font-size:.98rem;line-height:1.9;margin-left:18px;">
+                <li><b>Total Airdrop Allocation:</b> 100,000,000 MNODY reserved for community campaigns.</li>
+                <li><b>Distribution Method:</b> Task-based campaigns on platforms like TaskOn / Zealy,
+                    plus random giveaways for active Telegram and Twitter members.</li>
+                <li><b>Eligibility:</b> Genuine wallets that complete social and community tasks
+                    (joining, sharing, meme creation, optional holding / staking conditions).</li>
+                <li><b>Anti-Sybil:</b> Team uses manual review and filters to remove bots and duplicate wallets.</li>
+                <li><b>Goal:</b> Reward early believers, grow the MNODY brand and bootstrap real community.</li>
             </ul>
 
             <h3 style="font-size:1.3rem;margin-top:18px;">Vesting & Lock Design</h3>
@@ -742,7 +869,7 @@
             <h2 class="section-title">Join the Nody Cat Army</h2>
             <p style="font-size:1.1rem;max-width:780px;margin:0 auto 22px;">
                 The meme is cute, the tokenomics are not a joke. Grab MNODY, stake on
-                Team Finance and let the cat farm while you sleep.
+                Team Finance and join the 100M MNODY community airdrop waves.
             </p>
             <button class="btn" id="connectWallet2">Connect Wallet</button>
             <a href="https://quickswap.exchange/#/swap?outputCurrency=0x0bacbf5c435c3b0546f7cdf66f960770c7ad912c"
@@ -760,7 +887,7 @@
         © 2025 My Nody Cat (MNODY) • Meme first, but every tx is on-chain.
     </p>
     <div class="social-icons">
-        <a href="#" title="Telegram">Telegram</a>
+        <a href="https://t.me/Mynody" target="_blank" title="Telegram">Telegram</a>
         <a href="#" title="Twitter">Twitter</a>
         <a href="#" title="Discord">Discord</a>
     </div>
@@ -877,6 +1004,22 @@
             `(~<strong>${userYearlyReward.toFixed(2).toLocaleString()} MNODY / year</strong>) ` +
             `if pool size and rewards remain the same.`;
     }
+
+    // Simple in-browser airdrop form handler (stores in console for now)
+    document.getElementById('airdropForm').addEventListener('submit', function(e){
+        e.preventDefault();
+        const entry = {
+            wallet: document.getElementById('air_wallet').value.trim(),
+            telegram: document.getElementById('air_telegram').value.trim(),
+            twitter: document.getElementById('air_twitter').value.trim(),
+            reason: document.getElementById('air_reason').value.trim(),
+            timestamp: new Date().toISOString()
+        };
+        console.log('MNODY Airdrop Entry:', entry);
+        document.getElementById('airdropSuccess').style.display = 'block';
+        this.reset();
+        setTimeout(()=>{ document.getElementById('airdropSuccess').style.display = 'none'; }, 5000);
+    });
 </script>
 <!-- Visitor Counter (bottom me) -->
 <a href="https://hits.sh/">
