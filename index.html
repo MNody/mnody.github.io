@@ -1,19 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-   <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-NVPYP5VT8K"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-NVPYP5VT8K');
-</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MY NODY CAT | Cutest Meme Coin on Polygon</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;800;900&display=swap" rel="stylesheet">
+
+    <!-- Google Analytics (replace G-XXXXXXXXXX with your real ID) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-NVPYP5VT8K"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-NVPYP5VT8K');
+    </script>
+
     <style>
         :root{
             --p:#ff6b9d;
@@ -87,7 +88,6 @@
             header{grid-template-columns:1fr;padding-top:70px}
         }
 
-        /* HERO VISUAL */
         .hero-visual{
             position:relative;
             width:320px;
@@ -401,7 +401,6 @@
         }
         .staking-input:focus{outline:1px solid var(--p)}
 
-        /* AIRDROP extra */
         .airdrop-badge{
             display:inline-block;
             padding:6px 12px;
@@ -419,20 +418,6 @@
             grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
             gap:24px;
             margin-top:20px;
-        }
-        .airdrop-input{
-            width:100%;
-            padding:10px 12px;
-            margin:6px 0 14px;
-            border-radius:14px;
-            border:none;
-            background:rgba(15,23,42,.96);
-            color:#e5e7eb;
-            font-size:.95rem;
-        }
-        .airdrop-input:focus{outline:1px solid var(--p)}
-        .airdrop-tasks li{
-            margin-bottom:6px;
         }
 
         footer{
@@ -488,6 +473,10 @@
             + <strong>100M community airdrop</strong> for the Nody army.
         </p>
 
+        <div style="font-size:.85rem;opacity:.75;margin-top:6px;">
+            Visitor tracking active via <b>Google Analytics</b>.
+        </div>
+
         <div class="pill-row">
             <div class="pill">25% Supply Burned (2.5B)</div>
             <div class="pill">3B + 2.5B MNODY • Long Vesting</div>
@@ -506,7 +495,6 @@
                target="_blank" class="btn buy-btn">
                 Buy MNODY on QuickSwap
             </a>
-            <!-- Telegram hero button -->
             <a href="https://t.me/Mynody" target="_blank" class="btn btn-outline btn-sm">
                 Join Telegram
             </a>
@@ -684,7 +672,6 @@
             </div>
 
             <div class="staking-grid" style="margin-top:28px;">
-                <!-- APR CALCULATOR -->
                 <div class="card staking-highlight" id="aprCalculator" style="margin:0;">
                     <div class="card-inner">
                         <h3 style="font-size:1.4rem;margin-bottom:6px;">APR & Reward Estimator</h3>
@@ -711,7 +698,6 @@
                     </div>
                 </div>
 
-                <!-- CLAIMING GUIDE -->
                 <div class="card" style="margin:0;">
                     <div class="card-inner">
                         <h3 style="font-size:1.4rem;margin-bottom:8px;">How Staking & Claiming Works</h3>
@@ -740,78 +726,83 @@
         <div class="card-inner">
             <div class="airdrop-badge">100M MNODY COMMUNITY AIRDROP</div>
             <h2 class="section-title">MNODY Airdrop Campaign</h2>
+
+            <!-- LIVE COUNTDOWN -->
+            <div id="airdropCountdown" style="text-align:center;font-size:.95rem;margin-bottom:10px;opacity:.85;">
+                Airdrop ends in: --d --h --m --s
+            </div>
+
             <p style="font-size:1rem;max-width:980px;margin:0 auto 14px;text-align:center;">
                 To reward early community members and new Nody frens, the team has reserved
-                <strong>100,000,000 MNODY</strong> for task-based airdrops, social quests and
-                loyalty rewards. No private sale, no VC – just pure meme + community.
+                <strong>100,000,000 MNODY</strong> for on-chain airdrop claims. 
+                Each eligible wallet can claim a fixed <b>5,000 MNODY</b> once, after
+                joining the Telegram community.
             </p>
 
             <div class="airdrop-grid">
-                <!-- Left: info + tasks -->
                 <div>
                     <h3 style="font-size:1.3rem;margin-bottom:8px;">How to Join the Airdrop</h3>
-                    <ol class="airdrop-tasks" style="font-size:.98rem;line-height:1.9;margin-left:18px;">
-                        <li>Hold a Polygon wallet (MetaMask or similar) with a valid MNODY address.</li>
+                    <ol style="font-size:.98rem;line-height:1.9;margin-left:18px;">
+                        <li>Use a Polygon wallet (MetaMask or similar) on the MNODY network.</li>
                         <li>Join the official 
                             <b><a href="https://t.me/Mynody" target="_blank" style="color:#38bdf8;text-decoration:none;">
                                 Telegram channel
                             </a></b> and stay active in chat.</li>
                         <li>Follow and retweet the pinned post on the official <b>Twitter / X</b>.</li>
-                        <li>Visit this website and share it with friends (organic growth only).</li>
-                        <li>Optional booster: Hold or stake MNODY for higher tiers when snapshots happen.</li>
+                        <li>Come back to this page, connect your wallet and tick the checkbox confirming
+                            you joined Telegram.</li>
+                        <li>Press <b>Claim 5,000 MNODY</b> – each wallet can claim only once.</li>
                     </ol>
                     <p style="font-size:.9rem;opacity:.8;margin-top:8px;">
-                        Winners are selected based on real activity, not just bots. Multiple wallets for
-                        the same user may be disqualified. Team reserves the right to adjust rules to
-                        protect real community members.
+                        On-chain contract enforces one claim per wallet. Telegram join is verified socially
+                        (by tasks and manual checks), not by smart contract.
                     </p>
                 </div>
 
-                <!-- Right: on-site form sending to your email -->
                 <div>
-                    <h3 style="font-size:1.3rem;margin-bottom:8px;">Airdrop Registration (Phase 1)</h3>
+                    <h3 style="font-size:1.3rem;margin-bottom:8px;">On-Chain Claim (1 Wallet = 1 Claim)</h3>
                     <p style="font-size:.9rem;opacity:.8;">
-                        Fill this form – each valid entry will be emailed directly to the MNODY team inbox
-                        at <b>mynody@hotmail.com</b> for CSV airdrop processing.
+                        Connect your Polygon wallet, confirm you joined Telegram, then claim your 5,000 MNODY
+                        airdrop allocation once per address.
                     </p>
 
-                    <form 
-                        action="https://formsubmit.co/mynody@hotmail.com" 
-                        method="POST"
-                    >
-                        <!-- FormSubmit options -->
-                        <input type="hidden" name="_subject" value="New MNODY Airdrop Entry">
-                        <input type="hidden" name="_captcha" value="false">
-                        <!-- Optional: custom thank-you redirect -->
-                        <!-- <input type="hidden" name="_next" value="https://your-site.com/thanks.html"> -->
+                    <button class="btn btn-sm" id="airdropConnectBtn" style="width:100%;margin-top:4px;">
+                        Connect Wallet for Airdrop
+                    </button>
 
-                        <label class="staking-label">Wallet address (Polygon / MNODY)</label>
-                        <input class="airdrop-input" name="wallet" required placeholder="0x...">
+                    <div style="margin-top:10px;font-size:.9rem;">
+                        <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+                            <input type="checkbox" id="tgConfirm" style="width:16px;height:16px;">
+                            <span>I confirm I joined the official MNODY Telegram channel.</span>
+                        </label>
+                    </div>
 
-                        <label class="staking-label">Telegram username</label>
-                        <input class="airdrop-input" name="telegram" required placeholder="@username">
+                    <button class="btn btn-sm" id="claimBtn" style="width:100%;margin-top:8px;background:linear-gradient(135deg,#f97316,#fb923c);opacity:.7;" disabled>
+                        Claim 5,000 MNODY
+                    </button>
 
-                        <label class="staking-label">Twitter / X username</label>
-                        <input class="airdrop-input" name="twitter" required placeholder="@username">
+                    <!-- ADMIN CSV EXPORT BUTTON -->
+                    <button class="btn btn-sm btn-outline" id="downloadCsvBtn"
+                            style="width:100%;margin-top:8px;">
+                        Export Claimed Wallets (CSV)
+                    </button>
+                    <p style="font-size:.78rem;opacity:.7;margin-top:4px;">
+                        (Admin only: CSV uses PolygonScan API & on-chain <code>Claimed</code> events.)
+                    </p>
 
-                        <label class="staking-label">Why do you want MNODY airdrop? (short)</label>
-                        <input class="airdrop-input" name="reason" placeholder="I will meme, hold, stake and chill...">
-
-                        <button type="submit" class="btn btn-sm" style="width:100%;margin-top:4px;">
-                            Submit Airdrop Entry
-                        </button>
-                    </form>
+                    <div id="airdropClaimStatus" style="font-size:.9rem;margin-top:10px;min-height:20px;"></div>
 
                     <p style="font-size:.85rem;opacity:.7;margin-top:10px;">
-                        Tip: Use the same wallet in all campaigns (TaskOn / Zealy + this form) so that
-                        distribution is smooth and no address gets missed.
+                        Make sure you are on <b>Polygon mainnet</b> and have a little MATIC
+                        for gas. Claim amount and total supply are defined inside the
+                        airdrop smart contract.
                     </p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- WHITEPAPER STYLE SECTION -->
+    <!-- WHITEPAPER SECTION -->
     <section id="whitepaper" class="card lazy">
         <div class="card-inner">
             <h2 class="section-title">Whitepaper – Staking, Vesting & Airdrop</h2>
@@ -834,11 +825,14 @@
             <h3 style="font-size:1.3rem;margin-top:18px;">Community Airdrop Module</h3>
             <ul style="font-size:.98rem;line-height:1.9;margin-left:18px;">
                 <li><b>Total Airdrop Allocation:</b> 100,000,000 MNODY reserved for community campaigns.</li>
-                <li><b>Distribution Method:</b> Task-based campaigns on platforms like TaskOn / Zealy,
-                    plus random giveaways for active Telegram and Twitter members.</li>
-                <li><b>Eligibility:</b> Genuine wallets that complete social and community tasks
-                    (joining, sharing, meme creation, optional holding / staking conditions).</li>
-                <li><b>Anti-Sybil:</b> Team uses manual review and filters to remove bots and duplicate wallets.</li>
+                <li><b>Per-Wallet Allocation:</b> Base on-chain campaign offering <b>5,000 MNODY</b> per eligible
+                    wallet via claim contract.</li>
+                <li><b>Distribution Method:</b> On-chain claim contract plus task-based and manual filters
+                    for Telegram and Twitter activity.</li>
+                <li><b>Eligibility:</b> Genuine wallets that join the Telegram, follow social tasks and 
+                    pass anti-bot checks.</li>
+                <li><b>Anti-Sybil:</b> Contract enforces one claim per wallet; team may filter
+                    abusive wallets from future campaigns.</li>
                 <li><b>Goal:</b> Reward early believers, grow the MNODY brand and bootstrap real community.</li>
             </ul>
 
@@ -893,7 +887,13 @@
         <a href="#" title="Twitter">Twitter</a>
         <a href="#" title="Discord">Discord</a>
     </div>
+    <div style="font-size:.85rem;opacity:.7;margin-top:8px;">
+        Visitor stats & traffic are measured using <b>Google Analytics</b>.
+    </div>
 </footer>
+
+<!-- ethers.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/ethers@5/dist/ethers.min.js"></script>
 
 <script>
     // Scroll reveal
@@ -905,6 +905,65 @@
     const connectBtns = [document.getElementById('connectWallet'), document.getElementById('connectWallet2')];
     const statusEl = document.getElementById('walletStatus');
     const buyWithBtn = document.getElementById('buyWithWallet');
+    const airdropConnectBtn = document.getElementById('airdropConnectBtn');
+    const claimBtn = document.getElementById('claimBtn');
+    const airdropStatusEl = document.getElementById('airdropClaimStatus');
+    const tgCheckbox = document.getElementById('tgConfirm');
+    const countdownEl = document.getElementById('airdropCountdown');
+    const downloadCsvBtn = document.getElementById('downloadCsvBtn');
+
+    let currentAccount = null;
+    let provider = null;
+
+    // ✅ FINAL AIRDROP CONTRACT ADDRESS
+    const AIRDROP_CONTRACT_ADDRESS = "0xF5B3F45d72143E64D9793215093fFDaa2e3A41f5";
+
+    // PolygonScan API key for CSV export (ADMIN: fill this)
+    const POLYGONSCAN_API_KEY = "YOUR_POLYGONSCAN_API_KEY";
+
+    const AIRDROP_ABI = [
+        "function claim() external",
+        "function hasClaimed(address user) external view returns (bool)",
+        "event Claimed(address indexed user, uint256 amount)"
+    ];
+
+    // Countdown – change this to your real end time (UTC)
+    const AIRDROP_END_TIME = new Date("2026-01-31T18:30:00Z"); // TODO: set actual end date/time
+
+    function updateCountdown(){
+        if (!countdownEl) return;
+        const now = new Date().getTime();
+        const end = AIRDROP_END_TIME.getTime();
+        let diff = end - now;
+
+        if (diff <= 0){
+            countdownEl.textContent = "Airdrop has ended.";
+            return;
+        }
+
+        const days = Math.floor(diff / (1000*60*60*24));
+        diff -= days * 1000*60*60*24;
+        const hours = Math.floor(diff / (1000*60*60));
+        diff -= hours * 1000*60*60;
+        const mins = Math.floor(diff / (1000*60));
+        diff -= mins * 1000*60;
+        const secs = Math.floor(diff / 1000);
+
+        countdownEl.textContent = `Airdrop ends in: ${days}d ${hours}h ${mins}m ${secs}s`;
+    }
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+
+    function updateClaimButtonState() {
+        if (!claimBtn) return;
+        if (currentAccount && tgCheckbox && tgCheckbox.checked) {
+            claimBtn.disabled = false;
+            claimBtn.style.opacity = '1';
+        } else {
+            claimBtn.disabled = true;
+            claimBtn.style.opacity = '0.7';
+        }
+    }
 
     async function connect() {
         if (!window.ethereum) {
@@ -913,52 +972,67 @@
             return;
         }
 
-        // Switch / add Polygon
         try {
-            await window.ethereum.request({
-                method:'wallet_switchEthereumChain',
-                params:[{ chainId:'0x89' }]
-            });
-        } catch(e){
-            if(e.code === 4902){
+            // Polygon mainnet
+            try {
                 await window.ethereum.request({
-                    method:'wallet_addEthereumChain',
-                    params:[{
-                        chainId:'0x89',
-                        chainName:'Polygon',
-                        nativeCurrency:{symbol:'MATIC',decimals:18},
-                        rpcUrls:['https://polygon-rpc.com'],
-                        blockExplorerUrls:['https://polygonscan.com']
-                    }]
+                    method:'wallet_switchEthereumChain',
+                    params:[{ chainId:'0x89' }]
                 });
+            } catch(e){
+                if(e.code === 4902){
+                    await window.ethereum.request({
+                        method:'wallet_addEthereumChain',
+                        params:[{
+                            chainId:'0x89',
+                            chainName:'Polygon',
+                            nativeCurrency:{symbol:'MATIC',decimals:18},
+                            rpcUrls:['https://polygon-rpc.com'],
+                            blockExplorerUrls:['https://polygonscan.com']
+                        }]
+                    });
+                }
             }
-        }
 
-        try{
             const accounts = await window.ethereum.request({method:'eth_requestAccounts'});
-            const addr = accounts[0];
-            const short = addr.slice(0,6)+'...'+addr.slice(-4);
+            currentAccount = accounts[0];
+            provider = new ethers.providers.Web3Provider(window.ethereum);
+
+            const short = currentAccount.slice(0,6)+'...'+currentAccount.slice(-4);
             statusEl.innerHTML = 'Connected: '+short;
             statusEl.style.color = '#4ade80';
+
             connectBtns.forEach(b=>{
                 if(!b) return;
                 b.textContent = 'Wallet Connected';
                 b.disabled = true;
                 b.style.background = 'linear-gradient(135deg,#22c55e,#16a34a)';
             });
-            buyWithBtn.style.display = 'inline-flex';
-        }catch(err){
+
+            if (airdropConnectBtn) {
+                airdropConnectBtn.textContent = 'Wallet Connected for Airdrop';
+                airdropConnectBtn.disabled = true;
+            }
+
+            if (buyWithBtn) buyWithBtn.style.display = 'inline-flex';
+
+            updateClaimButtonState();
+
+        } catch(err){
+            console.error(err);
             statusEl.innerHTML = 'Connection rejected.';
             statusEl.style.color = '#f97316';
         }
     }
 
     connectBtns.forEach(b=>b && b.addEventListener('click',connect));
+    if (airdropConnectBtn) airdropConnectBtn.addEventListener('click',connect);
+    if (tgCheckbox) tgCheckbox.addEventListener('change', updateClaimButtonState);
 
-    // Auto-display if already connected
     if(window.ethereum && window.ethereum.selectedAddress){
-        const addr = window.ethereum.selectedAddress;
-        const short = addr.slice(0,6)+'...'+addr.slice(-4);
+        currentAccount = window.ethereum.selectedAddress;
+        provider = new ethers.providers.Web3Provider(window.ethereum);
+        const short = currentAccount.slice(0,6)+'...'+currentAccount.slice(-4);
         statusEl.innerHTML = 'Connected: '+short;
         statusEl.style.color = '#4ade80';
         connectBtns.forEach(b=>{
@@ -967,15 +1041,21 @@
             b.disabled = true;
             b.style.background = 'linear-gradient(135deg,#22c55e,#16a34a)';
         });
-        buyWithBtn.style.display = 'inline-flex';
+        if (airdropConnectBtn) {
+            airdropConnectBtn.textContent = 'Wallet Connected for Airdrop';
+            airdropConnectBtn.disabled = true;
+        }
+        if (buyWithBtn) buyWithBtn.style.display = 'inline-flex';
+        updateClaimButtonState();
     }
 
-    buyWithBtn.onclick = (e)=>{
-        e.preventDefault();
-        window.open('https://quickswap.exchange/#/swap?outputCurrency=0x0bacbf5c435c3b0546f7cdf66f960770c7ad912c','_blank');
-    };
+    if (buyWithBtn){
+        buyWithBtn.onclick = (e)=>{
+            e.preventDefault();
+            window.open('https://quickswap.exchange/#/swap?outputCurrency=0x0bacbf5c435c3b0546f7cdf66f960770c7ad912c','_blank');
+        };
+    }
 
-    // APR calculator
     function calculateAPR(){
         const totalReward = Number(document.getElementById('totalReward').value||0);
         const durationDays = Number(document.getElementById('durationDays').value||0);
@@ -1006,12 +1086,128 @@
             `(~<strong>${userYearlyReward.toFixed(2).toLocaleString()} MNODY / year</strong>) ` +
             `if pool size and rewards remain the same.`;
     }
-</script>
-<!-- Visitor Counter (bottom me) -->
-<a href="https://hits.sh/">
-  <img src="https://hits.sh/mnody.github.io.svg?style=flat-square&label=VISITORS&color=ff5555" alt="Visitors">
-</a>
 
+    async function claimAirdrop(){
+        if (!window.ethereum || !provider || !currentAccount){
+            airdropStatusEl.style.color = '#f97316';
+            airdropStatusEl.textContent = 'Please connect wallet first.';
+            return;
+        }
+        if (!tgCheckbox || !tgCheckbox.checked){
+            airdropStatusEl.style.color = '#f97316';
+            airdropStatusEl.textContent = 'Please confirm you joined the Telegram channel.';
+            return;
+        }
+        if (!AIRDROP_CONTRACT_ADDRESS){
+            airdropStatusEl.style.color = '#f97316';
+            airdropStatusEl.textContent = 'Airdrop contract not configured yet.';
+            return;
+        }
+
+        try{
+            const signer = provider.getSigner();
+            const contract = new ethers.Contract(AIRDROP_CONTRACT_ADDRESS, AIRDROP_ABI, signer);
+
+            airdropStatusEl.style.color = '#e5e7eb';
+            airdropStatusEl.textContent = 'Checking claim status...';
+
+            const already = await contract.hasClaimed(currentAccount);
+            if (already){
+                airdropStatusEl.style.color = '#f97316';
+                airdropStatusEl.textContent = 'You have already claimed this airdrop from this wallet.';
+                return;
+            }
+
+            airdropStatusEl.style.color = '#e5e7eb';
+            airdropStatusEl.textContent = 'Sending claim transaction...';
+
+            const tx = await contract.claim();
+            airdropStatusEl.textContent = 'Transaction submitted. Waiting for confirmation...';
+
+            await tx.wait();
+            airdropStatusEl.style.color = '#4ade80';
+            airdropStatusEl.textContent = '✅ Airdrop claimed successfully! Check your wallet for MNODY.';
+        } catch(err){
+            console.error(err);
+            airdropStatusEl.style.color = '#f97316';
+            if (err && err.message){
+                if (err.message.toLowerCase().includes('already claimed')){
+                    airdropStatusEl.textContent = 'You have already claimed this airdrop.';
+                } else {
+                    airdropStatusEl.textContent = 'Transaction failed or rejected.';
+                }
+            } else {
+                airdropStatusEl.textContent = 'Transaction failed.';
+            }
+        }
+    }
+
+    if (claimBtn){
+        claimBtn.addEventListener('click', claimAirdrop);
+    }
+
+    // 🔹 ADMIN: Download CSV of all Claimed events using PolygonScan API
+    async function downloadClaimsCsv(){
+        if (!POLYGONSCAN_API_KEY || POLYGONSCAN_API_KEY === "YOUR_POLYGONSCAN_API_KEY"){
+            alert("Set your PolygonScan API key in POLYGONSCAN_API_KEY constant first.");
+            return;
+        }
+        if (!AIRDROP_CONTRACT_ADDRESS){
+            alert("Airdrop contract address missing.");
+            return;
+        }
+
+        try{
+            const iface = new ethers.utils.Interface(AIRDROP_ABI);
+            const topic0 = ethers.utils.id("Claimed(address,uint256)");
+
+            const url = `https://api.polygonscan.com/api?module=logs&action=getLogs` +
+                        `&address=${AIRDROP_CONTRACT_ADDRESS}` +
+                        `&fromBlock=0&toBlock=latest` +
+                        `&topic0=${topic0}` +
+                        `&apikey=${POLYGONSCAN_API_KEY}`;
+
+            const res = await fetch(url);
+            const data = await res.json();
+
+            if (data.status !== "1" || !Array.isArray(data.result) || data.result.length === 0){
+                alert("No claim logs found or API returned empty result.");
+                return;
+            }
+
+            const rows = [["wallet","amount_raw","amount_mnody"]];
+
+            for (const log of data.result){
+                try{
+                    const parsed = iface.parseLog(log);
+                    const wallet = parsed.args.user;
+                    const amountRaw = parsed.args.amount.toString();
+                    const amountMnody = ethers.utils.formatUnits(parsed.args.amount, 18);
+                    rows.push([wallet, amountRaw, amountMnody]);
+                } catch(e){
+                    console.warn("Failed to parse log", e);
+                }
+            }
+
+            let csv = rows.map(r => r.join(",")).join("\n");
+            const blob = new Blob([csv], {type:"text/csv"});
+            const urlCsv = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = urlCsv;
+            a.download = "mnody_airdrop_claims.csv";
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            URL.revokeObjectURL(urlCsv);
+        } catch(err){
+            console.error(err);
+            alert("Failed to export CSV. Check console for details.");
+        }
+    }
+
+    if (downloadCsvBtn){
+        downloadCsvBtn.addEventListener('click', downloadClaimsCsv);
+    }
+</script>
 </body>
 </html>
-
