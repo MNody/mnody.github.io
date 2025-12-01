@@ -434,12 +434,6 @@
         .airdrop-tasks li{
             margin-bottom:6px;
         }
-        .airdrop-success{
-            margin-top:10px;
-            font-size:.9rem;
-            color:#4ade80;
-            display:none;
-        }
 
         footer{
             text-align:center;
@@ -512,7 +506,7 @@
                target="_blank" class="btn buy-btn">
                 Buy MNODY on QuickSwap
             </a>
-            <!-- NEW: Telegram hero button -->
+            <!-- Telegram hero button -->
             <a href="https://t.me/Mynody" target="_blank" class="btn btn-outline btn-sm">
                 Join Telegram
             </a>
@@ -773,36 +767,44 @@
                     </p>
                 </div>
 
-                <!-- Right: simple on-site form (frontend only) -->
+                <!-- Right: on-site form sending to your email -->
                 <div>
                     <h3 style="font-size:1.3rem;margin-bottom:8px;">Airdrop Registration (Phase 1)</h3>
-                    <p style="font-size:.9rem;opacity:.8;">Fill this form so the team can include you in the airdrop CSV export.</p>
+                    <p style="font-size:.9rem;opacity:.8;">
+                        Fill this form – each valid entry will be emailed directly to the MNODY team inbox
+                        at <b>mynody@hotmail.com</b> for CSV airdrop processing.
+                    </p>
 
-                    <form id="airdropForm">
+                    <form 
+                        action="https://formsubmit.co/mynody@hotmail.com" 
+                        method="POST"
+                    >
+                        <!-- FormSubmit options -->
+                        <input type="hidden" name="_subject" value="New MNODY Airdrop Entry">
+                        <input type="hidden" name="_captcha" value="false">
+                        <!-- Optional: custom thank-you redirect -->
+                        <!-- <input type="hidden" name="_next" value="https://your-site.com/thanks.html"> -->
+
                         <label class="staking-label">Wallet address (Polygon / MNODY)</label>
-                        <input class="airdrop-input" id="air_wallet" required placeholder="0x...">
+                        <input class="airdrop-input" name="wallet" required placeholder="0x...">
 
                         <label class="staking-label">Telegram username</label>
-                        <input class="airdrop-input" id="air_telegram" required placeholder="@username">
+                        <input class="airdrop-input" name="telegram" required placeholder="@username">
 
                         <label class="staking-label">Twitter / X username</label>
-                        <input class="airdrop-input" id="air_twitter" required placeholder="@username">
+                        <input class="airdrop-input" name="twitter" required placeholder="@username">
 
                         <label class="staking-label">Why do you want MNODY airdrop? (short)</label>
-                        <input class="airdrop-input" id="air_reason" placeholder="I will meme, hold, stake and chill...">
+                        <input class="airdrop-input" name="reason" placeholder="I will meme, hold, stake and chill...">
 
                         <button type="submit" class="btn btn-sm" style="width:100%;margin-top:4px;">
                             Submit Airdrop Entry
                         </button>
-                        <div id="airdropSuccess" class="airdrop-success">
-                            ✅ Submitted! Your entry is stored locally – team will export all entries for CSV airdrop.
-                        </div>
                     </form>
 
                     <p style="font-size:.85rem;opacity:.7;margin-top:10px;">
-                        Note: This on-site form stores your entry in the browser console for now.
-                        The team can connect a backend or Google Sheet / API later to collect all
-                        entries for distribution.
+                        Tip: Use the same wallet in all campaigns (TaskOn / Zealy + this form) so that
+                        distribution is smooth and no address gets missed.
                     </p>
                 </div>
             </div>
@@ -1004,22 +1006,6 @@
             `(~<strong>${userYearlyReward.toFixed(2).toLocaleString()} MNODY / year</strong>) ` +
             `if pool size and rewards remain the same.`;
     }
-
-    // Simple in-browser airdrop form handler (stores in console for now)
-    document.getElementById('airdropForm').addEventListener('submit', function(e){
-        e.preventDefault();
-        const entry = {
-            wallet: document.getElementById('air_wallet').value.trim(),
-            telegram: document.getElementById('air_telegram').value.trim(),
-            twitter: document.getElementById('air_twitter').value.trim(),
-            reason: document.getElementById('air_reason').value.trim(),
-            timestamp: new Date().toISOString()
-        };
-        console.log('MNODY Airdrop Entry:', entry);
-        document.getElementById('airdropSuccess').style.display = 'block';
-        this.reset();
-        setTimeout(()=>{ document.getElementById('airdropSuccess').style.display = 'none'; }, 5000);
-    });
 </script>
 <!-- Visitor Counter (bottom me) -->
 <a href="https://hits.sh/">
