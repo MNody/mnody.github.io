@@ -1,111 +1,873 @@
-<a href="whitepaper.html" target="_blank" style="padding:10px 20px;background:#333;color:#fff;border-radius:5px;text-decoration:none;">
-  White Paper
-</a>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MNODY - The Meme with Utility 🚀</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background: linear-gradient(to right, #7b2ff7, #f107a3);
-      color: white;
-      text-align: center;
-    }
-    header {
-      padding: 40px 20px;
-    }
-    header img {
-      max-width: 200px;
-      border-radius: 20px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.5);
-    }
-    h1 {
-      font-size: 2.5em;
-      margin: 10px 0;
-    }
-    .btn {
-      display: inline-block;
-      background: #ff0077;
-      padding: 12px 24px;
-      margin: 20px;
-      border-radius: 30px;
-      color: white;
-      text-decoration: none;
-      font-weight: bold;
-      transition: 0.3s;
-    }
-    .btn:hover {
-      background: #ff3399;
-    }
-    .card {
-      background: rgba(0,0,0,0.3);
-      margin: 20px auto;
-      padding: 20px;
-      border-radius: 15px;
-      max-width: 800px;
-      text-align: left;
-    }
-    iframe {
-      width: 100%;
-      height: 500px;
-      border: none;
-      border-radius: 15px;
-    }
-    footer {
-      padding: 20px;
-      background: rgba(0,0,0,0.5);
-      margin-top: 20px;
-    }
-    a { color: #ff99ff; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MY NODY CAT | Cutest Meme Coin on Polygon</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root{
+            --p:#ff6b9d;
+            --s:#c06c84;
+            --a:#feca57;
+            --d:#050816;
+            --l:#fff;
+            --o:#ff9a56;
+            --g1:#00f5a0;
+            --g2:#00d9f5;
+        }
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{
+            font-family:'Poppins',sans-serif;
+            background:radial-gradient(circle at top,#1a1a2e 0,#050816 40%,#02010a 100%);
+            color:var(--l);
+            overflow-x:hidden;
+            line-height:1.6;
+        }
+
+        .bg{
+            position:fixed;
+            inset:0;
+            background:
+                radial-gradient(circle at 10% 20%,rgba(255,107,157,.18) 0,transparent 55%),
+                radial-gradient(circle at 80% 0,rgba(0,217,245,.2) 0,transparent 55%),
+                radial-gradient(circle at 70% 90%,rgba(16,185,129,.18) 0,transparent 55%);
+            z-index:-3;
+        }
+        .bg-grid{
+            position:fixed;
+            inset:0;
+            background-image:linear-gradient(#ffffff0d 1px,transparent 1px),
+                             linear-gradient(90deg,#ffffff0d 1px,transparent 1px);
+            background-size:80px 80px;
+            opacity:.25;
+            z-index:-2;
+        }
+
+        .glow-orb{
+            position:fixed;
+            width:220px;height:220px;
+            border-radius:50%;
+            background:radial-gradient(circle,var(--g1),transparent 60%);
+            filter:blur(40px);
+            opacity:.45;
+            z-index:-1;
+            animation:orb 18s ease-in-out infinite alternate;
+        }
+        .glow-orb:nth-child(1){top:5%;left:5%}
+        .glow-orb:nth-child(2){top:70%;right:3%;animation-delay:3s}
+        .glow-orb:nth-child(3){top:35%;left:60%;animation-delay:6s}
+        @keyframes orb{
+            0%{transform:translate3d(0,0,0)}
+            100%{transform:translate3d(40px,-60px,0)}
+        }
+
+        .lazy{opacity:0;transform:translateY(40px);transition:all .9s ease}
+        .lazy.show{opacity:1;transform:none}
+
+        header{
+            padding:80px 20px 40px;
+            max-width:1300px;
+            margin:0 auto;
+            display:grid;
+            grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);
+            gap:40px;
+            align-items:center;
+        }
+        @media(max-width:900px){
+            header{grid-template-columns:1fr;padding-top:70px}
+        }
+
+        /* HERO VISUAL */
+        .hero-visual{
+            position:relative;
+            width:320px;
+            height:320px;
+            margin:0 auto;
+            border-radius:50%;
+            background:radial-gradient(circle at 30% 20%,#fff 0,#ffe5f4 20%,#312e81 55%,#020617 100%);
+            box-shadow:
+                0 0 0 3px rgba(255,255,255,.1),
+                0 0 50px rgba(0,0,0,.8),
+                0 0 120px rgba(255,107,157,.7);
+            overflow:hidden;
+        }
+        .hero-coin{
+            position:absolute;
+            inset:18%;
+            border-radius:50%;
+            background:conic-gradient(from 220deg,var(--g1),var(--g2),var(--p),var(--o),var(--g1));
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            color:#fff;
+            font-weight:900;
+            font-size:2.4rem;
+            letter-spacing:2px;
+            text-shadow:0 4px 14px rgba(0,0,0,.6);
+            animation:spinCoin 14s linear infinite;
+        }
+        .hero-coin::after{
+            content:'MY NODY';
+            position:absolute;
+            bottom:32%;
+            font-size:.9rem;
+            letter-spacing:3px;
+            opacity:.9;
+        }
+        .hero-face{
+            position:absolute;
+            width:110px;height:110px;
+            border-radius:32px;
+            background:radial-gradient(circle,#ffe4f1 0,#ffb4d1 35%,#f97316 100%);
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-size:3.2rem;
+            box-shadow:0 18px 40px rgba(0,0,0,.55);
+            animation:floatFace 3s ease-in-out infinite;
+        }
+        .hero-face span{transform:translateY(2px)}
+        .hero-face{top:26%;left:50%;transform:translateX(-50%)}
+
+        .orbit{
+            position:absolute;
+            inset:8%;
+            border-radius:50%;
+            border:1px dashed rgba(255,255,255,.22);
+        }
+        .orb-cat,.orb-rocket{
+            position:absolute;
+            width:44px;height:44px;
+            border-radius:999px;
+            background:radial-gradient(circle at 30% 20%,#fff,rgba(148,163,253,.8));
+            display:flex;align-items:center;justify-content:center;
+            font-size:1.4rem;
+            box-shadow:0 10px 25px rgba(0,0,0,.5);
+        }
+        .orb-cat{top:-12px;left:50%;transform:translateX(-50%)}
+        .orb-rocket{bottom:-12px;right:14%;}
+
+        .orb-ring{
+            position:absolute;
+            inset:-18%;
+            border-radius:50%;
+            border:2px solid rgba(148,163,253,.3);
+            filter:drop-shadow(0 0 18px rgba(59,130,246,.7));
+            animation:orbitSpin 24s linear infinite;
+        }
+        .hero-tag{
+            position:absolute;
+            right:18px;
+            top:22px;
+            padding:8px 16px;
+            border-radius:999px;
+            font-size:.8rem;
+            text-transform:uppercase;
+            letter-spacing:1px;
+            background:rgba(15,23,42,.85);
+            border:1px solid rgba(148,163,253,.5);
+        }
+
+        @keyframes spinCoin{
+            0%{transform:rotate(0deg)}
+            100%{transform:rotate(360deg)}
+        }
+        @keyframes floatFace{
+            0%,100%{transform:translate(-50%,0)}
+            50%{transform:translate(-50%,-14px)}
+        }
+        @keyframes orbitSpin{
+            0%{transform:rotate(0deg)}
+            100%{transform:rotate(-360deg)}
+        }
+
+        .hero-text h1{
+            font-size:4.6rem;
+            line-height:1.05;
+            font-weight:900;
+            background:linear-gradient(120deg,var(--p),var(--a),var(--g2));
+            -webkit-background-clip:text;
+            -webkit-text-fill-color:transparent;
+        }
+        .hero-sub{
+            margin-top:18px;
+            font-size:1.4rem;
+            color:#e5e7eb;
+        }
+        .pill-row{
+            display:flex;
+            flex-wrap:wrap;
+            gap:14px;
+            margin:20px 0 30px;
+        }
+        .pill{
+            padding:8px 16px;
+            border-radius:999px;
+            border:1px solid rgba(148,163,253,.4);
+            font-size:.95rem;
+            background:rgba(15,23,42,.85);
+        }
+        .live-badge{
+            display:inline-flex;
+            align-items:center;
+            gap:10px;
+            background:linear-gradient(135deg,var(--p),var(--o));
+            padding:10px 20px;
+            border-radius:999px;
+            font-size:.95rem;
+            font-weight:700;
+            box-shadow:0 0 35px rgba(248,113,113,.9);
+            margin-top:10px;
+        }
+        .live-dot{
+            width:10px;height:10px;border-radius:50%;background:#22c55e;
+            box-shadow:0 0 12px #22c55e;animation:ping 1.4s infinite;
+        }
+        @keyframes ping{
+            0%{transform:scale(1);opacity:1}
+            100%{transform:scale(1.7);opacity:0}
+        }
+
+        .btn{
+            background:linear-gradient(135deg,#10b981,#059669);
+            color:#fff;
+            padding:15px 32px;
+            border:none;
+            border-radius:999px;
+            font-size:1.05rem;
+            font-weight:700;
+            cursor:pointer;
+            margin:8px 10px 0 0;
+            display:inline-flex;
+            align-items:center;
+            justify-content:center;
+            gap:8px;
+            text-decoration:none;
+            box-shadow:0 15px 40px rgba(16,185,129,.5);
+            transition:.35s;
+            white-space:nowrap;
+        }
+        .btn:hover{
+            transform:translateY(-4px) scale(1.02);
+            box-shadow:0 20px 50px rgba(15,23,42,.9);
+        }
+        .btn-outline{
+            background:rgba(15,23,42,.9);
+            border:1px solid rgba(148,163,253,.7);
+            box-shadow:none;
+        }
+        .buy-btn{background:linear-gradient(135deg,var(--p),var(--o))}
+        .btn-sm{padding:10px 18px;font-size:.9rem}
+
+        nav{
+            position:sticky;
+            top:0;
+            z-index:100;
+            background:rgba(5,8,22,.95);
+            backdrop-filter:blur(24px);
+            border-bottom:1px solid rgba(148,163,253,.35);
+        }
+        nav ul{
+            display:flex;
+            justify-content:center;
+            gap:24px;
+            padding:14px 16px;
+            list-style:none;
+            flex-wrap:wrap;
+        }
+        nav a{
+            color:#e5e7eb;
+            text-decoration:none;
+            padding:8px 18px;
+            border-radius:999px;
+            font-size:.92rem;
+            font-weight:500;
+            transition:.25s;
+        }
+        nav a:hover{
+            background:rgba(148,163,253,.15);
+            color:#fff;
+            transform:translateY(-2px);
+        }
+
+        .container{max-width:1300px;margin:0 auto;padding:30px 20px 70px}
+        .card{
+            background:radial-gradient(circle at top left,rgba(148,163,253,.18),rgba(15,23,42,.95));
+            border-radius:28px;
+            padding:40px;
+            margin:40px 0;
+            border:1px solid rgba(148,163,253,.4);
+            box-shadow:0 20px 60px rgba(15,23,42,.9);
+            position:relative;
+            overflow:hidden;
+        }
+        .card::before{
+            content:'';
+            position:absolute;
+            inset:-40%;
+            background:radial-gradient(circle at top,rgba(255,255,255,.06),transparent 60%);
+            opacity:.8;
+            pointer-events:none;
+        }
+        .card-inner{position:relative;z-index:1}
+
+        .section-title{
+            font-size:2.4rem;
+            color:var(--a);
+            text-align:center;
+            margin-bottom:18px;
+        }
+
+        .stats-grid{
+            display:grid;
+            grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+            gap:24px;
+            margin:40px 0 10px;
+        }
+        .stat-box{
+            background:radial-gradient(circle at top,rgba(34,197,94,.16),rgba(15,23,42,.95));
+            border-radius:22px;
+            padding:26px 22px;
+            border:1px solid rgba(74,222,128,.5);
+            text-align:left;
+            position:relative;
+            overflow:hidden;
+        }
+        .stat-label{
+            font-size:.95rem;
+            text-transform:uppercase;
+            letter-spacing:.12em;
+            opacity:.75;
+        }
+        .stat-value{
+            font-size:2.3rem;
+            font-weight:800;
+            margin-top:8px;
+            background:linear-gradient(135deg,#fff,var(--g1));
+            -webkit-background-clip:text;
+            -webkit-text-fill-color:transparent;
+        }
+        .stat-sub{
+            font-size:.98rem;
+            opacity:.8;
+            margin-top:8px;
+        }
+
+        .badge{
+            display:inline-flex;
+            padding:6px 12px;
+            border-radius:999px;
+            border:1px solid rgba(148,163,253,.5);
+            font-size:.78rem;
+            text-transform:uppercase;
+            letter-spacing:.12em;
+            opacity:.85;
+        }
+
+        .staking-highlight{
+            background:radial-gradient(circle at top,rgba(34,197,94,.18),rgba(15,23,42,.98));
+            border-color:rgba(34,197,94,.7);
+        }
+
+        .staking-grid{
+            display:grid;
+            grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+            gap:24px;
+            margin-top:26px;
+        }
+        .staking-label{
+            font-size:.95rem;
+            opacity:.8;
+        }
+        .staking-input{
+            width:100%;
+            padding:10px 12px;
+            border-radius:14px;
+            border:none;
+            margin:6px 0 14px;
+            font-size:.95rem;
+            background:rgba(15,23,42,.96);
+            color:#e5e7eb;
+        }
+        .staking-input:focus{outline:1px solid var(--p)}
+
+        footer{
+            text-align:center;
+            padding:70px 20px 40px;
+            border-top:1px solid rgba(148,163,253,.35);
+            background:radial-gradient(circle at top,rgba(15,23,42,.9),#020617);
+        }
+        .social-icons{
+            display:flex;
+            justify-content:center;
+            gap:26px;
+            margin:30px 0 18px;
+        }
+        .social-icons a{
+            font-size:1.1rem;
+            padding:8px 14px;
+            border-radius:999px;
+            border:1px solid rgba(148,163,253,.6);
+            text-decoration:none;
+            color:#e5e7eb;
+            opacity:.8;
+            transition:.3s;
+        }
+        .social-icons a:hover{
+            transform:translateY(-3px);
+            opacity:1;
+            background:rgba(30,64,175,.9);
+        }
+
+        @media(max-width:768px){
+            .hero-text h1{font-size:3.1rem}
+            .hero-sub{font-size:1.1rem}
+            .card{padding:26px 20px}
+        }
+    </style>
 </head>
 <body>
 
-  <header>
-   <img src="logo.png" alt="MNODY Logo">
-    <h1>🔥 MNODY (MyNody) 🔥</h1>
-    <h2>The Meme with Utility 🚀</h2>
-    <a href="https://app.uniswap.org/#/swap" target="_blank" class="btn">Buy on Uniswap</a>
-  </header>
+<div class="bg"></div>
+<div class="bg-grid"></div>
+<div class="glow-orb"></div>
+<div another="glow-orb" class="glow-orb"></div>
+<div class="glow-orb"></div>
 
-  <section class="card">
-    <h2>📜 Tokenomics</h2>
+<header class="lazy">
+    <div class="hero-text">
+        <span class="badge">MNODY • MEME CAT ON POLYGON</span>
+        <h1>My Nody Cat<br/>The Cat that Farms the Chain</h1>
+        <p class="hero-sub">
+            Pure meme energy, real on-chain proof. Liquidity locked, 2.5B burned, 
+            3B + 2.5B long-term vesting and a <strong>500M staking reward pool (200M + 300M)</strong> for the Nody army.
+        </p>
+
+        <div class="pill-row">
+            <div class="pill">25% Supply Burned (2.5B)</div>
+            <div class="pill">3B + 2.5B MNODY • Long Vesting</div>
+            <div class="pill">500M Staking Rewards (200M + 300M)</div>
+        </div>
+
+        <div class="live-badge">
+            <div class="live-dot"></div>
+            <span>Live • Meme Cat Yield Season</span>
+        </div>
+
+        <div style="margin-top:28px;">
+            <button class="btn" id="connectWallet">Connect MetaMask</button>
+            <a href="https://quickswap.exchange/#/swap?outputCurrency=0x0bacbf5c435c3b0546f7cdf66f960770c7ad912c"
+               target="_blank" class="btn buy-btn">
+                Buy MNODY on QuickSwap
+            </a>
+            <a href="#" id="buyWithWallet" class="btn btn-outline btn-sm" style="display:none">
+                1-Click Buy with Wallet
+            </a>
+        </div>
+
+        <div id="walletStatus" style="font-size:.98rem;margin-top:14px;color:#f97316;font-weight:600"></div>
+    </div>
+
+    <div class="hero-visual">
+        <div class="hero-tag">Meme Yield Engine</div>
+        <div class="orbit"></div>
+        <div class="orb-ring"></div>
+        <div class="hero-coin">MNODY</div>
+        <div class="hero-face"><span>😺</span></div>
+        <div class="orb-cat">😸</div>
+        <div class="orb-rocket">🚀</div>
+    </div>
+</header>
+
+<nav>
     <ul>
-      <li>✅ Total Supply: <b>10,000,000,000</b></li>
-      <li>🔥 Burned: <b>2,500,000,000</b> 
-        (<a href="https://polygonscan.com/tx/0xb43c7e39d519f6bf2755393223842a93ac7b986a3c4d3f18dc97ea46bb707fa8" target="_blank">View Burn</a>)
-      </li>
-      <li>⏳ Vesting: <b>2,500,000,000 (3 years linear)</b> 
-        (<a href="https://polygonscan.com/address/0x1b2029a33f5d3e25aa4f65f3f9d7d4dcf913cf12" target="_blank">View Vesting</a>)
-      </li>
-      <li>💧 Circulating Supply: <b>5,000,000,000</b></li>
+        <li><a href="#about">Home</a></li>
+        <li><a href="#tokenomics">Tokenomics</a></li>
+        <li><a href="#staking">Staking</a></li>
+        <li><a href="#chart">Chart</a></li>
+        <li><a href="#buy">Buy</a></li>
     </ul>
-  </section>
+</nav>
 
-  <section class="card">
-    <h2>📌 Official Contract</h2>
-    <p>0x0BacbF5C435c3B0546fFcdF66F9660770Cc7D912C  
-    (<a href="https://polygonscan.com/token/0x0bacbf5c435c3b0546f7cdf66f960770c7ad912c" target="_blank">View on PolygonScan</a>)</p>
-  </section>
+<div class="container">
 
-  <section class="card">
-    <h2>📊 Live Chart</h2>
-   <iframe src="https://dexscreener.com/polygon/0xf8c95ef0d2614a49bca78c67f7d6fecee2c5589b"></iframe>
-  </section>
+    <!-- ABOUT -->
+    <section id="about" class="card lazy">
+        <div class="card-inner">
+            <h2 class="section-title">Welcome to My Nody Cat</h2>
+            <p style="font-size:1.1rem;text-align:center;max-width:840px;margin:0 auto;">
+                My Nody Cat (MNODY) is a hyper-cute Polygon meme coin built with
+                serious on-chain discipline: burned supply, long-term vesting, locked
+                LP and a staking program fed by a dedicated <strong>500M MNODY reward pool</strong>
+                (200M base + 300M expansion). Meme first — but the numbers still have
+                to pass the Nody sniff test.
+            </p>
+        </div>
+    </section>
 
-  <footer>
-    <p>🌐 Follow us on 
-      <a href="https://twitter.com" target="_blank">Twitter</a> | 
-      <a href="https://t.me" target="_blank">Telegram</a>
+    <!-- STATS -->
+    <section class="lazy">
+        <div class="stats-grid">
+            <div class="stat-box">
+                <div class="stat-label">Total Supply</div>
+                <div class="stat-value">10,000,000,000</div>
+                <div class="stat-sub">Hard-capped MNODY supply on Polygon.</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-label">Burned Forever</div>
+                <div class="stat-value">2,500,000,000</div>
+                <div class="stat-sub">Sent to dead address • 25% of supply removed.</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-label">Locked & Vested</div>
+                <div class="stat-value">5,500,000,000*</div>
+                <div class="stat-sub">LP locks + 3B + 2.5B long-term vesting for ecosystem growth.</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-label">Staking Rewards</div>
+                <div class="stat-value">500,000,000</div>
+                <div class="stat-sub">200M base rewards + 300M expansion pool for Nody stakers.</div>
+            </div>
+        </div>
+        <p style="opacity:.7;font-size:.9rem;margin-top:6px;text-align:center;">
+            *Approximate breakdown, see PolygonScan + Team Finance page for live details.
+        </p>
+    </section>
+
+    <!-- TOKENOMICS -->
+    <section id="tokenomics" class="card lazy">
+        <div class="card-inner">
+            <h2 class="section-title">Tokenomics & On-Chain Proof</h2>
+
+            <div style="text-align:center;font-size:1rem;max-width:960px;margin:0 auto;">
+                <p style="margin:6px 0;">
+                    <strong>Token Contract:</strong>
+                    <code style="background:#020617;border-radius:10px;padding:6px 10px;">
+                        0x0bacbf5c435c3b0546f7cdf66f960770c7ad912c
+                    </code>
+                </p>
+
+                <p style="margin:6px 0;">
+                    <strong>25% Burn (2.5B MNODY):</strong>
+                    <a href="https://polygonscan.com/tx/0x4ce95d00814793adf2062ace6571811696a72f197793d694e9486bddc08c9073"
+                       target="_blank" style="color:#4ade80;text-decoration:none;">
+                        PolygonScan Tx (verified)
+                    </a>
+                </p>
+
+                <p style="margin:6px 0;">
+                    <strong>Liquidity / Team Locks:</strong>
+                    <a href="https://polygonscan.com/address/0x1b2029a33f5d3e25aa4f65f3f9d7d4dcf913cf12"
+                       target="_blank" style="color:#38bdf8;text-decoration:none;">
+                        Multi-year vesting and lock contracts
+                    </a>
+                </p>
+
+                <p style="margin:6px 0;">
+                    <strong>3B MNODY Long-Term Vesting (5.5 Years):</strong><br/>
+                    Contract:
+                    <a href="https://polygonscan.com/address/0x9FEbbB83a336831a3Cc35Ac965B735FFeEbC630E"
+                       target="_blank" style="color:#4ade80;text-decoration:none;">
+                        0x9FEb...630E
+                    </a>
+                    • Tx:
+                    <a href="https://polygonscan.com/tx/0x04a4fba1d818b56fcac2e4555235b3d6e53b310d7b453787966ec730f6d6d35f"
+                       target="_blank" style="color:#f97316;text-decoration:none;">
+                        0x04a4fb…6d35f
+                    </a>
+                    <br/>
+                    <span style="font-size:.95rem;opacity:.85;">
+                        First 6 months full lock (cliff), then linear unlocking over 5 years –
+                        slow, transparent release for ecosystem growth and CEX / marketing.
+                    </span>
+                </p>
+
+                <p style="margin:6px 0;">
+                    <strong>2.5B MNODY Vesting (1 Year Lock + 3 Years Linear):</strong><br/>
+                    Tx:
+                    <a href="https://polygonscan.com/tx/0xb29526d2524fcfe619362856f7b28e8e20279a73d45702669650d2d9020e46fd"
+                       target="_blank" style="color:#fde047;text-decoration:none;">
+                        0xb29526d2524fcfe619362856f7b28e8e20279a73d45702669650d2d9020e46fd
+                    </a>
+                    <br/>
+                    <span style="font-size:.95rem;opacity:.85;">
+                        Locked for the first 12 months, then released linearly over the next 3 years –
+                        reinforcing long-term alignment and liquidity depth.
+                    </span>
+                </p>
+
+                <p style="margin:6px 0;">
+                    <strong>Dex Pair:</strong>
+                    <a href="https://dexscreener.com/polygon/0x3cEC491A74c924aaeb74DDe821653AaFEc7b94B9"
+                       target="_blank" style="color:#f9a8d4;text-decoration:none;">
+                        DexScreener Live Chart
+                    </a>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- STAKING -->
+    <section id="staking" class="card staking-highlight lazy">
+        <div class="card-inner">
+            <h2 class="section-title">MNODY Staking • 500M Reward Pool</h2>
+
+            <p style="font-size:1rem;max-width:960px;margin:0 auto 14px;text-align:center;">
+                Stake MNODY through the audited Team Finance contracts and earn from a
+                combined <strong>500,000,000 MNODY reward pool</strong>. The pool is split
+                into a 200M base allocation plus an additional 300M expansion allocation.
+                Rewards stream linearly over the pool duration and are shared proportionally
+                by all stakers.
+            </p>
+
+            <div style="text-align:center;margin-top:18px;">
+                <button class="btn buy-btn"
+                        onclick="window.open('https://www.team.finance/view-coin/0x0bacbf5c435c3b0546f7cdf66f960770c7ad912c?name=MyNody&symbol=MNODY&chainid=0x89&_gl=1*x6d27t*_gcl_au*NDY3MTgzNTAwLjE3NjQ1ODU3ODk','_blank')">
+                    Open Team Finance Staking
+                </button>
+                <button class="btn btn-outline btn-sm"
+                        onclick="document.getElementById('aprCalculator').scrollIntoView({behavior:'smooth'})">
+                    Open APR Calculator
+                </button>
+            </div>
+
+            <div class="staking-grid" style="margin-top:28px;">
+                <!-- APR CALCULATOR -->
+                <div class="card staking-highlight" id="aprCalculator" style="margin:0;">
+                    <div class="card-inner">
+                        <h3 style="font-size:1.4rem;margin-bottom:6px;">APR & Reward Estimator</h3>
+                        <p class="staking-label">Adjust the numbers based on the live pool in Team Finance.</p>
+
+                        <label class="staking-label">Total reward pool (MNODY)</label>
+                        <input id="totalReward" class="staking-input" type="number" value="500000000">
+
+                        <label class="staking-label">Pool duration (days)</label>
+                        <input id="durationDays" class="staking-input" type="number" value="240">
+
+                        <label class="staking-label">Total MNODY currently staked</label>
+                        <input id="totalStaked" class="staking-input" type="number" value="10000000">
+
+                        <label class="staking-label">Your stake (MNODY)</label>
+                        <input id="userStake" class="staking-input" type="number" value="100000">
+
+                        <button class="btn btn-sm" style="width:100%;margin-top:4px;" onclick="calculateAPR()">Calculate APR</button>
+
+                        <div style="margin-top:16px;font-size:.95rem;">
+                            <div id="aprResult" style="margin-bottom:8px;font-weight:700;"></div>
+                            <div id="userRewardResult" style="opacity:.92;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CLAIMING GUIDE -->
+                <div class="card" style="margin:0;">
+                    <div class="card-inner">
+                        <h3 style="font-size:1.4rem;margin-bottom:8px;">How Staking & Claiming Works</h3>
+                        <ol style="font-size:.98rem;line-height:1.9;margin-left:18px;">
+                            <li>Click <b>“Open Team Finance Staking”</b> and open the MNODY page.</li>
+                            <li>Connect your wallet on <b>Polygon</b> (same address that holds MNODY).</li>
+                            <li>Select the active <b>MNODY staking pool</b> from the list.</li>
+                            <li>Press <b>Approve</b> once to allow the contract to use your MNODY.</li>
+                            <li>Enter how much you want to stake and confirm the <b>Stake</b> transaction.</li>
+                            <li>Rewards accrue automatically while you are staked in the pool.</li>
+                            <li>To harvest, click <b>Claim</b> – your earned MNODY is sent to your wallet.</li>
+                            <li>After lock / pool end, hit <b>Unstake / Withdraw</b> to get your principal back.</li>
+                        </ol>
+                        <p style="font-size:.88rem;margin-top:10px;opacity:.78;">
+                            APR is dynamic and depends on total staked and remaining rewards – use the
+                            calculator to experiment with different pool sizes and durations.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- WHITEPAPER STYLE SECTION -->
+    <section id="whitepaper" class="card lazy">
+        <div class="card-inner">
+            <h2 class="section-title">Whitepaper – Staking & Vesting Overview</h2>
+            <p style="font-size:1rem;max-width:980px;margin:0 auto 12px;">
+                The MNODY economy is designed around transparent burn, long-term
+                vesting and a high-energy staking engine. Below is the concise
+                whitepaper-style summary you can reuse in documents and listings.
+            </p>
+            <h3 style="font-size:1.3rem;margin-top:18px;">Staking Module</h3>
+            <ul style="font-size:.98rem;line-height:1.9;margin-left:18px;">
+                <li><b>Platform:</b> Team Finance Staking (non-custodial smart contracts on Polygon).</li>
+                <li><b>Total Staking Rewards:</b> 500,000,000 MNODY.</li>
+                <li><b>Split:</b> 200,000,000 MNODY base pool + 300,000,000 MNODY expansion pool.</li>
+                <li><b>Distribution:</b> Rewards stream linearly over the configured pool duration.</li>
+                <li><b>Fair Share:</b> User reward = (User stake / Total staked) × Daily pool reward.</li>
+                <li><b>Claiming:</b> Rewards can be claimed at any time according to pool rules;
+                    principal is withdrawable after the lock / pool end.</li>
+            </ul>
+
+            <h3 style="font-size:1.3rem;margin-top:18px;">Vesting & Lock Design</h3>
+            <ul style="font-size:.98rem;line-height:1.9;margin-left:18px;">
+                <li><b>Burn:</b> 2.5B MNODY (25% of supply) permanently burned and verifiable on-chain.</li>
+                <li><b>Vesting Pool A – 3B MNODY:</b> 6 months full lock followed by 5-year linear unlock
+                    (ecosystem, CEX and growth incentives).</li>
+                <li><b>Vesting Pool B – 2.5B MNODY:</b> 1-year full lock followed by 3-year linear unlock,
+                    reinforcing long-term alignment and liquidity depth.</li>
+                <li><b>Liquidity & Team:</b> Additional LP and team allocations are locked via time-locked
+                    smart contracts on Polygon, with all links publicly available.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- CHART -->
+    <section id="chart" class="card lazy">
+        <div class="card-inner">
+            <h2 class="section-title">Live MNODY / USDT Chart</h2>
+            <iframe src="https://dexscreener.com/polygon/0x3cEC491A74c924aaeb74DDe821653AaFEc7b94B9?embed=1&theme=dark&trades=0&info=0"
+                    style="width:100%;height:580px;border:none;border-radius:20px;margin-top:20px;"
+                    loading="lazy"></iframe>
+        </div>
+    </section>
+
+    <!-- BUY CTA -->
+    <section id="buy" class="card lazy" style="background:radial-gradient(circle at top,rgba(248,113,113,.36),rgba(15,23,42,.98));border-color:rgba(248,113,113,.7);">
+        <div class="card-inner" style="text-align:center;">
+            <h2 class="section-title">Join the Nody Cat Army</h2>
+            <p style="font-size:1.1rem;max-width:780px;margin:0 auto 22px;">
+                The meme is cute, the tokenomics are not a joke. Grab MNODY, stake on
+                Team Finance and let the cat farm while you sleep.
+            </p>
+            <button class="btn" id="connectWallet2">Connect Wallet</button>
+            <a href="https://quickswap.exchange/#/swap?outputCurrency=0x0bacbf5c435c3b0546f7cdf66f960770c7ad912c"
+               target="_blank" class="btn buy-btn">
+                Buy MNODY on QuickSwap
+            </a>
+        </div>
+    </section>
+
+</div>
+
+<footer>
+    <div style="font-size:2.2rem;margin-bottom:8px;">😺🚀💎🌙</div>
+    <p style="font-size:1rem;opacity:.85;">
+        © 2025 My Nody Cat (MNODY) • Meme first, but every tx is on-chain.
     </p>
-    <p>© 2025 MNODY. All Rights Reserved.</p>
-  </footer>
+    <div class="social-icons">
+        <a href="#" title="Telegram">Telegram</a>
+        <a href="#" title="Twitter">Twitter</a>
+        <a href="#" title="Discord">Discord</a>
+    </div>
+</footer>
 
+<script>
+    // Scroll reveal
+    const observer = new IntersectionObserver(entries=>{
+        entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('show'); });
+    }, {threshold:0.12});
+    document.querySelectorAll('.lazy').forEach(el=>observer.observe(el));
+
+    const connectBtns = [document.getElementById('connectWallet'), document.getElementById('connectWallet2')];
+    const statusEl = document.getElementById('walletStatus');
+    const buyWithBtn = document.getElementById('buyWithWallet');
+
+    async function connect() {
+        if (!window.ethereum) {
+            statusEl.innerHTML = 'MetaMask not found. Click to install.';
+            window.open('https://metamask.io/download/','_blank');
+            return;
+        }
+
+        // Switch / add Polygon
+        try {
+            await window.ethereum.request({
+                method:'wallet_switchEthereumChain',
+                params:[{ chainId:'0x89' }]
+            });
+        } catch(e){
+            if(e.code === 4902){
+                await window.ethereum.request({
+                    method:'wallet_addEthereumChain',
+                    params:[{
+                        chainId:'0x89',
+                        chainName:'Polygon',
+                        nativeCurrency:{symbol:'MATIC',decimals:18},
+                        rpcUrls:['https://polygon-rpc.com'],
+                        blockExplorerUrls:['https://polygonscan.com']
+                    }]
+                });
+            }
+        }
+
+        try{
+            const accounts = await window.ethereum.request({method:'eth_requestAccounts'});
+            const addr = accounts[0];
+            const short = addr.slice(0,6)+'...'+addr.slice(-4);
+            statusEl.innerHTML = 'Connected: '+short;
+            statusEl.style.color = '#4ade80';
+            connectBtns.forEach(b=>{
+                if(!b) return;
+                b.textContent = 'Wallet Connected';
+                b.disabled = true;
+                b.style.background = 'linear-gradient(135deg,#22c55e,#16a34a)';
+            });
+            buyWithBtn.style.display = 'inline-flex';
+        }catch(err){
+            statusEl.innerHTML = 'Connection rejected.';
+            statusEl.style.color = '#f97316';
+        }
+    }
+
+    connectBtns.forEach(b=>b && b.addEventListener('click',connect));
+
+    // Auto-display if already connected
+    if(window.ethereum && window.ethereum.selectedAddress){
+        const addr = window.ethereum.selectedAddress;
+        const short = addr.slice(0,6)+'...'+addr.slice(-4);
+        statusEl.innerHTML = 'Connected: '+short;
+        statusEl.style.color = '#4ade80';
+        connectBtns.forEach(b=>{
+            if(!b) return;
+            b.textContent = 'Wallet Connected';
+            b.disabled = true;
+            b.style.background = 'linear-gradient(135deg,#22c55e,#16a34a)';
+        });
+        buyWithBtn.style.display = 'inline-flex';
+    }
+
+    buyWithBtn.onclick = (e)=>{
+        e.preventDefault();
+        window.open('https://quickswap.exchange/#/swap?outputCurrency=0x0bacbf5c435c3b0546f7cdf66f960770c7ad912c','_blank');
+    };
+
+    // APR calculator
+    function calculateAPR(){
+        const totalReward = Number(document.getElementById('totalReward').value||0);
+        const durationDays = Number(document.getElementById('durationDays').value||0);
+        const totalStaked = Number(document.getElementById('totalStaked').value||0);
+        const userStake = Number(document.getElementById('userStake').value||0);
+
+        const aprResult = document.getElementById('aprResult');
+        const userRewardResult = document.getElementById('userRewardResult');
+
+        if(!totalReward || !durationDays || !totalStaked || !userStake){
+            aprResult.innerHTML = 'Please fill all fields with valid numbers.';
+            userRewardResult.innerHTML = '';
+            return;
+        }
+
+        const dailyPoolReward = totalReward / durationDays;
+        const yearlyPoolReward = dailyPoolReward * 365;
+        const apr = (yearlyPoolReward / totalStaked) * 100;
+
+        const userShare = userStake / totalStaked;
+        const userDailyReward = dailyPoolReward * userShare;
+        const userYearlyReward = userDailyReward * 365;
+
+        aprResult.innerHTML = `Estimated Pool APR: <span style="color:#facc15;">${apr.toFixed(2)}% / year</span>`;
+        userRewardResult.innerHTML =
+            `If you stake <strong>${userStake.toLocaleString()} MNODY</strong>, ` +
+            `you earn about <strong>${userDailyReward.toFixed(2).toLocaleString()} MNODY / day</strong> ` +
+            `(~<strong>${userYearlyReward.toFixed(2).toLocaleString()} MNODY / year</strong>) ` +
+            `if pool size and rewards remain the same.`;
+    }
+</script>
 </body>
 </html>
