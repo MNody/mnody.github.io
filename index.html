@@ -23,10 +23,9 @@
     .glow1{top:0;left:10%;background:radial-gradient(circle,var(--cyan),transparent);}
     .glow2{bottom:0;right:10%;background:radial-gradient(circle,var(--pink),transparent);}
 
-    header{padding:80px 20px 60px;text-align:center;max-width:1400px;margin:0 auto;}
+    header{padding:90px 20px 70px;text-align:center;max-width:1400px;margin:0 auto;}
     .logo-img{width:420px;max-width:92vw;margin:20px auto;border-radius:50%;box-shadow:0 0 100px rgba(255,107,157,0.7);border:8px solid rgba(255,255,255,0.15);}
-    .hero-title{font-size:6rem;font-weight:900;background:linear-gradient(120deg,#ff6b9d,#feca57,#00d9f5);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin:10px 0;}
-    .hero-subtitle{font-size:2.2rem;color:var(--gray);margin:15px 0 25px;}
+    .hero-title{font-size:6rem;font-weight:900;background:linear-gradient(120deg,#ff6b9d,#feca57,#00d9f5);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
     .pills{display:flex;justify-content:center;flex-wrap:wrap;gap:18px;margin:35px 0;}
     .pill{padding:14px 32px;background:rgba(15,23,42,.9);border:1px solid rgba(148,163,253,.5);border-radius:50px;font-weight:600;}
     .live-badge{display:inline-flex;align-items:center;gap:14px;background:linear-gradient(135deg,var(--pink),var(--orange));padding:18px 36px;border-radius:50px;font-weight:700;box-shadow:0 0 60px rgba(255,107,157,.9);margin:30px 0;}
@@ -40,7 +39,7 @@
     .btn:hover{transform:translateY(-6px);box-shadow:0 30px 60px rgba(0,0,0,.7);}
 
     nav{position:sticky;top:0;z-index:100;background:rgba(5,8,22,.95);backdrop-filter:blur(20px);border-bottom:1px solid rgba(148,163,253,.3);}
-    nav ul{display:flex;justify-content:center;gap:45px;padding:22px;flex-wrap:wrap;}
+    nav ul{display:flex;justify-content:center;gap:50px;padding:22px;flex-wrap:wrap;}
     nav a{color:var(--gray);text-decoration:none;padding:14px 30px;border-radius:50px;font-weight:600;transition:.3s;}
     nav a:hover{background:rgba(148,163,253,.2);color:#fff;}
 
@@ -53,14 +52,13 @@
     .calc-card{background:rgba(20,30,55,.95);border:1px solid rgba(100,150,255,.6);border-radius:24px;padding:35px;text-align:center;}
     .calc-input{width:100%;padding:16px;margin:12px 0;border-radius:14px;background:#0f172a;color:#fff;border:2px solid #4ade80;font-size:1.1rem;}
     .calc-output{font-size:1.6rem;font-weight:700;margin:20px 0;}
-    .info-box{background:rgba(15,23,42,.9);padding:35px;border-radius:20px;text-align:center;line-height:2.2;font-size:1.15rem;color:#e5e7eb;}
 
     .disclaimer{background:rgba(255,107,157,.1);border:1px solid rgba(255,107,157,.3);padding:30px;border-radius:20px;margin:60px 0;text-align:center;font-size:1.1rem;color:#ff6b9d;}
 
-    footer{text-align:center;padding:100px 20px;background:rgba(5,8,22,.9);}
+    footer{text-align:center;padding:120px 20px;background:rgba(5,8,22,.9);}
     footer h1{font-size:5rem;background:linear-gradient(120deg,var(--pink),var(--yellow));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:20px;}
-    .social-links a{font-size:1.6rem;margin:0 20px;color:var(--cyan);transition:.3s;}
-    .social-links a:hover{color:var(--pink);transform:scale(1.2);}
+    .social a{color:var(--cyan);font-size:1.8rem;margin:0 25px;text-decoration:none;}
+    .social a:hover{color:#fff;}
   </style>
 </head>
 <body>
@@ -72,7 +70,6 @@
   <header>
     <img src="https://raw.githubusercontent.com/MNody/mynody-assets/main/logo.png" alt="My Nody Cat" class="logo-img">
     <h1 class="hero-title">My Nody Cat</h1>
-    <p class="hero-subtitle">The Cat That Farms The Chain</p>
     <p style="font-size:1.5rem;color:var(--gray);max-width:900px;margin:0 auto 30px;">
       2.5B burned • 5.5B vested • 500M staking rewards • 100M airdrop live
     </p>
@@ -97,9 +94,9 @@
   <nav>
     <ul>
       <li><a href="#tokenomics">Tokenomics</a></li>
+      <li><a href="#airdrop">Airdrop</a></li>
       <li><a href="#staking">Staking</a></li>
       <li><a href="#chart">Chart</a></li>
-      <li><a href="https://quickswap.exchange/#/swap?outputCurrency=0x0bacbf5c435c3b0546f7cdf66f960770c7ad912c" target="_blank">Buy</a></li>
     </ul>
   </nav>
 
@@ -107,9 +104,9 @@
 
     <section id="tokenomics" class="card">
       <h2 class="section-title">Tokenomics</h2>
-      <div class="info-box">
+      <div style="text-align:center;color:#e5e7eb;font-size:1.2rem;line-height:2;">
         <p><strong>Contract:</strong> <code>0x0bacbf5c435c3b0546f7cdf66f960770c7ad912c</code></p>
-        <p>Total Supply: 10B • Tax: 0/0 • LP: Locked • Ownership Renounced</p>
+        <p>Total Supply: 10B • Tax: 0/0 • Liquidty Locked • Ownership Renounced</p>
         <p style="margin-top:20px;">
           <a href="https://polygonscan.com/token/0x0bacbf5c435c3b0546f7cdf66f960770c7ad912c" target="_blank" style="color:var(--cyan);">PolygonScan</a> • 
           <a href="https://dexscreener.com/polygon/0x3cec491a74c924aaeb74dde821653aafec7b94b9" target="_blank" style="color:var(--pink);">DexScreener</a>
@@ -117,18 +114,25 @@
       </div>
     </section>
 
+    <section id="airdrop" class="card">
+      <h2 class="section-title">100M MNODY Airdrop • LIVE</h2>
+      <div style="text-align:center;padding:20px;">
+        <h3 style="font-size:2rem;color:#feca57;margin:20px 0;">Claim 5,000 MNODY Free!</h3>
+        <button class="btn btn-primary" id="connectAirdrop">Connect Wallet</button>
+        <div style="margin:20px;"><label><input type="checkbox" id="tgCheck"> Joined <a href="https://t.me/Mynody" target="_blank" style="color:#00d9f5;">Telegram</a></label></div>
+        <button class="btn btn-pink" id="claimBtn" disabled style="padding:20px 50px;font-size:1.3rem;">Claim Now</button>
+        <div id="airdropStatus" style="margin-top:20px;font-size:1.4rem;font-weight:700;"></div>
+      </div>
+    </section>
+
     <section id="staking" class="card">
       <h2 class="section-title">Staking • Up to 3,650% APY</h2>
-      <div class="info-box">
-        <p>500M MNODY rewards • Powered by Team Finance<br>
-        Pool 1: 1,227% APY → Ends <strong>30 July 2026</strong><br>
-        Pool 2: 3,650% APY → Ends <strong>30 April 2026</strong></p>
-        <a href="https://www.team.finance/view-coin/0x0bacbf5c435c3b0546f7cdf66f960770c7ad912c?name=MyNody&symbol=MNODY&chainid=137&tab=staking" target="_blank" class="btn btn-primary">Open Staking Now</a>
+      <div style="text-align:center;margin-bottom:30px;">
+        <a href="https://www.team.finance/view-coin/0x0bacbf5c435c3b0546f7cdf66f960770c7ad912c?name=MyNody&symbol=MNODY&chainid=137&tab=staking" target="_blank" class="btn btn-primary">Open Staking → Team Finance</a>
       </div>
-
       <div class="grid">
         <div class="calc-card">
-          <h3 style="color:#fff;margin-bottom:20px;font-size:1.6rem;">Calculator</h3>
+          <h3 style="color:#fff;margin-bottom:20px;">Calculator</h3>
           <input type="number" id="stakeAmount" class="calc-input" placeholder="Enter amount" value="10000">
           <select id="apySelect" class="calc-input">
             <option value="1227">Pool 1 → 1,227% APY</option>
@@ -138,9 +142,8 @@
           <div id="dailyReward" class="calc-output" style="color:#00f5a0;"></div>
           <div id="yearlyReward" class="calc-output" style="color:#ff6b9d;"></div>
         </div>
-
         <div class="calc-card">
-          <h3 style="color:#fff;margin-bottom:20px;font-size:1.6rem;">Pool Details</h3>
+          <h3 style="color:#fff;margin-bottom:20px;">Pool Details</h3>
           <div style="text-align:left;color:#e5e7eb;line-height:2.3;">
             <p><strong style="color:#feca57;">Pool 1</strong><br>200M rewards<br>Ends: <strong>30 July 2026</strong><br>APY: 1,227%</p>
             <hr style="border:0;border-top:1px solid rgba(255,255,255,.1);margin:20px 0;">
@@ -152,7 +155,7 @@
 
     <section id="chart" class="card">
       <h2 class="section-title">Live Chart</h2>
-      <iframe src="https://dexscreener.com/polygon/0x3cec491a74c924aaeb74dde821653aafec7b94b9?embed=1&theme=dark&trades=0&info=0&volume=0" 
+      <iframe src="https://dexscreener.com/polygon/0x3cec491a74c924aaeb74dde821653aafec7b94b9?embed=1&theme=dark&trades=0&info=0" 
               style="width:100%;height:720px;border:none;border-radius:28px;" loading="lazy"></iframe>
     </section>
 
@@ -165,56 +168,53 @@
 
   <footer>
     <h1>My Nody Cat • Moon Soon</h1>
-    <p>Contact Us:</p>
-    <div class="social-links">
+    <div class="social">
       <a href="https://t.me/Mynody" target="_blank">Telegram</a>
     </div>
-    <p style="margin-top:30px;font-size:0.9rem;color:#777;">© 2025 My Nody Cat • Pure meme energy</p>
+    <p style="margin-top:30px;color:#777;">© 2025 My Nody Cat • Pure meme energy</p>
   </footer>
 
-  <!-- Ethers.js -->
-  <script src="https://cdn.ethers.io/lib/ethers-5.7.umd.min.js" type="text/javascript"></script>
+  <script src="https://cdn.ethers.io/lib/ethers-5.7.umd.min.js"></script>
   <script>
     let account = null;
+    let claimed = localStorage.getItem("mnodyClaimed") === "true";
 
-    async function connectWallet() {
-      if (!window.ethereum) {
-        alert("MetaMask not detected! Install it first.");
-        return;
-      }
-
+    async function connect() {
+      if (!window.ethereum) return alert("Install MetaMask!");
       try {
-        await window.ethereum.request({
-          method: 'wallet_switchEthereumChain',
-          params: [{ chainId: '0x89' }],
-        });
-      } catch (error) {
-        if (error.code === 4902) {
-          await window.ethereum.request({
-            method: 'wallet_addEthereumChain',
-            params: [{
-              chainId: '0x89',
-              chainName: 'Polygon Mainnet',
-              nativeCurrency: { name: 'MATIC', symbol: 'MATIC', decimals: 18 },
-              rpcUrls: ['https://polygon-rpc.com'],
-              blockExplorerUrls: ['https://polygonscan.com']
-            }],
-          });
-        }
+        await window.ethereum.request({ method: 'wallet_switchEthereumChain', params: [{ chainId: '0x89' }] });
+      } catch (e) {
+        if (e.code === 4902) await window.ethereum.request({ method: 'wallet_addEthereumChain', params: [{ chainId: '0x89', chainName: 'Polygon', rpcUrls: ['https://polygon-rpc.com'], nativeCurrency: { symbol: 'MATIC', decimals: 18 }, blockExplorerUrls: ['https://polygonscan.com'] }] });
       }
+      const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+      account = accounts[0];
+      const short = account.slice(0,6)+"..."+account.slice(-4);
+      document.getElementById("walletStatus").innerHTML = "Connected: " + short;
+      ["connectWallet","connectAirdrop"].forEach(id => document.getElementById(id).innerHTML = "Connected");
+      checkClaim();
+    }
 
-      try {
-        const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
-        account = accounts[0];
-        const short = account.slice(0,6) + "..." + account.slice(-4);
-        document.getElementById("walletStatus").innerHTML = `Connected: ${short}`;
-        document.getElementById("connectWallet").innerHTML = "Connected";
-        document.getElementById("connectWallet").style.background = "#059669";
-      } catch (err) {
-        document.getElementById("walletStatus").innerHTML = "Failed to connect";
-        document.getElementById("walletStatus").style.color = "#ef4444";
+    function checkClaim() {
+      if (claimed) {
+        document.getElementById("airdropStatus").innerHTML = "Already claimed!";
+        document.getElementById("airdropStatus").style.color = "#f97316";
+        document.getElementById("claimBtn").disabled = true;
+      } else if (account && document.getElementById("tgCheck").checked) {
+        document.getElementById("claimBtn").disabled = false;
       }
     }
+
+    document.getElementById("connectWallet").onclick = connect;
+    document.getElementById("connectAirdrop").onclick = connect;
+    document.getElementById("tgCheck").onchange = checkClaim;
+
+    document.getElementById("claimBtn").onclick = () => {
+      document.getElementById("airdropStatus").innerHTML = "CLAIMED 5,000 MNODY! Cat";
+      document.getElementById("airdropStatus").style.color = "#00f5a0";
+      document.getElementById("claimBtn").disabled = true;
+      localStorage.setItem("mnodyClaimed", "true");
+      claimed = true;
+    };
 
     function calculateRewards() {
       const amount = parseFloat(document.getElementById("stakeAmount").value) || 0;
@@ -225,8 +225,6 @@
       document.getElementById("dailyReward").innerHTML = `Daily: <strong>${daily.toFixed(2)}</strong> MNODY`;
       document.getElementById("yearlyReward").innerHTML = `Yearly: <strong>${yearly.toLocaleString()}</strong> MNODY`;
     }
-
-    document.getElementById("connectWallet").addEventListener("click", connectWallet);
   </script>
 </body>
 </html>
