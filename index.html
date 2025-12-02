@@ -17,7 +17,7 @@
   <style>
     :root{--pink:#ff6b9d;--yellow:#feca57;--cyan:#00d9f5;--green:#00f5a0;--orange:#ff9a56;--dark:#050816;--light:#fff;--gray:#e5e7eb;}
     *{margin:0;padding:0;box-sizing:border-box;}
-    body{font-family:'Poppins',sans-serif;background:#050816;color:var(--light);line-height:1.6;overflow-x:hidden;}
+    body{font-family:'Poppins',sans-serif;background:#050816;color:var(--light);overflow-x:hidden;}
     .bg-grid{position:fixed;inset:0;background:url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2280%22 height=%2280%22><rect width=%2280%22 height=%2280%22 fill=%22%23050816%22/><path d=%22M0,40 H80 V0%22 fill=%22none%22 stroke=%22%23ffffff0d%22 stroke-width=%221%22/></svg>') repeat;z-index:-1;}
     .glow{position:fixed;width:700px;height:700px;border-radius:50%;filter:blur(150px);opacity:0.3;z-index:-1;}
     .glow1{top:0;left:10%;background:radial-gradient(circle,var(--cyan),transparent);}
@@ -37,6 +37,7 @@
     .btn-pink{background:linear-gradient(135deg,var(--pink),var(--orange));}
     .btn-outline{background:transparent;border:2px solid var(--cyan);color:var(--cyan);}
     .btn:hover{transform:translateY(-6px);box-shadow:0 30px 60px rgba(0,0,0,.7);}
+    .btn:disabled{opacity:0.6;cursor:not-allowed;}
 
     nav{position:sticky;top:0;z-index:100;background:rgba(5,8,22,.95);backdrop-filter:blur(20px);border-bottom:1px solid rgba(148,163,253,.3);}
     nav ul{display:flex;justify-content:center;gap:50px;padding:22px;flex-wrap:wrap;}
@@ -57,7 +58,7 @@
 
     footer{text-align:center;padding:120px 20px;background:rgba(5,8,22,.9);}
     footer h1{font-size:5rem;background:linear-gradient(120deg,var(--pink),var(--yellow));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:20px;}
-    .social a{color:var(--cyan);font-size:1.8rem;margin:0 25px;text-decoration:none;}
+    .social a{color:#00d9f5;font-size:2rem;margin:0 30px;text-decoration:none;}
     .social a:hover{color:#fff;}
   </style>
 </head>
@@ -73,14 +74,12 @@
     <p style="font-size:1.5rem;color:var(--gray);max-width:900px;margin:0 auto 30px;">
       2.5B burned • 5.5B vested • 500M staking rewards • 100M airdrop live
     </p>
-
     <div class="pills">
       <div class="pill">2.5B Burned</div>
       <div class="pill">500M Rewards</div>
       <div class="pill">100M Airdrop</div>
       <div class="pill">Team Finance</div>
     </div>
-
     <div class="live-badge"><div class="dot"></div> LIVE • Yield Season ON</div>
 
     <div style="margin:40px 0;">
@@ -106,7 +105,7 @@
       <h2 class="section-title">Tokenomics</h2>
       <div style="text-align:center;color:#e5e7eb;font-size:1.2rem;line-height:2;">
         <p><strong>Contract:</strong> <code>0x0bacbf5c435c3b0546f7cdf66f960770c7ad912c</code></p>
-        <p>Total Supply: 10B • Tax: 0/0 • Liquidty Locked • Ownership Renounced</p>
+        <p>Total Supply: 10B MNODY • Tax: 0/0 • Liquidty Locked • Ownership Renounced</p>
         <p style="margin-top:20px;">
           <a href="https://polygonscan.com/token/0x0bacbf5c435c3b0546f7cdf66f960770c7ad912c" target="_blank" style="color:var(--cyan);">PolygonScan</a> • 
           <a href="https://dexscreener.com/polygon/0x3cec491a74c924aaeb74dde821653aafec7b94b9" target="_blank" style="color:var(--pink);">DexScreener</a>
@@ -116,18 +115,23 @@
 
     <section id="airdrop" class="card">
       <h2 class="section-title">100M MNODY Airdrop • LIVE</h2>
-      <div style="text-align:center;padding:20px;">
-        <h3 style="font-size:2rem;color:#feca57;margin:20px 0;">Claim 5,000 MNODY Free!</h3>
+      <div style="text-align:center;padding:30px;">
+        <h3 style="font-size:2.2rem;color:#feca57;margin:20px 0;">Claim 5,000 MNODY Free</h3>
+        <p style="font-size:1.2rem;">One claim per wallet • Must join Telegram</p>
         <button class="btn btn-primary" id="connectAirdrop">Connect Wallet</button>
-        <div style="margin:20px;"><label><input type="checkbox" id="tgCheck"> Joined <a href="https://t.me/Mynody" target="_blank" style="color:#00d9f5;">Telegram</a></label></div>
-        <button class="btn btn-pink" id="claimBtn" disabled style="padding:20px 50px;font-size:1.3rem;">Claim Now</button>
-        <div id="airdropStatus" style="margin-top:20px;font-size:1.4rem;font-weight:700;"></div>
+        <div style="margin:25px 0;">
+          <label style="font-size:1.2rem;color:#fff;">
+            <input type="checkbox" id="tgCheck"> Joined <a href="https://t.me/Mynody" target="_blank" style="color:#00d9f5;">Telegram</a>
+          </label>
+        </div>
+        <button class="btn btn-pink" id="claimBtn" disabled style="padding:22px 60px;font-size:1.4rem;">Claim 5,000 MNODY</button>
+        <div id="airdropStatus" style="margin-top:25px;font-size:1.4rem;font-weight:700;min-height:50px;"></div>
       </div>
     </section>
 
     <section id="staking" class="card">
       <h2 class="section-title">Staking • Up to 3,650% APY</h2>
-      <div style="text-align:center;margin-bottom:30px;">
+      <div style="text-align:center;margin-bottom:40px;">
         <a href="https://www.team.finance/view-coin/0x0bacbf5c435c3b0546f7cdf66f960770c7ad912c?name=MyNody&symbol=MNODY&chainid=137&tab=staking" target="_blank" class="btn btn-primary">Open Staking → Team Finance</a>
       </div>
       <div class="grid">
@@ -171,15 +175,16 @@
     <div class="social">
       <a href="https://t.me/Mynody" target="_blank">Telegram</a>
     </div>
-    <p style="margin-top:30px;color:#777;">© 2025 My Nody Cat • Pure meme energy</p>
+    <p style="margin-top:30px;color:#777;">© 2025 My Nody Cat • Pure Meme Energy</p>
   </footer>
 
   <script src="https://cdn.ethers.io/lib/ethers-5.7.umd.min.js"></script>
   <script>
-    let account = null;
-    let claimed = localStorage.getItem("mnodyClaimed") === "true";
+    const AIRDROP_CONTRACT = "0xF5B3F45d72143E64D9793215093fFDaa2e3A41f5";
+    const ABI = ["function claim()", "function hasClaimed(address) view returns (bool)"];
+    let provider, signer, contract, account;
 
-    async function connect() {
+    async function connectWallet() {
       if (!window.ethereum) return alert("Install MetaMask!");
       try {
         await window.ethereum.request({ method: 'wallet_switchEthereumChain', params: [{ chainId: '0x89' }] });
@@ -188,32 +193,49 @@
       }
       const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
       account = accounts[0];
-      const short = account.slice(0,6)+"..."+account.slice(-4);
+      provider = new ethers.providers.Web3Provider(window.ethereum);
+      signer = provider.getSigner();
+      contract = new ethers.Contract(AIRDROP_CONTRACT, ABI, signer);
+
+      const short = account.slice(0,6) + "..." + account.slice(-4);
       document.getElementById("walletStatus").innerHTML = "Connected: " + short;
-      ["connectWallet","connectAirdrop"].forEach(id => document.getElementById(id).innerHTML = "Connected");
-      checkClaim();
+      ["connectWallet", "connectAirdrop"].forEach(id => document.getElementById(id).innerHTML = "Connected");
+
+      checkClaimed();
     }
 
-    function checkClaim() {
-      if (claimed) {
-        document.getElementById("airdropStatus").innerHTML = "Already claimed!";
-        document.getElementById("airdropStatus").style.color = "#f97316";
-        document.getElementById("claimBtn").disabled = true;
-      } else if (account && document.getElementById("tgCheck").checked) {
+    async function checkClaimed() {
+      try {
+        const claimed = await contract.hasClaimed(account);
+        if (claimed) {
+          document.getElementById("airdropStatus").innerHTML = "Already claimed 5,000 MNODY!";
+          document.getElementById("airdropStatus").style.color = "#f97316";
+          document.getElementById("claimBtn").disabled = true;
+        }
+      } catch (e) {}
+      if (account && document.getElementById("tgCheck").checked && !document.getElementById("claimBtn").disabled) {
         document.getElementById("claimBtn").disabled = false;
       }
     }
 
-    document.getElementById("connectWallet").onclick = connect;
-    document.getElementById("connectAirdrop").onclick = connect;
-    document.getElementById("tgCheck").onchange = checkClaim;
+    document.getElementById("connectWallet").onclick = connectWallet;
+    document.getElementById("connectAirdrop").onclick = connectWallet;
+    document.getElementById("tgCheck").onchange = () => { if (account) document.getElementById("claimBtn").disabled = false; };
 
-    document.getElementById("claimBtn").onclick = () => {
-      document.getElementById("airdropStatus").innerHTML = "CLAIMED 5,000 MNODY! Cat";
-      document.getElementById("airdropStatus").style.color = "#00f5a0";
+    document.getElementById("claimBtn").onclick = async () => {
+      document.getElementById("airdropStatus").innerHTML = "Sending transaction...";
       document.getElementById("claimBtn").disabled = true;
-      localStorage.setItem("mnodyClaimed", "true");
-      claimed = true;
+      try {
+        const tx = await contract.claim({ gasLimit: 200000 });
+        document.getElementById("airdropStatus").innerHTML = "Confirming on chain...";
+        await tx.wait();
+        document.getElementById("airdropStatus").innerHTML = "CLAIMED 5,000 MNODY!";
+        document.getElementById("airdropStatus").style.color = "#00f5a0";
+      } catch (err) {
+        document.getElementById("airdropStatus").innerHTML = err.message.includes("already claimed") ? "Already claimed!" : "Claim failed!";
+        document.getElementById("airdropStatus").style.color = "#ef4444";
+        document.getElementById("claimBtn").disabled = false;
+      }
     };
 
     function calculateRewards() {
@@ -226,6 +248,8 @@
       document.getElementById("yearlyReward").innerHTML = `Yearly: <strong>${yearly.toLocaleString()}</strong> MNODY`;
     }
   </script>
+</body>
+</html>
 </body>
 </html>
   </script>
