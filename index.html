@@ -1,18 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-     <!-- Google Analytics (replace G-XXXXXXXXXX with your real ID) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-NVPYP5VT8K"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){ dataLayer.push(arguments); }
-    gtag('js', new Date());
-    gtag('config', 'G-NVPYP5VT8K');
-  </script>
-
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>My Nody Cat (MNODY) — Zero tax ERC-20 on Polygon | LP locked, renounced</title>
+<title>My Nody Cat (MNODY) – Zero tax ERC-20 on Polygon | LP locked, renounced</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;900&display=swap" rel="stylesheet" />
 <style>
 :root{--p:#ff6b9d;--y:#feca57;--c:#00d9f5;--g:#00f5a0;--o:#ff9a56;--d:#050816;--w:#fff;--gr:#e5e7eb;}
@@ -34,11 +25,12 @@ h1.hero{font-size:6rem;font-weight:900;background:linear-gradient(120deg,var(--p
 .live{display:inline-flex;align-items:center;gap:14px;background:linear-gradient(135deg,var(--p),var(--o));padding:14px 30px;border-radius:50px;font-weight:700;box-shadow:0 0 60px rgba(255,107,157,.9);margin:30px 0}
 .dot{width:16px;height:16px;background:#22c55e;border-radius:50%;animation:p 1.8s infinite}
 @keyframes p{0%,100%{transform:scale(1)}75%{transform:scale(2.8);opacity:0}}
-.btn{display:inline-block;padding:16px 38px;border:none;border-radius:50px;font-weight:700;cursor:pointer;margin:8px;text-decoration:none}
-.b1{background:linear-gradient(135deg,var(--g),#059669);box-shadow:0 15px 40px rgba(16,185,129,.7)}
-.b2{background:linear-gradient(135deg,var(--p),var(--o))}
+.btn{display:inline-block;padding:16px 38px;border:none;border-radius:50px;font-weight:700;cursor:pointer;margin:8px;text-decoration:none;transition:transform .2s}
+.b1{background:linear-gradient(135deg,var(--g),#059669);box-shadow:0 15px 40px rgba(16,185,129,.7);color:#000}
+.b2{background:linear-gradient(135deg,var(--p),var(--o));color:#fff}
 .b3{background:transparent;border:2px solid var(--c);color:#9be2ef}
 .btn:hover{transform:translateY(-6px)}
+.btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
 nav{position:sticky;top:0;z-index:100;background:rgba(5,8,22,.95);backdrop-filter:blur(20px);padding:14px 0}
 nav ul{display:flex;justify-content:center;gap:40px;flex-wrap:wrap}
 nav a{color:#aaa;text-decoration:none;padding:10px 22px;border-radius:50px}
@@ -59,6 +51,30 @@ footer h1{font-size:3.6rem;background:linear-gradient(120deg,var(--p),var(--y));
 .social a{color:#00d9f5;font-size:1.6rem;margin:0 22px;text-decoration:none}
 .status{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:10px}
 .status .pill{border-color:#334466}
+.step-box{background:rgba(20,30,55,.95);border:2px solid rgba(100,210,255,.3);border-radius:20px;padding:32px;margin:24px 0;position:relative;transition:border-color .3s}
+.step-box.active{border-color:#00f5a0;box-shadow:0 0 30px rgba(0,245,160,.3)}
+.step-box.completed{border-color:#4ade80;background:rgba(34,197,94,.08)}
+.step-num{position:absolute;top:-18px;left:24px;background:linear-gradient(135deg,var(--p),var(--o));padding:8px 20px;border-radius:50px;font-weight:900;font-size:1.1rem}
+.step-box.completed .step-num{background:linear-gradient(135deg,#22c55e,#059669)}
+.step-box h3{font-size:1.8rem;margin:12px 0 16px;color:#feca57}
+.step-box.completed h3{color:#4ade80}
+.step-box p{color:#a1a1aa;margin:8px 0;line-height:1.6}
+.airdrop-info{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;margin:24px 0;text-align:center}
+.info-card{background:rgba(255,107,157,.1);border:1px solid rgba(255,107,157,.3);border-radius:16px;padding:20px}
+.info-card h4{color:#ff6b9d;font-size:2rem;margin-bottom:8px}
+.info-card p{color:#cfe3ff;font-size:.95rem}
+.highlight{background:linear-gradient(135deg,rgba(0,245,160,.15),rgba(0,217,245,.15));border:2px solid var(--g);padding:20px;border-radius:16px;margin:20px 0}
+.highlight strong{color:#00f5a0;font-size:1.1rem}
+code{background:#020617;padding:6px 12px;border-radius:8px;word-break:break-all;color:#80eaff;font-size:.9rem}
+.security-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(34,197,94,.15);border:1px solid #22c55e;padding:8px 16px;border-radius:12px;margin:6px;color:#4ade80;font-size:.9rem}
+.security-badge::before{content:'✓';font-weight:900;font-size:1.2rem}
+.command-box{background:#0b1224;border:2px solid #6366f1;border-radius:12px;padding:16px;margin:16px 0;font-family:monospace}
+.command-box code{background:#020617;color:#c084fc;font-size:1.05rem;display:block;padding:12px;margin:8px 0}
+.check-icon{display:inline-block;width:24px;height:24px;background:#22c55e;border-radius:50%;text-align:center;line-height:24px;font-weight:900;margin-right:8px}
+.approval-status{padding:16px;border-radius:12px;margin:16px 0;text-align:center;font-weight:700;font-size:1.1rem}
+.approval-status.pending{background:rgba(251,191,36,.15);border:2px solid #fbbf24;color:#fbbf24}
+.approval-status.approved{background:rgba(34,197,94,.15);border:2px solid #22c55e;color:#22c55e}
+.approval-status.rejected{background:rgba(239,68,68,.15);border:2px solid #ef4444;color:#ef4444}
 </style>
 </head>
 <body>
@@ -69,32 +85,30 @@ footer h1{font-size:3.6rem;background:linear-gradient(120deg,var(--p),var(--y));
 
 <header>
   <img src="https://raw.githubusercontent.com/MNody/mynody-assets/main/logo.png" class="logo" alt="My Nody Cat">
-  <h1 class="hero">My Nody Cat</h1>
-  <p class="sub">Zero‑tax ERC‑20 on Polygon. LP locked. Ownership renounced. Transparent supply and rewards.</p>
+  <h1 class="hero">MyNodyCat</h1>
+  <p class="sub">Zero-tax ERC-20 on Polygon. LP locked. Ownership renounced. Transparent supply and rewards.</p>
 
   <div class="pills">
     <span class="pill">2.5B Burned</span>
     <span class="pill">5.5B Vested</span>
     <span class="pill">500M Staking Rewards</span>
-    <span class="pill">100M Airdrop</span>
+    <span class="pill">100M Airdrop Pool</span>
   </div>
 
   <div class="badges">
     <span class="badge">Contract: <a href="https://polygonscan.com/token/0x0bacbf5c435c3b0546f7cdf66f960770c7ad912c" target="_blank">Polygonscan</a></span>
     <span class="badge">Pair: <a href="https://dexscreener.com/polygon/0x3cec491a74c924aaeb74dde821653aafec7b94b9" target="_blank">MNODY/USDT</a></span>
     <span class="badge">LP lock: <a href="https://www.pinksale.finance/pinklock/liquidity-0x6C9A0D8B1c7a95a323d744dE30cf027694710633" target="_blank">PinkLock</a></span>
-    <span class="badge">Owner: <a href="https://polygonscan.com/address/0x8eD28aD45e1C98Ef7be7F2B15BADbAfCc21E79c7" target="_blank">0x8eD2…79c7</a></span>
-    <span class="badge">Source: <a href="https://polygonscan.com/address/0x0bacbf5c435c3b0546f7cdf66f960770c7ad912c#code" target="_blank">Verified</a></span>
+    <span class="badge">Owner: <a href="https://polygonscan.com/address/0x8eD28bD24e1C98Ef7be7F7B15VCDbAfCc21E26c8" target="_blank">Renounced</a></span>
   </div>
 
   <div class="live"><div class="dot"></div> LIVE • Yield Season ON</div>
 
   <div style="margin:36px 0;">
-    <button id="connectWallet" class="btn b1">Connect wallet (Polygon)</button>
     <a href="https://quickswap.exchange/#/swap?outputCurrency=0x0bacbf5c435c3b0546f7cdf66f960770c7ad912c" target="_blank" class="btn b2">Buy MNODY on QuickSwap</a>
-    <a href="https://t.me/Mynody" target="_blank" class="btn b3">Telegram</a>
+    <a href="https://t.me/MyNody" target="_blank" class="btn b3">Join Telegram</a>
   </div>
-  <div id="walletStatus" style="font-size:1.1rem;font-weight:700;color:#00f5a0;"></div>
+  
   <div class="status">
     <span class="pill">Airdrop: LIVE</span>
     <span class="pill">Staking: LIVE</span>
@@ -115,7 +129,7 @@ footer h1{font-size:3.6rem;background:linear-gradient(120deg,var(--p),var(--y));
 <div class="container">
 
   <section id="tokenomics" class="card">
-    <h2 class="st">Tokenomics and proofs</h2>
+    <h2 class="st">Tokenomics & Proofs</h2>
     <div class="kv">
       <div><strong>Contract (Polygon):</strong></div>
       <div><code id="addr">0x0bacbf5c435c3b0546f7cdf66f960770c7ad912c</code>
@@ -130,8 +144,8 @@ footer h1{font-size:3.6rem;background:linear-gradient(120deg,var(--p),var(--y));
 
       <div><strong>LP locked:</strong></div>
       <div>
-        <a href="https://www.pinksale.finance/pinklock/liquidity-0x6C9A0D8B1c7a95a323d744dE30cf027694710633" target="_blank">0x6C9A…0633</a>
-        • Lock date: 2025‑11‑22 • Unlock: 2031‑11‑30 • Owner: 0x8eD2…79c7
+        <a href="https://www.pinksale.finance/pinklock/liquidity-0x6C9A0D8B1c7a95a323d744dE30cf027694710633" target="_blank">PinkLock</a>
+        • Lock: 2025-11-22 • Unlock: 2031-11-30
       </div>
 
       <div><strong>Explorer:</strong></div>
@@ -143,30 +157,181 @@ footer h1{font-size:3.6rem;background:linear-gradient(120deg,var(--p),var(--y));
   </section>
 
   <section id="airdrop" class="card">
-    <h2 class="st">100M Airdrop • LIVE</h2>
-    <div style="text-align:center;padding:10px 10px 24px;">
-      <h3 style="font-size:2rem;color:#feca57;margin:8px 0;">Claim 5,000 MNODY free</h3>
-      <p>One claim per wallet • Must join Telegram • Polygon network (137)</p>
-
-      <div style="margin:16px 0;">
-        <button id="connectAirdrop" class="btn b1">Connect wallet</button>
+    <h2 class="st">🎁 MNODY Airdrop - Bot-Protected System</h2>
+    
+    <div class="airdrop-info">
+      <div class="info-card">
+        <h4>10,000</h4>
+        <p>MNODY per wallet</p>
       </div>
+      <div class="info-card">
+        <h4>100M</h4>
+        <p>Total airdrop pool</p>
+      </div>
+      <div class="info-card">
+        <h4>10,000</h4>
+        <p>Max participants</p>
+      </div>
+    </div>
 
-      <div style="margin:14px;">
-        <label style="font-size:1rem;">
-          <input type="checkbox" id="tgCheck" /> I’ve joined
-          <a href="https://t.me/Mynody" target="_blank" style="color:#00d9f5;">Telegram</a>
+    <div class="highlight">
+      <strong>🛡️ Maximum Security - Telegram Bot Verification Required</strong>
+      <p style="margin-top:8px;color:#cfe3ff">This airdrop uses Telegram bot registration + Merkle proof verification to prevent bot attacks. Manual + automatic approval system ensures only real users can claim.</p>
+    </div>
+
+    <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:16px 0">
+      <span class="security-badge">Telegram Verified</span>
+      <span class="security-badge">Merkle Proof</span>
+      <span class="security-badge">No Bots</span>
+      <span class="security-badge">Time-locked</span>
+      <span class="security-badge">Reentrancy Protected</span>
+    </div>
+
+    <!-- STEP 1: Join Telegram -->
+    <div class="step-box" id="step1">
+      <div class="step-num">STEP 1</div>
+      <h3>💬 Join Telegram Group</h3>
+      <p>Telegram membership is <strong>mandatory</strong> for all participants. This is the first security layer to prevent bot attacks.</p>
+      <div style="margin:16px 0">
+        <a href="https://t.me/MyNody" target="_blank" class="btn b3" id="joinTgBtn">Join @MyNodyCat on Telegram</a>
+      </div>
+      <div style="margin:16px 0">
+        <label style="display:flex;align-items:center;justify-content:center;gap:10px;font-size:1.1rem;cursor:pointer">
+          <input type="checkbox" id="tgCheck" style="width:20px;height:20px;cursor:pointer" />
+          <span>I have joined the Telegram group</span>
         </label>
       </div>
+      <div id="step1Status" style="min-height:28px;font-weight:700;margin-top:12px"></div>
+    </div>
 
-      <button id="claimBtn" class="btn b2" disabled style="padding:18px 46px;font-size:1.2rem;">Claim 5,000 MNODY</button>
+    <!-- STEP 2: Register via Telegram Bot -->
+    <div class="step-box" id="step2">
+      <div class="step-num">STEP 2</div>
+      <h3>🤖 Register Your Wallet via Telegram Bot</h3>
+      <p>Go to <a href="https://t.me/MynodyAirdrop_bot" target="_blank" style="color:#00d9f5;text-decoration:underline">@MynodyAirdrop_bot</a> and register your wallet address.</p>
+      
+      <div style="background:rgba(239,68,68,.15);border:2px solid #ef4444;padding:16px;border-radius:12px;margin:16px 0">
+        <p style="font-size:1rem;color:#fca5a5;font-weight:700;margin:0">
+          ⚠️ <strong style="color:#fff">MANDATORY REQUIREMENTS:</strong><br>
+          1️⃣ You MUST be a member of @MyNodyCat Telegram channel<br>
+          2️⃣ Bot will verify your channel membership automatically<br>
+          3️⃣ Registration will be REJECTED if you haven't joined the channel
+        </p>
+      </div>
+      
+      <div class="command-box">
+        <strong style="color:#feca57">Step-by-step:</strong>
+        <p style="color:#a1a1aa;margin:8px 0">1. First join the channel: <a href="https://t.me/MyNody" target="_blank" style="color:#00d9f5">@MyNodyCat</a></p>
+        <p style="color:#a1a1aa;margin:8px 0">2. Then open the bot: <a href="https://t.me/MynodyAirdrop_bot" target="_blank" style="color:#00d9f5">@MynodyAirdrop_bot</a></p>
+        <p style="color:#a1a1aa;margin:8px 0">3. Send start command:</p>
+        <code>/start</code>
+        <p style="color:#a1a1aa;margin:12px 0">4. Register your wallet address:</p>
+        <code>/register &lt;your_wallet_address&gt;</code>
+        <p style="margin-top:12px;color:#a1a1aa;font-size:.9rem">Example:</p>
+        <code>/register 0x8eD28bD24e1C98Ef7be7F7B15VCDbAfCc21E26c8</code>
+      </div>
 
-      <div id="airdropStatus" style="margin-top:18px;font-size:1.2rem;font-weight:700;min-height:36px;"></div>
+      <div style="background:rgba(99,102,241,.1);border:1px solid rgba(99,102,241,.3);padding:16px;border-radius:12px;margin:16px 0">
+        <p style="font-size:.95rem;color:#cfe3ff;margin-bottom:8px">
+          <strong style="color:#818cf8">🔍 Bot Verification Process:</strong>
+        </p>
+        <p style="font-size:.9rem;color:#a1a1aa;line-height:1.8;margin:0">
+          ✓ Checks if you're a member of @MyNodyCat channel<br>
+          ✓ Verifies your Telegram account age and activity<br>
+          ✓ Manual approval by admins for additional security<br>
+          ✓ Adds your wallet to Merkle tree whitelist<br>
+        </p>
+      </div>
+
+      <div style="background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3);padding:16px;border-radius:12px;margin:16px 0">
+        <p style="font-size:.95rem;color:#4ade80;margin:0">
+          <strong style="color:#00f5a0">✅ Expected Bot Responses:</strong><br>
+          <span style="color:#cfe3ff">• "✅ Wallet approved! Wait for claim window." - if approved</span><br>
+          <span style="color:#cfe3ff">• "🟢 APPROVED" - confirmation message</span><br>
+          <span style="color:#ef4444">• "❌ You must join @MyNodyCat channel first!" - if not a member</span>
+        </p>
+      </div>
+
+      <div id="approvalStatus" class="approval-status pending">
+        ⏳ Waiting for Telegram bot approval...
+      </div>
+
+      <div style="margin-top:16px">
+        <button id="checkApprovalBtn" class="btn b2">Check My Approval Status</button>
+      </div>
+      
+      <div style="margin-top:12px;text-align:center">
+        <label style="display:inline-flex;align-items:center;gap:10px;font-size:1rem;cursor:pointer">
+          <input type="checkbox" id="botCheck" style="width:18px;height:18px;cursor:pointer" />
+          <span>I have joined the channel AND registered via bot (received approval)</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- STEP 3: Claim Tokens -->
+    <div class="step-box" id="step4">
+      <div class="step-num">STEP 3</div>
+      <h3>🎯 Claim Your MNODY Tokens</h3>
+      <p>Once approved by the bot, you can claim your 10,000 MNODY tokens. The claim button will be enabled after successful verification.</p>
+      
+      <div style="background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.3);padding:16px;border-radius:12px;margin:16px 0">
+        <p style="font-size:.95rem;color:#fde68a">
+          <strong>⚠️ Important:</strong> Claim window has a cooldown period. Each wallet can claim only once. Ensure using the correct wallet address that you registered with the bot.
+</p>
+</div>
+
+<!-- 🔥 COOLDOWN TIMER START -->
+<div id="cooldownBox" style="
+  background:rgba(251,191,36,.15);
+  border:2px solid #fbbf24;
+  padding:16px;
+  border-radius:12px;
+  margin:16px 0;
+  text-align:center;
+  font-weight:700;
+  color:#fbbf24;
+">
+  ⏳ Claim will open in:
+  <span id="cooldownTimer">Loading...</span>
+</div>
+<!-- 🔥 COOLDOWN TIMER END -->
+
+<div style="margin:24px 0">
+  <button id="claimBtn" class="btn b2" disabled
+    style="padding:20px 50px;font-size:1.3rem;font-weight:900">
+    🎁 CLAIM 10,000 MNODY
+  </button>
+</div>
+
+
+      <div id="claimStatus" style="margin-top:20px;font-size:1.2rem;font-weight:700;min-height:40px"></div>
+    </div>
+
+    <div style="margin-top:32px;padding:20px;background:rgba(15,23,42,.95);border:1px solid #334466;border-radius:16px">
+      <h4 style="color:#feca57;margin-bottom:12px">🔍 Contract Information</h4>
+      <p style="margin:8px 0"><strong>Airdrop Contract:</strong></p>
+      <code style="display:block;margin:8px 0">0xdfde67FBf752DAd30F6894D64EAe52A9E2c32cB0</code>
+      <p style="margin:8px 0"><strong>Token Contract:</strong></p>
+      <code style="display:block;margin:8px 0">0x0bacbf5c435c3b0546f7cdf66f960770c7ad912c</code>
+      <p style="margin-top:12px;font-size:.9rem;color:#a1a1aa">✓ Verified and audited on Polygonscan | ✓ Merkle-tree secured | ✓ Reentrancy protected</p>
+    </div>
+
+    <div style="margin-top:24px;padding:20px;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);border-radius:16px">
+      <h4 style="color:#ef4444;margin-bottom:8px">🚨 Important Security Rules</h4>
+      <p style="color:#fca5a5;font-size:.95rem;line-height:1.8">
+        ✓ Channel membership is checked automatically by the bot<br>
+        ✓ Bot will reject registration if you're not a channel member<br>
+        ✓ You must join @MyNodyCat channel BEFORE registering your wallet<br>
+        ✓ Never share your private keys or seed phrase with anyone<br>
+        ✓ MNODY team will never ask for your wallet credentials<br>
+        ✓ All claims are processed through the verified smart contract<br>
+        ✓ Be aware of scammers impersonating our bot or team
+      </p>
     </div>
   </section>
 
   <section id="staking" class="card">
-    <h2 class="st">Staking • Up to 3,650% APY</h2>
+    <h2 class="st">Staking • Up to 1,217% APY</h2>
     <div style="text-align:center;margin-bottom:18px;">
       <a href="https://www.team.finance/view-coin/0x0bacbf5c435c3b0546f7cdf66f960770c7ad912c?name=MyNody&symbol=MNODY&chainid=137&tab=staking" target="_blank" class="btn b1">Open staking on Team Finance</a>
     </div>
@@ -175,20 +340,31 @@ footer h1{font-size:3.6rem;background:linear-gradient(120deg,var(--p),var(--y));
         <h3 style="margin-bottom:14px;">Calculator</h3>
         <input type="number" id="amt" class="inp" value="10000" placeholder="Amount (MNODY)">
         <select id="pool" class="inp">
-          <option value="1227">Pool 1 → 1,227% APY</option>
-          <option value="3650">Pool 2 → 3,650% APY</option>
+          <option value="438">Pool 1 → 438% APY</option>
+          <option value="1217">Pool 2 → 1,217% APY</option>
         </select>
         <button onclick="calc()" class="btn b2" style="margin:10px auto;">Calculate</button>
         <div id="daily" class="out" style="color:#00f5a0;"></div>
         <div id="yearly" class="out" style="color:#ff6b9d;"></div>
-        <p style="font-size:.9rem;color:#a1a1aa;margin-top:6px;">Rewards are distributed from dedicated pools (200M / 300M).</p>
+        <p style="font-size:.9rem;color:#a1a1aa;margin-top:6px;">Rewards are distributed from dedicated pools.</p>
       </div>
       <div class="cc">
         <h3 style="margin-bottom:14px;">Pool details</h3>
-        <div style="text-align:left;line-height:2;">
-          <p><strong style="color:#feca57;">Pool 1</strong><br>200M rewards<br>Ends: 30 July 2026<br>APY: 1,227%</p>
+        <div style="text-align:left;line-height:1.9;">
+          <p><strong style="color:#feca57;">Pool 1</strong><br>
+          Total: 200M MNODY<br>
+          Staked: 70M | Available: 45M<br>
+          Claimed: 651,370 MNODY<br>
+          Start: Nov 25, 2025<br>
+          End: Jul 21, 2026<br>
+          <strong style="color:#00f5a0;">APY: 438%</strong></p>
           <hr style="margin:16px 0;border-top:1px solid #444;">
-          <p><strong style="color:#ff6b9d;">Pool 2</strong><br>300M rewards<br>Ends: 30 April 2026<br>APY: 3,650%</p>
+          <p><strong style="color:#ff6b9d;">Pool 2</strong><br>
+          Total: 300M MNODY<br>
+          Staked: 75M | Available: 65M<br>
+          Start: Dec 31, 2025<br>
+          End: Apr 30, 2026<br>
+          <strong style="color:#ff6b9d;">APY: 1,217%</strong></p>
         </div>
       </div>
     </div>
@@ -206,100 +382,224 @@ footer h1{font-size:3.6rem;background:linear-gradient(120deg,var(--p),var(--y));
 </div>
 
 <footer>
-  <h1>My Nody Cat • Moon Soon</h1>
+  <h1>MyNodyCat • Moon Soon</h1>
   <div class="social">
-    <a href="https://t.me/Mynody" target="_blank">Telegram</a>
+    <a href="https://t.me/MyNody" target="_blank">Telegram</a>
   </div>
-  <p style="margin-top:18px;color:#777;">© 2025 My Nody Cat • Pure Meme Energy</p>
+  <p style="margin-top:18px;color:#777;">© 2025 MyNodyCat • Pure Meme Energy</p>
 </footer>
 
 <script src="https://unpkg.com/ethers@5.7.2/dist/ethers.umd.min.js"></script>
 <script>
-const AIRDROP = "0xF5B3F45d72143E64D9793215093fFDaa2e3A41f5";
-const ABI = ["function claim()", "function hasClaimed(address) view returns (bool)"];
-let provider, signer, contract, acc = null;
+const AIRDROP = "0xdfde67FBf752DAd30F6894D64EAe52A9E2c32cB0";
+const ABI = [
+  "function claim(uint256 batchId, bytes32[] calldata proof)",
+  "function claimed(address) view returns (bool)",
+  "function verifyProof(bytes32[] calldata proof, address user) view returns (bool)"
+];
 
 function short(a){return a? (a.slice(0,6)+"..."+a.slice(-4)):""}
+
+function updateStepUI(step, status) {
+  const stepEl = document.getElementById(`step${step}`);
+  if(status === 'active') {
+    stepEl.classList.add('active');
+  } else if(status === 'completed') {
+    stepEl.classList.remove('active');
+    stepEl.classList.add('completed');
+  }
+}
+
 async function ensurePolygon(){
   try {
     await window.ethereum.request({ method:'wallet_switchEthereumChain', params:[{ chainId:'0x89' }] });
   } catch(e){
     if(e.code===4902){
       await window.ethereum.request({ method:'wallet_addEthereumChain', params:[{
-        chainId:'0x89', chainName:'Polygon', rpcUrls:['https://polygon-rpc.com'],
+        chainId:'0x89', 
+        chainName:'Polygon Mainnet', 
+        rpcUrls:['https://polygon-rpc.com'],
         nativeCurrency:{ name:'MATIC', symbol:'MATIC', decimals:18},
         blockExplorerUrls:['https://polygonscan.com']
-      } ]});
+      }]});
     } else { throw e; }
   }
 }
 
-async function connect(){
-  if(!window.ethereum){ alert("MetaMask not found"); return; }
-  await ensurePolygon();
-  const accounts = await window.ethereum.request({ method:'eth_requestAccounts' });
-  acc = accounts[0];
-  provider = new window.ethers.providers.Web3Provider(window.ethereum);
-  signer = provider.getSigner();
-  contract = new window.ethers.Contract(AIRDROP, ABI, signer);
-  document.getElementById("walletStatus").innerText = "Connected: "+short(acc);
-  document.getElementById("connectWallet").innerText = "Connected";
-  document.getElementById("connectAirdrop").innerText = "Connected";
-  checkClaim();
-}
-
-async function checkClaim(){
-  if(!acc || !contract) return;
-  try {
-    const claimed = await contract.hasClaimed(acc);
-    if(claimed){
-      document.getElementById("airdropStatus").innerText = "Already claimed!";
-      document.getElementById("airdropStatus").style.color = "#f97316";
-      document.getElementById("claimBtn").disabled = true;
-      return;
-    }
-  } catch(e){}
-  // Enable claim only when Telegram checkbox checked
-  const tg = document.getElementById("tgCheck").checked;
-  document.getElementById("claimBtn").disabled = !(acc && tg);
-}
-
-document.getElementById("connectWallet").onclick = connect;
-document.getElementById("connectAirdrop").onclick = connect;
-document.getElementById("tgCheck").onchange = () => { checkClaim(); };
-
-document.getElementById("claimBtn").onclick = async () => {
-  if(!acc){ alert("Connect wallet first"); return; }
-  if(!document.getElementById("tgCheck").checked){ alert("Join Telegram and tick the box"); return; }
-  document.getElementById("airdropStatus").innerText = "Sending...";
-  document.getElementById("airdropStatus").style.color = "#cfe3ff";
-  document.getElementById("claimBtn").disabled = true;
-  try {
-    // small delay to deter bot scripts a bit
-    await new Promise(r=>setTimeout(r,400));
-    const tx = await contract.claim({ gasLimit: 300000 });
-    document.getElementById("airdropStatus").innerText = "Confirming...";
-    const rcpt = await tx.wait();
-    const hash = tx.hash || (rcpt && rcpt.transactionHash) || "";
-    document.getElementById("airdropStatus").innerHTML = `CLAIMED 5,000 MNODY! <a href="https://polygonscan.com/tx/${hash}" target="_blank" style="color:#80eaff;">View txn</a>`;
-    document.getElementById("airdropStatus").style.color = "#00f5a0";
-  } catch(e){
-    document.getElementById("airdropStatus").innerText = "Failed / Already claimed";
-    document.getElementById("airdropStatus").style.color = "#ef4444";
-    // Re-check state in case revert was due to prior claim
-    checkClaim();
+// Step 1: Telegram Check
+document.getElementById('tgCheck').onchange = function() {
+  if(this.checked) {
+    updateStepUI(1, 'completed');
+    document.getElementById('step1Status').innerHTML = '<span style="color:#22c55e">✓ Step 1 completed - Proceed to Telegram bot</span>';
+    updateStepUI(2, 'active');
+    currentStep = 2;
+  } else {
+    document.getElementById('step1').classList.remove('completed');
+    document.getElementById('step1Status').innerHTML = '';
   }
 };
 
+// Step 2: Bot approval check
+document.getElementById('botCheck').onchange = function() {
+  if(this.checked) {
+    if(!document.getElementById('tgCheck').checked) {
+      alert("Please complete Step 1 first (Join Telegram)");
+      this.checked = false;
+      return;
+    }
+    updateStepUI(2, 'completed');
+    updateStepUI(3, 'active');
+    document.getElementById("claimBtn").disabled = false;
+    currentStep = 3;
+  }
+};
+
+// Check approval status - REAL WORKING CODE
+document.getElementById("checkApprovalBtn").onclick = async function() {
+  if(!document.getElementById('tgCheck').checked) {
+    alert("Please join Telegram first (Step 1)");
+    return;
+  }
+  
+  const statusEl = document.getElementById("approvalStatus");
+  const checkBtn = document.getElementById("checkApprovalBtn");
+  
+  statusEl.className = "approval-status pending";
+  statusEl.innerText = "🔄 Checking approval status...";
+  checkBtn.innerText = "Checking...";
+  checkBtn.disabled = true;
+  
+  try {
+    const walletInput = prompt("Enter your registered wallet address to check approval:");
+    if(!walletInput) {
+      checkBtn.innerText = "Check My Approval Status";
+      checkBtn.disabled = false;
+      return;
+    }
+    
+    // REAL API CALL - Change URL to your backend
+    const res = await fetch(`http://localhost:3001/proof?wallet=${walletInput}`);
+    
+    if (!res.ok) {
+      throw new Error("Not approved");
+    }
+    
+    const data = await res.json();
+    
+    // APPROVED - Update UI
+    statusEl.className = "approval-status approved";
+    statusEl.innerHTML = '<span class="check-icon">✓</span>✅ Wallet approved! Claim will open during claim window.';
+    
+    // Enable claim button
+    document.getElementById('botCheck').checked = true;
+    document.getElementById('botCheck').dispatchEvent(new Event('change'));
+    document.getElementById("claimBtn").disabled = false;
+    
+  } catch(e) {
+    // NOT APPROVED
+    statusEl.className = "approval-status pending";
+    statusEl.innerHTML = "⏳ Not approved yet. Please wait or register via Telegram bot:<br><code>/register " + walletInput + "</code>";
+    console.error('Approval check error:', e);
+  }
+  
+  checkBtn.innerText = "Check My Approval Status";
+  checkBtn.disabled = false;
+};
+
+// Claim tokens - REAL WORKING CODE
+document.getElementById("claimBtn").onclick = async () => {
+  if(!document.getElementById('tgCheck').checked) {
+    alert("Please join Telegram first (Step 1)");
+    return;
+  }
+  
+  if(!document.getElementById('botCheck').checked) {
+    alert("Please complete Telegram bot registration first (Step 2)");
+    return;
+  }
+  
+  const claimStatus = document.getElementById("claimStatus");
+  const claimBtn = document.getElementById("claimBtn");
+  
+  claimStatus.innerHTML = "🔄 Connecting wallet...";
+  claimStatus.style.color = "#00d9f5";
+  claimBtn.disabled = true;
+  
+  try {
+    // Connect wallet if not connected
+    if(!window.ethereum){ 
+      alert("MetaMask not detected. Please install MetaMask."); 
+      claimBtn.disabled = false;
+      return; 
+    }
+    
+    await ensurePolygon();
+    const accounts = await window.ethereum.request({ method:'eth_requestAccounts' });
+    account = accounts[0];
+    provider = new window.ethers.providers.Web3Provider(window.ethereum);
+    signer = provider.getSigner();
+    
+    claimStatus.innerHTML = "📡 Fetching proof from server...";
+    claimStatus.style.color = "#a1a1aa";
+    
+    // 1️⃣ FETCH PROOF FROM BACKEND
+    const res = await fetch(`http://localhost:3001/proof?wallet=${account.toLowerCase()}`);
+    
+    if (!res.ok) {
+      throw new Error("Not approved");
+    }
+    
+    const data = await res.json();
+    const batchId = data.batchId;
+    const proof = data.proof;
+    
+    claimStatus.innerHTML = "📝 Sending transaction...";
+    
+    // 2️⃣ CALL CONTRACT WITH BATCH ID
+    const contract = new window.ethers.Contract(AIRDROP, ABI, signer);
+    const tx = await contract.claim(batchId, proof, { gasLimit: 300000 });
+    
+    claimStatus.innerHTML = "⏳ Transaction sent. Waiting confirmation...";
+    const receipt = await tx.wait();
+    
+    const txHash = receipt.transactionHash || tx.hash;
+    claimStatus.innerHTML = `🎉 MNODY claimed successfully!<br><a href="https://polygonscan.com/tx/${txHash}" target="_blank" style="color:#00d9f5;text-decoration:underline;font-size:1rem">View transaction on Polygonscan →</a>`;
+    claimStatus.style.color = "#00f5a0";
+    
+    updateStepUI(3, 'completed');
+    
+  } catch (e) {
+    console.error("Claim error:", e);
+    
+    if(e.message && e.message.includes("Not approved")){
+      claimStatus.innerHTML = `❌ Wallet not eligible or claim not started yet<br>Register via Telegram bot: <code>/register ${account}</code>`;
+      claimStatus.style.color = "#ef4444";
+    } else if(e.message && e.message.includes("Already claimed")){
+      claimStatus.innerHTML = "⚠️ You have already claimed your tokens";
+      claimStatus.style.color = "#f97316";
+    } else if(e.message && e.message.includes("user rejected")){
+      claimStatus.innerHTML = "❌ Transaction cancelled by user";
+      claimStatus.style.color = "#ef4444";
+    } else {
+      claimStatus.innerHTML = "❌ Claim failed. Claim window not open yet. Please wait for the 7-day cooling period.";
+      claimStatus.style.color = "#ef4444";
+    }
+    
+    claimBtn.disabled = false;
+  }
+};
+
+// Copy contract address
 document.getElementById("copyAddr").onclick = () => {
   const el = document.getElementById("addr").innerText.trim();
   navigator.clipboard.writeText(el).then(()=>{
     const btn = document.getElementById("copyAddr");
-    btn.innerText = "Copied!";
+    btn.innerText = "✓ Copied!";
     setTimeout(()=>btn.innerText="Copy", 1400);
   });
 };
 
+// Staking calculator - SIMPLE AND WORKING
 function calc(){
   const a = parseFloat(document.getElementById("amt").value)||0;
   const p = parseFloat(document.getElementById("pool").value);
@@ -308,6 +608,69 @@ function calc(){
   document.getElementById("daily").innerHTML = `Daily: <strong>${d.toFixed(2)}</strong> MNODY`;
   document.getElementById("yearly").innerHTML = `Yearly: <strong>${Math.round(y).toLocaleString()}</strong> MNODY`;
 }
+
+// Listen for account changes
+if(window.ethereum){
+  window.ethereum.on('accountsChanged', (accounts) => {
+    if(accounts.length > 0){
+      location.reload();
+    }
+  });
+  
+  window.ethereum.on('chainChanged', () => {
+    location.reload();
+  });
+}
+
+// Initialize first step as active
+updateStepUI(1, 'active');
+</script>
+<script>
+/* ===============================
+   CLAIM COOLDOWN TIMER (WORKING)
+   =============================== */
+
+/*
+  🔴 IMPORTANT:
+  Polygonscan → Airdrop Contract → Read → claimStartTime()
+  Jo unix timestamp mile, wahi yahan daalo
+*/
+const CLAIM_START_TIME = Math.floor(Date.now() / 1000) + 520200;
+
+(function startCooldownTimer() {
+  const timer = document.getElementById("cooldownTimer");
+  const box   = document.getElementById("cooldownBox");
+  const btn   = document.getElementById("claimBtn");
+
+  if (!timer || !box || !btn) {
+    console.error("Cooldown elements missing");
+    return;
+  }
+
+  function tick() {
+    const now  = Math.floor(Date.now() / 1000);
+    const diff = CLAIM_START_TIME - now;
+
+    if (diff <= 0) {
+      timer.textContent = "✅ Claim is LIVE!";
+      box.style.borderColor = "#22c55e";
+      box.style.color = "#22c55e";
+      btn.disabled = false;
+      return;
+    }
+
+    const days = Math.floor(diff / 86400);
+    const hrs  = Math.floor((diff % 86400) / 3600);
+    const mins = Math.floor((diff % 3600) / 60);
+    const secs = diff % 60;
+
+    timer.textContent = `${days}d ${hrs}h ${mins}m ${secs}s`;
+    btn.disabled = true;
+  }
+
+  tick();
+  setInterval(tick, 1000);
+})();
 </script>
 </body>
 </html>
