@@ -583,7 +583,7 @@ document.getElementById("claimBtn").onclick = async () => {
     console.error("Claim error:", e);
     
     if(e.message && e.message.includes("Not approved")){
-      claimStatus.innerHTML = `❌ Wallet not eligible or claim not started yet<br>Register via Telegram bot: <code>/register ${account}</code>`;
+      claimStatus.innerHTML = `❌Claim window not open yet. Please wait for the 7-day cooling period<br>Register via Telegram bot: <code>/register ${account}</code>`;
       claimStatus.style.color = "#ef4444";
     } else if(e.message && e.message.includes("Already claimed")){
       claimStatus.innerHTML = "⚠️ You have already claimed your tokens";
