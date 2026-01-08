@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MNODY Swap - Polygon</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #1a1b3d 0%, #0a0b1e 100%);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  padding: 20px;
+}
+
+.swap-container {
+  background: rgba(30, 31, 60, 0.95);
+  border-radius: 24px;
+  padding: 24px;
+  width: 100%;
+  max-width: 480px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.header h2 {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.settings-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: #fff;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.settings-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.swap-box {
+  background: rgba(20, 21, 45, 0.8);
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.swap-label {
+  font-size: 13px;
+  color: #8f8f9f;
+  margin-bottom: 12px;
+  font-weight: 500;
+}
+
+.token-select {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.token-select:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.token-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ff6b9d, #feca57);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.token-info {
+  flex: 1;
+}
+
+.token-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.token-chain {
+  font-size: 12px;
+  color: #8f8f9f;
+}
+
+.amount-input {
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 28px;
+  font-weight: 600;
+  width: 100%;
+  margin-top: 12px;
+  outline: none;
+}
+
+.amount-input::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.balance {
+  font-size: 13px;
+  color: #8f8f9f;
+  margin-top: 8px;
+  text-align: right;
+}
+
+.balance span {
+  color: #00d9f5;
+  cursor: pointer;
+}
+
+.swap-arrow {
+  display: flex;
+  justify-content: center;
+  margin: -8px 0;
+  position: relative;
+  z-index: 2;
+}
+
+.swap-arrow-btn {
+  background: rgba(30, 31, 60, 0.95);
+  border: 4px solid rgba(20, 21, 45, 0.8);
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: #fff;
+  font-size: 20px;
+}
+
+.swap-arrow-btn:hover {
+  transform: rotate(180deg);
+  background: rgba(255, 107, 157, 0.2);
+}
+
+.swap-details {
+  background: rgba(20, 21, 45, 0.5);
+  border-radius: 12px;
+  padding: 16px;
+  margin: 16px 0;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  margin: 8px 0;
+  font-size: 14px;
+}
+
+.detail-label {
+  color: #8f8f9f;
+}
+
+.detail-value {
+  color: #fff;
+  font-weight: 500;
+}
+
+.swap-btn {
+  width: 100%;
+  padding: 18px;
+  background: linear-gradient(135deg, #ff6b9d, #ff9a56);
+  border: none;
+  border-radius: 16px;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-top: 16px;
+}
+
+.swap-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(255, 107, 157, 0.5);
+}
+
+.swap-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.connect-btn {
+  background: linear-gradient(135deg, #00f5a0, #059669);
+  color: #000;
+}
+
+.status {
+  text-align: center;
+  margin-top: 16px;
+  padding: 12px;
+  border-radius: 12px;
+  font-size: 14px;
+  display: none;
+}
+
+.status.success {
+  background: rgba(34, 197, 94, 0.15);
+  border: 1px solid #22c55e;
+  color: #22c55e;
+  display: block;
+}
+
+.status.error {
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid #ef4444;
+  color: #ef4444;
+  display: block;
+}
+
+.status.pending {
+  background: rgba(251, 191, 36, 0.15);
+  border: 1px solid #fbbf24;
+  color: #fbbf24;
+  display: block;
+}
+
+.price-impact {
+  color: #22c55e;
+}
+
+.price-impact.high {
+  color: #ef4444;
+}
+
+.active-tx {
+  background: rgba(139, 92, 246, 0.15);
+  border: 1px solid #8b5cf6;
+  border-radius: 12px;
+  padding: 12px;
+  margin-bottom: 16px;
+  display: none;
+}
+
+.active-tx.show {
+  display: block;
+}
+
+.tx-status {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #c4b5fd;
+  font-size: 14px;
+}
+
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #8b5cf6;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.rejected {
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid #ef4444;
+}
+
+.rejected .tx-status {
+  color: #fca5a5;
+}
+</style>
+</head>
+<body>
+
+<div class="swap-container">
+  <div class="header">
+    <h2>Exchange</h2>
+    <button class="settings-btn">⚙</button>
+  </div>
+
+  <div class="active-tx" id="activeTx">
+    <div class="tx-status">
+      <div class="spinner"></div>
+      <span>MNODY → USDT</span>
+    </div>
+  </div>
+
+  <div class="swap-box">
+    <div class="swap-label">From</div>
+    <div class="token-select">
+      <div class="token-icon">M</div>
+      <div class="token-info">
+        <div class="token-name">MNODY</div>
+        <div class="token-chain">Polygon</div>
+      </div>
+    </div>
+    <input type="number" class="amount-input" id="fromAmount" placeholder="0" step="any">
+    <div class="balance">Balance: <span id="mnodyBalance">0</span> MNODY</div>
+  </div>
+
+  <div class="swap-arrow">
+    <div class="swap-arrow-btn" onclick="reverseSwap()">↓</div>
+  </div>
+
+  <div class="swap-box">
+    <div class="swap-label">To</div>
+    <div class="token-select">
+      <div class="token-icon" style="background: linear-gradient(135deg, #26a17b, #22c55e);">U</div>
+      <div class="token-info">
+        <div class="token-name">USDT</div>
+        <div class="token-chain">Polygon</div>
+      </div>
+    </div>
+    <input type="number" class="amount-input" id="toAmount" placeholder="0" readonly>
+    <div class="balance">Balance: <span id="usdtBalance">0</span> USDT</div>
+  </div>
+
+  <div class="swap-details" id="swapDetails" style="display: none;">
+    <div class="detail-row">
+      <span class="detail-label">Rate</span>
+      <span class="detail-value" id="rate">1 MNODY = 0.00 USDT</span>
+    </div>
+    <div class="detail-row">
+      <span class="detail-label">Price Impact</span>
+      <span class="detail-value price-impact" id="priceImpact">< 0.01%</span>
+    </div>
+    <div class="detail-row">
+      <span class="detail-label">Slippage Tolerance</span>
+      <span class="detail-value">0.5%</span>
+    </div>
+  </div>
+
+  <button class="swap-btn connect-btn" id="swapBtn" onclick="handleSwap()">Connect Wallet</button>
+
+  <div class="status" id="statusMsg"></div>
+</div>
+
+<script src="https://unpkg.com/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+<script>
+const MNODY_ADDRESS = "0x0bacbf5c435c3b0546f7cdf66f960770c7ad912c";
+const USDT_ADDRESS = "0xc2132D05D31c914a87C6611C10748AEb04B58e8F"; // USDT on Polygon
+const ROUTER_ADDRESS = "0xa5E0829CaCEd8fFDD4De3c43696c57F7D7A678ff"; // QuickSwap Router
+
+const ERC20_ABI = [
+  "function balanceOf(address) view returns (uint256)",
+  "function approve(address spender, uint256 amount) returns (bool)",
+  "function allowance(address owner, address spender) view returns (uint256)",
+  "function decimals() view returns (uint8)"
+];
+
+const ROUTER_ABI = [
+  "function getAmountsOut(uint amountIn, address[] memory path) view returns (uint[] memory amounts)",
+  "function swapExactTokensForTokens(uint amountIn, uint amountOutMin, address[] calldata path, address to, uint deadline) returns (uint[] memory amounts)"
+];
+
+let provider, signer, account;
+let swapDirection = 'mnodyToUsdt'; // or 'usdtToMnody'
+
+async function connectWallet() {
+  if (!window.ethereum) {
+    showStatus('Please install MetaMask', 'error');
+    return false;
+  }
+
+  try {
+    await window.ethereum.request({
+      method: 'wallet_switchEthereumChain',
+      params: [{ chainId: '0x89' }]
+    });
+  } catch (e) {
+    if (e.code === 4902) {
+      await window.ethereum.request({
+        method: 'wallet_addEthereumChain',
+        params: [{
+          chainId: '0x89',
+          chainName: 'Polygon Mainnet',
+          rpcUrls: ['https://polygon-rpc.com'],
+          nativeCurrency: { name: 'MATIC', symbol: 'MATIC', decimals: 18 },
+          blockExplorerUrls: ['https://polygonscan.com']
+        }]
+      });
+    }
+  }
+
+  provider = new ethers.providers.Web3Provider(window.ethereum);
+  const accounts = await provider.send("eth_requestAccounts", []);
+  account = accounts[0];
+  signer = provider.getSigner();
+
+  document.getElementById('swapBtn').textContent = 'Enter Amount';
+  document.getElementById('swapBtn').classList.remove('connect-btn');
+  
+  await updateBalances();
+  return true;
+}
+
+async function updateBalances() {
+  try {
+    const mnodyContract = new ethers.Contract(MNODY_ADDRESS, ERC20_ABI, provider);
+    const usdtContract = new ethers.Contract(USDT_ADDRESS, ERC20_ABI, provider);
+
+    const mnodyBal = await mnodyContract.balanceOf(account);
+    const usdtBal = await usdtContract.balanceOf(account);
+
+    document.getElementById('mnodyBalance').textContent = ethers.utils.formatEther(mnodyBal);
+    document.getElementById('usdtBalance').textContent = ethers.utils.formatUnits(usdtBal, 6);
+  } catch (e) {
+    console.error('Balance fetch error:', e);
+  }
+}
+
+async function getQuote(amountIn) {
+  if (!amountIn || amountIn <= 0) return;
+
+  try {
+    const router = new ethers.Contract(ROUTER_ADDRESS, ROUTER_ABI, provider);
+    const path = swapDirection === 'mnodyToUsdt' 
+      ? [MNODY_ADDRESS, USDT_ADDRESS]
+      : [USDT_ADDRESS, MNODY_ADDRESS];
+
+    const decimalsIn = swapDirection === 'mnodyToUsdt' ? 18 : 6;
+    const decimalsOut = swapDirection === 'mnodyToUsdt' ? 6 : 18;
+    
+    const amountInWei = ethers.utils.parseUnits(amountIn.toString(), decimalsIn);
+    const amounts = await router.getAmountsOut(amountInWei, path);
+    const amountOut = ethers.utils.formatUnits(amounts[1], decimalsOut);
+
+    if (swapDirection === 'mnodyToUsdt') {
+      document.getElementById('toAmount').value = parseFloat(amountOut).toFixed(6);
+      document.getElementById('rate').textContent = `1 MNODY = ${(parseFloat(amountOut) / amountIn).toFixed(8)} USDT`;
+    } else {
+      document.getElementById('toAmount').value = parseFloat(amountOut).toFixed(2);
+      document.getElementById('rate').textContent = `1 USDT = ${(parseFloat(amountOut) / amountIn).toFixed(2)} MNODY`;
+    }
+
+    document.getElementById('swapDetails').style.display = 'block';
+    document.getElementById('swapBtn').textContent = 'Swap';
+    document.getElementById('swapBtn').disabled = false;
+  } catch (e) {
+    console.error('Quote error:', e);
+    document.getElementById('toAmount').value = '0';
+  }
+}
+
+document.getElementById('fromAmount').addEventListener('input', (e) => {
+  const val = e.target.value;
+  if (val && parseFloat(val) > 0) {
+    getQuote(val);
+  } else {
+    document.getElementById('toAmount').value = '';
+    document.getElementById('swapDetails').style.display = 'none';
+  }
+});
+
+function reverseSwap() {
+  swapDirection = swapDirection === 'mnodyToUsdt' ? 'usdtToMnody' : 'mnodyToUsdt';
+  
+  // Swap the UI
+  const fromBox = document.querySelectorAll('.swap-box')[0];
+  const toBox = document.querySelectorAll('.swap-box')[1];
+  const parent = fromBox.parentNode;
+  const arrow = document.querySelector('.swap-arrow');
+  
+  parent.insertBefore(toBox, fromBox);
+  parent.insertBefore(arrow, fromBox);
+  
+  // Clear inputs
+  document.getElementById('fromAmount').value = '';
+  document.getElementById('toAmount').value = '';
+  document.getElementById('swapDetails').style.display = 'none';
+}
+
+async function handleSwap() {
+  const btn = document.getElementById('swapBtn');
+  
+  if (btn.textContent === 'Connect Wallet') {
+    await connectWallet();
+    return;
+  }
+
+  const amountIn = document.getElementById('fromAmount').value;
+  if (!amountIn || parseFloat(amountIn) <= 0) {
+    showStatus('Please enter an amount', 'error');
+    return;
+  }
+
+  try {
+    showActiveTx();
+    showStatus('Checking allowance...', 'pending');
+
+    const tokenIn = swapDirection === 'mnodyToUsdt' ? MNODY_ADDRESS : USDT_ADDRESS;
+    const decimalsIn = swapDirection === 'mnodyToUsdt' ? 18 : 6;
+    const amountInWei = ethers.utils.parseUnits(amountIn, decimalsIn);
+
+    const tokenContract = new ethers.Contract(tokenIn, ERC20_ABI, signer);
+    const allowance = await tokenContract.allowance(account, ROUTER_ADDRESS);
+
+    if (allowance.lt(amountInWei)) {
+      showStatus('Please approve token spending...', 'pending');
+      const approveTx = await tokenContract.approve(ROUTER_ADDRESS, ethers.constants.MaxUint256);
+      showStatus('Approving... Please wait', 'pending');
+      await approveTx.wait();
+    }
+
+    showStatus('Executing swap...', 'pending');
+
+    const router = new ethers.Contract(ROUTER_ADDRESS, ROUTER_ABI, signer);
+    const path = swapDirection === 'mnodyToUsdt'
+      ? [MNODY_ADDRESS, USDT_ADDRESS]
+      : [USDT_ADDRESS, MNODY_ADDRESS];
+
+    const amountOut = document.getElementById('toAmount').value;
+    const decimalsOut = swapDirection === 'mnodyToUsdt' ? 6 : 18;
+    const amountOutMin = ethers.utils.parseUnits((parseFloat(amountOut) * 0.995).toFixed(decimalsOut), decimalsOut);
+    
+    const deadline = Math.floor(Date.now() / 1000) + 60 * 20;
+
+    const tx = await router.swapExactTokensForTokens(
+      amountInWei,
+      amountOutMin,
+      path,
+      account,
+      deadline,
+      { gasLimit: 300000 }
+    );
+
+    showStatus('Transaction sent! Waiting for confirmation...', 'pending');
+    const receipt = await tx.wait();
+
+    hideActiveTx();
+    showStatus(`✅ Swap successful! <a href="https://polygonscan.com/tx/${receipt.transactionHash}" target="_blank" style="color:#00d9f5;text-decoration:underline">View on Polygonscan</a>`, 'success');
+
+    document.getElementById('fromAmount').value = '';
+    document.getElementById('toAmount').value = '';
+    document.getElementById('swapDetails').style.display = 'none';
+    
+    await updateBalances();
+  } catch (e) {
+    console.error('Swap error:', e);
+    hideActiveTx();
+    
+    if (e.code === 4001) {
+      showStatus('Transaction rejected by user', 'error');
+      showRejectedTx();
+    } else {
+      showStatus('Swap failed: ' + (e.reason || e.message), 'error');
+    }
+  }
+}
+
+function showStatus(msg, type) {
+  const status = document.getElementById('statusMsg');
+  status.innerHTML = msg;
+  status.className = 'status ' + type;
+}
+
+function showActiveTx() {
+  const tx = document.getElementById('activeTx');
+  tx.classList.add('show');
+  tx.classList.remove('rejected');
+}
+
+function hideActiveTx() {
+  setTimeout(() => {
+    document.getElementById('activeTx').classList.remove('show');
+  }, 2000);
+}
+
+function showRejectedTx() {
+  const tx = document.getElementById('activeTx');
+  tx.classList.add('rejected');
+  tx.querySelector('.tx-status span').textContent = 'Transaction rejected';
+  setTimeout(() => {
+    tx.classList.remove('show', 'rejected');
+  }, 3000);
+}
+
+// Auto-connect if already connected
+if (window.ethereum) {
+  window.ethereum.request({ method: 'eth_accounts' }).then(accounts => {
+    if (accounts.length > 0) {
+      connectWallet();
+    }
+  });
+}
+</script>
+
+</body>
+</html>
