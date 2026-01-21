@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MNODY Swap - Polygon</title>
+<title>MNODY Swap - Multi-Chain</title>
 <style>
 * {
   margin: 0;
@@ -36,7 +36,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 }
 
 .header h2 {
@@ -61,6 +61,60 @@ body {
 
 .settings-btn:hover {
   background: rgba(255, 255, 255, 0.15);
+}
+
+.network-switcher {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  background: rgba(20, 21, 45, 0.8);
+  padding: 6px;
+  border-radius: 16px;
+}
+
+.network-btn {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  border-radius: 12px;
+  background: transparent;
+  color: #8f8f9f;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.network-btn.active {
+  background: linear-gradient(135deg, #8247e5, #6b21a8);
+  color: #fff;
+}
+
+.network-btn.active.arbitrum {
+  background: linear-gradient(135deg, #28a0f0, #1e88e5);
+}
+
+.network-btn:hover:not(.active) {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.contract-info {
+  background: rgba(40, 160, 240, 0.1);
+  border: 1px solid rgba(40, 160, 240, 0.3);
+  border-radius: 12px;
+  padding: 12px;
+  margin-bottom: 16px;
+  font-size: 11px;
+  text-align: center;
+}
+
+.contract-info a {
+  color: #28a0f0;
+  text-decoration: none;
+  word-break: break-all;
 }
 
 .swap-box {
@@ -258,14 +312,6 @@ body {
   display: block;
 }
 
-.price-impact {
-  color: #22c55e;
-}
-
-.price-impact.high {
-  color: #ef4444;
-}
-
 .active-tx {
   background: rgba(139, 92, 246, 0.15);
   border: 1px solid #8b5cf6;
@@ -299,29 +345,36 @@ body {
 @keyframes spin {
   to { transform: rotate(360deg); }
 }
-
-.rejected {
-  background: rgba(239, 68, 68, 0.15);
-  border: 1px solid #ef4444;
-}
-
-.rejected .tx-status {
-  color: #fca5a5;
-}
 </style>
 </head>
 <body>
 
 <div class="swap-container">
   <div class="header">
-    <h2>Exchange</h2>
+    <h2>MNODY Swap</h2>
     <button class="settings-btn">⚙</button>
+  </div>
+
+  <div class="network-switcher">
+    <button class="network-btn active" id="polygonBtn" onclick="switchNetwork('polygon')">
+      🟣 Polygon
+    </button>
+    <button class="network-btn" id="arbitrumBtn" onclick="switchNetwork('arbitrum')">
+      🔵 Arbitrum
+    </button>
+  </div>
+
+  <div class="contract-info" id="contractInfo">
+    <strong>MNODY:</strong>
+    <a href="https://polygonscan.com/address/0x0bacbf5c435c3b0546f7cdf66f960770c7ad912c" target="_blank" id="contractLink">
+      0x0bacbf5c435c3b0546f7cdf66f960770c7ad912c
+    </a>
   </div>
 
   <div class="active-tx" id="activeTx">
     <div class="tx-status">
       <div class="spinner"></div>
-      <span>MNODY → USDT</span>
+      <span>Processing transaction...</span>
     </div>
   </div>
 
@@ -331,7 +384,7 @@ body {
       <div class="token-icon">M</div>
       <div class="token-info">
         <div class="token-name">MNODY</div>
-        <div class="token-chain">Polygon</div>
+        <div class="token-chain" id="fromChain">Polygon</div>
       </div>
     </div>
     <input type="number" class="amount-input" id="fromAmount" placeholder="0" step="any">
@@ -348,7 +401,7 @@ body {
       <div class="token-icon" style="background: linear-gradient(135deg, #26a17b, #22c55e);">U</div>
       <div class="token-info">
         <div class="token-name">USDT</div>
-        <div class="token-chain">Polygon</div>
+        <div class="token-chain" id="toChain">Polygon</div>
       </div>
     </div>
     <input type="number" class="amount-input" id="toAmount" placeholder="0" readonly>
@@ -362,10 +415,10 @@ body {
     </div>
     <div class="detail-row">
       <span class="detail-label">Price Impact</span>
-      <span class="detail-value price-impact" id="priceImpact">< 0.01%</span>
+      <span class="detail-value" id="priceImpact">< 0.01%</span>
     </div>
     <div class="detail-row">
-      <span class="detail-label">Slippage Tolerance</span>
+      <span class="detail-label">Slippage</span>
       <span class="detail-value">0.5%</span>
     </div>
   </div>
@@ -377,9 +430,32 @@ body {
 
 <script src="https://unpkg.com/ethers@5.7.2/dist/ethers.umd.min.js"></script>
 <script>
-const MNODY_ADDRESS = "0x0bacbf5c435c3b0546f7cdf66f960770c7ad912c";
-const USDT_ADDRESS = "0xc2132D05D31c914a87C6611C10748AEb04B58e8F"; // USDT on Polygon
-const ROUTER_ADDRESS = "0xa5E0829CaCEd8fFDD4De3c43696c57F7D7A678ff"; // QuickSwap Router
+const NETWORKS = {
+  polygon: {
+    chainId: '0x89',
+    name: 'Polygon',
+    rpc: 'https://polygon-rpc.com',
+    explorer: 'https://polygonscan.com',
+    mnody: '0x0bacbf5c435c3b0546f7cdf66f960770c7ad912c',
+    usdt: '0xc2132D05D31c914a87C6611C10748AEb04B58e8F',
+    router: '0xa5E0829CaCEd8fFDD4De3c43696c57F7D7A678ff', // QuickSwap
+    emoji: '🟣'
+  },
+  arbitrum: {
+    chainId: '0xa4b1',
+    name: 'Arbitrum',
+    rpc: 'https://arb1.arbitrum.io/rpc',
+    explorer: 'https://arbiscan.io',
+    mnody: '0x608B84947d77310836cAa65024F1E164d9Ba8bc7',
+    usdt: '0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9',
+    router: '0xc873fEcbd354f5A56E00E710B90EF4201db2448d', // Camelot
+    emoji: '🔵'
+  }
+};
+
+let currentNetwork = 'polygon';
+let provider, signer, account;
+let swapDirection = 'mnodyToUsdt';
 
 const ERC20_ABI = [
   "function balanceOf(address) view returns (uint256)",
@@ -393,8 +469,68 @@ const ROUTER_ABI = [
   "function swapExactTokensForTokens(uint amountIn, uint amountOutMin, address[] calldata path, address to, uint deadline) returns (uint[] memory amounts)"
 ];
 
-let provider, signer, account;
-let swapDirection = 'mnodyToUsdt'; // or 'usdtToMnody'
+async function switchNetwork(network) {
+  currentNetwork = network;
+  
+  document.getElementById('polygonBtn').classList.toggle('active', network === 'polygon');
+  document.getElementById('arbitrumBtn').classList.toggle('active', network === 'arbitrum');
+  
+  if (network === 'arbitrum') {
+    document.getElementById('arbitrumBtn').classList.add('arbitrum');
+  }
+  
+  const net = NETWORKS[network];
+  document.getElementById('contractInfo').innerHTML = `
+    <strong>MNODY:</strong>
+    <a href="${net.explorer}/address/${net.mnody}" target="_blank">
+      ${net.mnody}
+    </a>
+  `;
+  
+  document.getElementById('fromChain').textContent = net.name;
+  document.getElementById('toChain').textContent = net.name;
+  
+  if (account) {
+    try {
+      await window.ethereum.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId: net.chainId }]
+      });
+      provider = new ethers.providers.Web3Provider(window.ethereum);
+      signer = provider.getSigner();
+      await updateBalances();
+    } catch (e) {
+      if (e.code === 4902) {
+        await addNetwork(network);
+      }
+    }
+  }
+  
+  document.getElementById('fromAmount').value = '';
+  document.getElementById('toAmount').value = '';
+  document.getElementById('swapDetails').style.display = 'none';
+}
+
+async function addNetwork(network) {
+  const net = NETWORKS[network];
+  await window.ethereum.request({
+    method: 'wallet_addEthereumChain',
+    params: [{
+      chainId: net.chainId,
+      chainName: net.name,
+      rpcUrls: [net.rpc],
+      nativeCurrency: { 
+        name: network === 'polygon' ? 'MATIC' : 'ETH',
+        symbol: network === 'polygon' ? 'MATIC' : 'ETH',
+        decimals: 18 
+      },
+      blockExplorerUrls: [net.explorer]
+    }]
+  });
+  provider = new ethers.providers.Web3Provider(window.ethereum);
+  signer = provider.getSigner();
+  await updateBalances();
+}
 
 async function connectWallet() {
   if (!window.ethereum) {
@@ -402,23 +538,16 @@ async function connectWallet() {
     return false;
   }
 
+  const net = NETWORKS[currentNetwork];
+  
   try {
     await window.ethereum.request({
       method: 'wallet_switchEthereumChain',
-      params: [{ chainId: '0x89' }]
+      params: [{ chainId: net.chainId }]
     });
   } catch (e) {
     if (e.code === 4902) {
-      await window.ethereum.request({
-        method: 'wallet_addEthereumChain',
-        params: [{
-          chainId: '0x89',
-          chainName: 'Polygon Mainnet',
-          rpcUrls: ['https://polygon-rpc.com'],
-          nativeCurrency: { name: 'MATIC', symbol: 'MATIC', decimals: 18 },
-          blockExplorerUrls: ['https://polygonscan.com']
-        }]
-      });
+      await addNetwork(currentNetwork);
     }
   }
 
@@ -435,9 +564,12 @@ async function connectWallet() {
 }
 
 async function updateBalances() {
+  if (!account) return;
+  
   try {
-    const mnodyContract = new ethers.Contract(MNODY_ADDRESS, ERC20_ABI, provider);
-    const usdtContract = new ethers.Contract(USDT_ADDRESS, ERC20_ABI, provider);
+    const net = NETWORKS[currentNetwork];
+    const mnodyContract = new ethers.Contract(net.mnody, ERC20_ABI, provider);
+    const usdtContract = new ethers.Contract(net.usdt, ERC20_ABI, provider);
 
     const mnodyBal = await mnodyContract.balanceOf(account);
     const usdtBal = await usdtContract.balanceOf(account);
@@ -453,10 +585,11 @@ async function getQuote(amountIn) {
   if (!amountIn || amountIn <= 0) return;
 
   try {
-    const router = new ethers.Contract(ROUTER_ADDRESS, ROUTER_ABI, provider);
+    const net = NETWORKS[currentNetwork];
+    const router = new ethers.Contract(net.router, ROUTER_ABI, provider);
     const path = swapDirection === 'mnodyToUsdt' 
-      ? [MNODY_ADDRESS, USDT_ADDRESS]
-      : [USDT_ADDRESS, MNODY_ADDRESS];
+      ? [net.mnody, net.usdt]
+      : [net.usdt, net.mnody];
 
     const decimalsIn = swapDirection === 'mnodyToUsdt' ? 18 : 6;
     const decimalsOut = swapDirection === 'mnodyToUsdt' ? 6 : 18;
@@ -484,7 +617,7 @@ async function getQuote(amountIn) {
 
 document.getElementById('fromAmount').addEventListener('input', (e) => {
   const val = e.target.value;
-  if (val && parseFloat(val) > 0) {
+  if (val && parseFloat(val) > 0 && account) {
     getQuote(val);
   } else {
     document.getElementById('toAmount').value = '';
@@ -495,7 +628,6 @@ document.getElementById('fromAmount').addEventListener('input', (e) => {
 function reverseSwap() {
   swapDirection = swapDirection === 'mnodyToUsdt' ? 'usdtToMnody' : 'mnodyToUsdt';
   
-  // Swap the UI
   const fromBox = document.querySelectorAll('.swap-box')[0];
   const toBox = document.querySelectorAll('.swap-box')[1];
   const parent = fromBox.parentNode;
@@ -504,7 +636,6 @@ function reverseSwap() {
   parent.insertBefore(toBox, fromBox);
   parent.insertBefore(arrow, fromBox);
   
-  // Clear inputs
   document.getElementById('fromAmount').value = '';
   document.getElementById('toAmount').value = '';
   document.getElementById('swapDetails').style.display = 'none';
@@ -528,26 +659,27 @@ async function handleSwap() {
     showActiveTx();
     showStatus('Checking allowance...', 'pending');
 
-    const tokenIn = swapDirection === 'mnodyToUsdt' ? MNODY_ADDRESS : USDT_ADDRESS;
+    const net = NETWORKS[currentNetwork];
+    const tokenIn = swapDirection === 'mnodyToUsdt' ? net.mnody : net.usdt;
     const decimalsIn = swapDirection === 'mnodyToUsdt' ? 18 : 6;
     const amountInWei = ethers.utils.parseUnits(amountIn, decimalsIn);
 
     const tokenContract = new ethers.Contract(tokenIn, ERC20_ABI, signer);
-    const allowance = await tokenContract.allowance(account, ROUTER_ADDRESS);
+    const allowance = await tokenContract.allowance(account, net.router);
 
     if (allowance.lt(amountInWei)) {
       showStatus('Please approve token spending...', 'pending');
-      const approveTx = await tokenContract.approve(ROUTER_ADDRESS, ethers.constants.MaxUint256);
+      const approveTx = await tokenContract.approve(net.router, ethers.constants.MaxUint256);
       showStatus('Approving... Please wait', 'pending');
       await approveTx.wait();
     }
 
     showStatus('Executing swap...', 'pending');
 
-    const router = new ethers.Contract(ROUTER_ADDRESS, ROUTER_ABI, signer);
+    const router = new ethers.Contract(net.router, ROUTER_ABI, signer);
     const path = swapDirection === 'mnodyToUsdt'
-      ? [MNODY_ADDRESS, USDT_ADDRESS]
-      : [USDT_ADDRESS, MNODY_ADDRESS];
+      ? [net.mnody, net.usdt]
+      : [net.usdt, net.mnody];
 
     const amountOut = document.getElementById('toAmount').value;
     const decimalsOut = swapDirection === 'mnodyToUsdt' ? 6 : 18;
@@ -568,7 +700,7 @@ async function handleSwap() {
     const receipt = await tx.wait();
 
     hideActiveTx();
-    showStatus(`✅ Swap successful! <a href="https://polygonscan.com/tx/${receipt.transactionHash}" target="_blank" style="color:#00d9f5;text-decoration:underline">View on Polygonscan</a>`, 'success');
+    showStatus(`✅ Swap successful! <a href="${net.explorer}/tx/${receipt.transactionHash}" target="_blank" style="color:#00d9f5;text-decoration:underline">View Transaction</a>`, 'success');
 
     document.getElementById('fromAmount').value = '';
     document.getElementById('toAmount').value = '';
@@ -581,7 +713,6 @@ async function handleSwap() {
     
     if (e.code === 4001) {
       showStatus('Transaction rejected by user', 'error');
-      showRejectedTx();
     } else {
       showStatus('Swap failed: ' + (e.reason || e.message), 'error');
     }
@@ -595,9 +726,7 @@ function showStatus(msg, type) {
 }
 
 function showActiveTx() {
-  const tx = document.getElementById('activeTx');
-  tx.classList.add('show');
-  tx.classList.remove('rejected');
+  document.getElementById('activeTx').classList.add('show');
 }
 
 function hideActiveTx() {
@@ -606,16 +735,6 @@ function hideActiveTx() {
   }, 2000);
 }
 
-function showRejectedTx() {
-  const tx = document.getElementById('activeTx');
-  tx.classList.add('rejected');
-  tx.querySelector('.tx-status span').textContent = 'Transaction rejected';
-  setTimeout(() => {
-    tx.classList.remove('show', 'rejected');
-  }, 3000);
-}
-
-// Auto-connect if already connected
 if (window.ethereum) {
   window.ethereum.request({ method: 'eth_accounts' }).then(accounts => {
     if (accounts.length > 0) {
