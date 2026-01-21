@@ -87,7 +87,7 @@ code{background:#020617;padding:6px 12px;border-radius:8px;word-break:break-all;
 <header>
   <img src="https://raw.githubusercontent.com/MNody/mynody-assets/main/logo.png" class="logo" alt="My Nody Cat">
   <h1 class="hero">MyNodyCat</h1>
-  <p class="sub">🌐 Now Multi-Chain! Zero-tax meme token on Polygon & Arbitrum. LP locked. Fully Decentralized.</p>
+  <p class="sub">🌍 Now Multi-Chain! Zero-tax meme token on Polygon & Arbitrum. LP locked. Fully Decentralized.</p>
 
   <div style="margin:24px 0">
     <span class="chain-badge">🟣 Polygon</span>
@@ -102,17 +102,17 @@ code{background:#020617;padding:6px 12px;border-radius:8px;word-break:break-all;
   </div>
 
   <div class="badges">
-    <span class="badge">Contract: <a href="https://polygonscan.com/token/0x0bacbf5c435c3b0546f7cdf66f960770c7ad912c" target="_blank">Polygonscan</a></span>
+    <span class="badge">Polygon: <a href="https://polygonscan.com/token/0x0bacbf5c435c3b0546f7cdf66f960770c7ad912c" target="_blank">0x0bac...912c</a></span>
+    <span class="badge">Arbitrum: <a href="https://arbiscan.io/address/0x608B84947d77310836cAa65024F1E164d9Ba8bc7" target="_blank">0x608B...8bc7</a></span>
     <span class="badge">Pair: <a href="https://dexscreener.com/polygon/0x3cec491a74c924aaeb74dde821653aafec7b94b9" target="_blank">MNODY/USDT</a></span>
-    <span class="badge">LP lock: <a href="https://www.pinksale.finance/pinklock/liquidity-0x6C9A0D8B1c7a95a323d744dE30cf027694710633" target="_blank">PinkLock</a></span>
-    <span class="badge">Contract: <a href="https://polygonscan.com/address/0x0bacbf5c435c3b0546f7cdf66f960770c7ad912c#code" target="_blank">Fully Decentralized ✅</a></span>
+    <span class="badge">Status: <a href="https://polygonscan.com/address/0x0bacbf5c435c3b0546f7cdf66f960770c7ad912c#code" target="_blank">Fully Decentralized ✅</a></span>
   </div>
 
-  <div class="live"><div class="dot"></div> LIVE • Yield Season ON</div>
+  <div class="live"><div class="dot"></div> LIVE • Multi-Chain Active</div>
 
   <div style="margin:36px 0;">
-    <a href="mnody_swap_interface.html" target="_blank" class="btn b2">Buy MNODY Swap</a>
-    <a href="#bridge" class="btn b1">🌉 Bridge MNODY</a>
+    <a href="mnody_swap_interface.html" target="_blank" class="btn b1">🔄 Swap MNODY (Polygon + Arbitrum)</a>
+    <a href="#bridge" class="btn b2">🌉 Bridge Tokens</a>
     <a href="https://t.me/MyNody" target="_blank" class="btn b3">Join Telegram</a>
   </div>
   
@@ -120,7 +120,7 @@ code{background:#020617;padding:6px 12px;border-radius:8px;word-break:break-all;
     <span class="pill">Airdrop: LIVE</span>
     <span class="pill">Staking: LIVE</span>
     <span class="pill">Bridge: LIVE</span>
-    <span class="pill">LP: Locked</span>
+    <span class="pill">Both LP: Locked</span>
     <span class="pill">Fully Decentralized ✅</span>
   </div>
 </header>
@@ -155,9 +155,16 @@ code{background:#020617;padding:6px 12px;border-radius:8px;word-break:break-all;
         <div class="kv" style="grid-template-columns:1fr;gap:8px;text-align:left">
           <div><strong>MNODY Contract:</strong></div>
           <code style="font-size:.85rem">0x0bacbf5c435c3b0546f7cdf66f960770c7ad912c</code>
+          <button class="copy" onclick="copyText('0x0bacbf5c435c3b0546f7cdf66f960770c7ad912c',this)" style="margin-top:8px">Copy</button>
           
           <div style="margin-top:12px"><strong>Bridge Vault:</strong></div>
           <code style="font-size:.85rem">0xA53365C371f4Cde2bb012F505Ef9e7946AFBc322</code>
+          <button class="copy" onclick="copyText('0xA53365C371f4Cde2bb012F505Ef9e7946AFBc322',this)" style="margin-top:8px">Copy</button>
+          
+          <div style="margin-top:12px"><strong>LP Lock:</strong></div>
+          <div style="color:#cfe3ff;font-size:.9rem">
+            🔒 <a href="https://www.pinksale.finance/pinklock/liquidity-0x6C9A0D8B1c7a95a323d744dE30cf027694710633" target="_blank" style="color:#00f5a0">PinkLock</a> • Until 2031-11-30
+          </div>
           
           <div style="margin-top:16px">
             <a href="https://polygonscan.com/address/0xA53365C371f4Cde2bb012F505Ef9e7946AFBc322" target="_blank" class="btn b3" style="font-size:.9rem;padding:10px 20px">
@@ -173,9 +180,24 @@ code{background:#020617;padding:6px 12px;border-radius:8px;word-break:break-all;
         <div class="kv" style="grid-template-columns:1fr;gap:8px;text-align:left">
           <div><strong>ArbMNODY Contract:</strong></div>
           <code style="font-size:.85rem">0x608B84947d77310836cAa65024F1E164d9Ba8bc7</code>
+          <button class="copy" onclick="copyText('0x608B84947d77310836cAa65024F1E164d9Ba8bc7',this)" style="margin-top:8px">Copy</button>
           
           <div style="margin-top:12px"><strong>Bridge Controller:</strong></div>
           <code style="font-size:.85rem">0x9429fdAcCD0de6866Ca0049e0C96DC27D49fA3D0</code>
+          <button class="copy" onclick="copyText('0x9429fdAcCD0de6866Ca0049e0C96DC27D49fA3D0',this)" style="margin-top:8px">Copy</button>
+          
+          <div style="margin-top:12px"><strong>LP Address (Camelot):</strong></div>
+          <code style="font-size:.85rem">0x0DD8624aE2664a68a47d5c4a17c4549e3C76c197</code>
+          <button class="copy" onclick="copyText('0x0DD8624aE2664a68a47d5c4a17c4549e3C76c197',this)" style="margin-top:8px">Copy</button>
+          
+          <div style="margin-top:12px"><strong>LP Lock:</strong></div>
+          <div style="color:#cfe3ff;font-size:.9rem">
+            🔒 Locked on PinkSale for 2 years
+          </div>
+          
+          <div style="margin-top:12px"><strong>Bridge Transaction:</strong></div>
+          <code style="font-size:.75rem;display:block;margin-top:4px">0x90ba23ff8a2076deb099362c7950313a20475ba52044a5e74e26a7ccbbf8748e</code>
+          <button class="copy" onclick="copyText('0x90ba23ff8a2076deb099362c7950313a20475ba52044a5e74e26a7ccbbf8748e',this)" style="margin-top:8px">Copy</button>
           
           <div style="margin-top:16px">
             <a href="https://arbiscan.io/address/0x608B84947d77310836cAa65024F1E164d9Ba8bc7" target="_blank" class="btn b3" style="font-size:.9rem;padding:10px 20px">
@@ -232,18 +254,21 @@ code{background:#020617;padding:6px 12px;border-radius:8px;word-break:break-all;
     <div class="chain-section">
       <h3 style="color:#feca57;margin-bottom:20px">🟣 Polygon (Original Chain)</h3>
       <div class="kv">
-        <div><strong>Contract (Polygon):</strong></div>
+        <div><strong>Contract:</strong></div>
         <div><code id="addr">0x0bacbf5c435c3b0546f7cdf66f960770c7ad912c</code>
           <button class="copy" id="copyAddr">Copy</button>
         </div>
 
-        <div><strong>Total supply:</strong></div>
+        <div><strong>Total Supply:</strong></div>
         <div>10,000,000,000 MNODY • Tax 0/0 • Decimals 18</div>
 
         <div><strong>Pair (MNODY/USDT):</strong></div>
         <div><a href="https://dexscreener.com/polygon/0x3cec491a74c924aaeb74dde821653aafec7b94b9" target="_blank">0x3cEC491A74c924aaeb74DDe821653AaFEc7b94B9</a></div>
 
-        <div><strong>LP locked:</strong></div>
+        <div><strong>DEX:</strong></div>
+        <div>QuickSwap (Polygon)</div>
+
+        <div><strong>LP Locked:</strong></div>
         <div>
           <a href="https://www.pinksale.finance/pinklock/liquidity-0x6C9A0D8B1c7a95a323d744dE30cf027694710633" target="_blank">PinkLock</a>
           • Lock: 2025-11-22 • Unlock: 2031-11-30
@@ -252,7 +277,7 @@ code{background:#020617;padding:6px 12px;border-radius:8px;word-break:break-all;
         <div><strong>Explorer:</strong></div>
         <div>
           <a href="https://polygonscan.com/token/0x0bacbf5c435c3b0546f7cdf66f960770c7ad912c" target="_blank">Polygonscan</a>
-          • <a href="https://polygonscan.com/address/0x0bacbf5c435c3b0546f7cdf66f960770c7ad912c#code" target="_blank">Verified code</a>
+          • <a href="https://polygonscan.com/address/0x0bacbf5c435c3b0546f7cdf66f960770c7ad912c#code" target="_blank">Verified Code</a>
         </div>
       </div>
     </div>
@@ -271,9 +296,52 @@ code{background:#020617;padding:6px 12px;border-radius:8px;word-break:break-all;
         <div><strong>Currently Bridged:</strong></div>
         <div>10,000,000 MNODY</div>
 
+        <div><strong>LP Address (Camelot):</strong></div>
+        <div><code>0x0DD8624aE2664a68a47d5c4a17c4549e3C76c197</code>
+          <button class="copy" onclick="copyText('0x0DD8624aE2664a68a47d5c4a17c4549e3C76c197',this)">Copy</button>
+        </div>
+
+        <div><strong>Pair:</strong></div>
+        <div>MNODY/USDT on Camelot DEX</div>
+
+        <div><strong>LP Lock Status:</strong></div>
+        <div>🔒 Locked on PinkSale for 2 years</div>
+
+        <div><strong>Bridge Tx Hash:</strong></div>
+        <div><code style="font-size:.8rem">0x90ba23ff8a2076deb099362c7950313a20475ba52044a5e74e26a7ccbbf8748e</code>
+          <button class="copy" onclick="copyText('0x90ba23ff8a2076deb099362c7950313a20475ba52044a5e74e26a7ccbbf8748e',this)">Copy</button>
+        </div>
+
         <div><strong>Explorer:</strong></div>
         <div>
-          <a href="https://arbiscan.io/address/0x608B84947d77310836cAa65024F1E164d9Ba8bc7" target="_blank">Arbiscan</a>
+          <a href="https://arbiscan.io/address/0x608B84947d77310836cAa65024F1E164d9Ba8bc7" target="_blank">Arbiscan Token</a>
+          • <a href="https://arbiscan.io/address/0x0DD8624aE2664a68a47d5c4a17c4549e3C76c197" target="_blank">View LP</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="highlight" style="margin-top:32px">
+      <h3 style="color:#00f5a0;margin-bottom:16px;text-align:center">📈 Token Distribution</h3>
+      <div style="max-width:800px;margin:auto">
+        <div style="display:flex;justify-content:space-between;margin:12px 0">
+          <span>🔥 Burned:</span>
+          <strong>2,500,000,000 MNODY (25%)</strong>
+        </div>
+        <div style="display:flex;justify-content:space-between;margin:12px 0">
+          <span>🔒 Team Vested:</span>
+          <strong>5,500,000,000 MNODY (55%)</strong>
+        </div>
+        <div style="display:flex;justify-content:space-between;margin:12px 0">
+          <span>💰 Staking Pool:</span>
+          <strong>500,000,000 MNODY (5%)</strong>
+        </div>
+        <div style="display:flex;justify-content:space-between;margin:12px 0">
+          <span>🎁 Airdrop Pool:</span>
+          <strong>100,000,000 MNODY (1%)</strong>
+        </div>
+        <div style="display:flex;justify-content:space-between;margin:12px 0">
+          <span>💧 Liquidity & Circulation:</span>
+          <strong>1,400,000,000 MNODY (14%)</strong>
         </div>
       </div>
     </div>
@@ -357,40 +425,40 @@ code{background:#020617;padding:6px 12px;border-radius:8px;word-break:break-all;
 
   <!-- STAKING -->
   <section id="staking" class="card">
-    <h2 class="st">💰 Staking • Up to 1,217% APY</h2>
+    <h2 class="st">💰 Staking • Up to 318% APY</h2>
     <div style="text-align:center;margin-bottom:18px;">
-      <a href="https://www.team.finance/view-coin/0x0bacbf5c435c3b0546f7cdf66f960770c7ad912c?name=MyNody&symbol=MNODY&chainid=137&tab=staking" target="_blank" class="btn b1">Open staking on Team Finance</a>
+      <a href="https://www.team.finance/view-coin/0x0bacbf5c435c3b0546f7cdf66f960770c7ad912c?name=MyNody&symbol=MNODY&chainid=137&tab=staking" target="_blank" class="btn b1">Open Staking on Team Finance</a>
     </div>
     <div class="grid">
       <div class="cc">
         <h3 style="margin-bottom:14px;">Calculator</h3>
         <input type="number" id="amt" class="inp" value="10000" placeholder="Amount (MNODY)">
         <select id="pool" class="inp">
-          <option value="438">Pool 1 → 438% APY</option>
-          <option value="1217">Pool 2 → 1,217% APY</option>
+          <option value="260">Pool 1 → 260% APY</option>
+          <option value="318">Pool 2 → 318% APY</option>
         </select>
         <button onclick="calc()" class="btn b2" style="margin:10px auto;">Calculate</button>
         <div id="daily" class="out" style="color:#00f5a0;"></div>
         <div id="yearly" class="out" style="color:#ff6b9d;"></div>
-        <p style="font-size:.9rem;color:#a1a1aa;margin-top:6px;">Rewards are distributed from dedicated pools.</p>
+        <p style="font-size:.9rem;color:#a1a1aa;margin-top:6px;">Rewards distributed from dedicated pools</p>
       </div>
       <div class="cc">
-        <h3 style="margin-bottom:14px;">Pool details</h3>
+        <h3 style="margin-bottom:14px;">Pool Details</h3>
         <div style="text-align:left;line-height:1.9;">
           <p><strong style="color:#feca57;">Pool 1</strong><br>
           Total: 200M MNODY<br>
-          Staked: 70M | Available: 45M<br>
+          Staked: 118M | Available: 82M<br>
           Claimed: 651,370 MNODY<br>
           Start: Nov 25, 2025<br>
           End: Jul 21, 2026<br>
-          <strong style="color:#00f5a0;">APY: 438%</strong></p>
+          <strong style="color:#00f5a0;">APY: 260%</strong></p>
           <hr style="margin:16px 0;border-top:1px solid #444;">
           <p><strong style="color:#ff6b9d;">Pool 2</strong><br>
           Total: 300M MNODY<br>
-          Staked: 75M | Available: 65M<br>
+          Staked: 287M | Available: 13M<br>
           Start: Dec 31, 2025<br>
           End: Apr 30, 2026<br>
-          <strong style="color:#ff6b9d;">APY: 1,217%</strong></p>
+          <strong style="color:#ff6b9d;">APY: 318%</strong></p>
         </div>
       </div>
     </div>
@@ -398,7 +466,12 @@ code{background:#020617;padding:6px 12px;border-radius:8px;word-break:break-all;
 
   <!-- CHART -->
   <section id="chart" class="card">
-    <h2 class="st">Live chart</h2>
+    <h2 class="st">📈 Live Chart</h2>
+    <div style="margin-bottom:20px;text-align:center">
+      <div class="pills">
+        <span class="pill">🟣 Polygon Chart</span>
+      </div>
+    </div>
     <iframe src="https://dexscreener.com/polygon/0x3cec491a74c924aaeb74dde821653aafec7b94b9?embed=1&theme=dark&trades=0&info=0" style="width:100%;height:700px;border:none;border-radius:22px;" loading="lazy"></iframe>
   </section>
 
@@ -451,7 +524,9 @@ code{background:#020617;padding:6px 12px;border-radius:8px;word-break:break-all;
         MNODY is designed with maximum security:
         <br><br>
         ✅ <strong>Fully Decentralized:</strong> Contract has no owner function - nobody can control the token<br>
-        ✅ <strong>LP Locked:</strong> Liquidity locked on PinkLock until November 30, 2031<br>
+        ✅ <strong>LP Locked (Both Chains):</strong><br>
+        &nbsp;&nbsp;&nbsp;• Polygon: Locked on PinkLock until November 30, 2031<br>
+        &nbsp;&nbsp;&nbsp;• Arbitrum: Locked on PinkSale for 2 years<br>
         ✅ <strong>Zero Tax:</strong> 0% buy/sell tax - pure transfers<br>
         ✅ <strong>Verified Contract:</strong> Fully verified and auditable on PolygonScan<br>
         ✅ <strong>Transparent Tokenomics:</strong> All allocations publicly visible
@@ -461,7 +536,7 @@ code{background:#020617;padding:6px 12px;border-radius:8px;word-break:break-all;
     </div>
 
     <div class="faq-item">
-      <div class="faq-q">🔄 What is the total supply and token distribution?</div>
+      <div class="faq-q">📄 What is the total supply and token distribution?</div>
       <div class="faq-a">
         Total Supply: 10,000,000,000 MNODY
         <br><br>
@@ -470,14 +545,14 @@ code{background:#020617;padding:6px 12px;border-radius:8px;word-break:break-all;
         • 5.5B Vested for team/development (55%)<br>
         • 500M Staking Rewards (5%)<br>
         • 100M Airdrop Pool (1%)<br>
-        • Remaining in circulation and LP
+        • 1.4B Liquidity & Circulation (14%)
         <br><br>
         All burns and locks are verifiable on-chain.
       </div>
     </div>
 
     <div class="faq-item">
-      <div class="faq-q">🌐 Why go multi-chain? What are the benefits?</div>
+      <div class="faq-q">🌍 Why go multi-chain? What are the benefits?</div>
       <div class="faq-a">
         Multi-chain expansion to Arbitrum provides several benefits:
         <br><br>
@@ -494,7 +569,7 @@ code{background:#020617;padding:6px 12px;border-radius:8px;word-break:break-all;
     <div class="faq-item">
       <div class="faq-q">📊 Where can I buy MNODY?</div>
       <div class="faq-a">
-        You can buy MNODY on:
+        You can buy MNODY on both chains:
         <br><br>
         <strong>Polygon Network:</strong><br>
         • QuickSwap (MNODY/USDT pair)<br>
@@ -502,8 +577,9 @@ code{background:#020617;padding:6px 12px;border-radius:8px;word-break:break-all;
         • View live chart on DexScreener
         <br><br>
         <strong>Arbitrum Network:</strong><br>
-        • Coming soon after bridge launch<br>
-        • DEX listings to be announced
+        • Camelot DEX (MNODY/USDT pair)<br>
+        • Use our multi-chain swap interface<br>
+        • LP locked for 2 years
         <br><br>
         Always verify the correct contract address before trading!
       </div>
@@ -522,7 +598,9 @@ code{background:#020617;padding:6px 12px;border-radius:8px;word-break:break-all;
         ✅ Be aware of fake tokens with similar names<br>
         ✅ Use only verified DEX platforms
         <br><br>
-        <strong>Official Contract:</strong> 0x0bacbf5c435c3b0546f7cdf66f960770c7ad912c
+        <strong>Official Contracts:</strong><br>
+        Polygon: 0x0bacbf5c435c3b0546f7cdf66f960770c7ad912c<br>
+        Arbitrum: 0x608B84947d77310836cAa65024F1E164d9Ba8bc7
       </div>
     </div>
 
@@ -548,11 +626,12 @@ code{background:#020617;padding:6px 12px;border-radius:8px;word-break:break-all;
 </div>
 
 <footer>
-  <h1>MyNodyCat • Moon Soon</h1>
+  <h1>MyNodyCat • Multi-Chain Moon Mission</h1>
   <div class="social">
     <a href="https://t.me/MyNody" target="_blank">Telegram</a>
   </div>
   <p style="margin-top:18px;color:#777;">© 2025 MyNodyCat • Pure Meme Energy</p>
+  <p style="margin-top:8px;color:#555;font-size:.9rem;">🟣 Polygon • 🔵 Arbitrum</p>
 </footer>
 
 <script>
@@ -575,7 +654,7 @@ function copyText(text, btn) {
   });
 }
 
-// Staking calculator - SIMPLE AND WORKING
+// Staking calculator
 function calc(){
   const a = parseFloat(document.getElementById("amt").value)||0;
   const p = parseFloat(document.getElementById("pool").value);
@@ -585,24 +664,13 @@ function calc(){
   document.getElementById("yearly").innerHTML = `Yearly: <strong>${Math.round(y).toLocaleString()}</strong> MNODY`;
 }
 
-// FAQ toggle functionality - FIXED
+// FAQ toggle functionality
 document.addEventListener('DOMContentLoaded', function() {
   const faqItems = document.querySelectorAll('.faq-item');
   
   faqItems.forEach(item => {
     item.addEventListener('click', function() {
-      // Toggle active class
       this.classList.toggle('active');
-      
-      // Optional: Close other FAQs when opening one (accordion style)
-      // Uncomment below if you want only one FAQ open at a time
-      /*
-      faqItems.forEach(otherItem => {
-        if (otherItem !== this) {
-          otherItem.classList.remove('active');
-        }
-      });
-      */
     });
   });
 });
