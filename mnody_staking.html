@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MNODY Staking - Earn up to 300% APY</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #0a0b1e 0%, #1a1b3d 100%);
+  min-height: 100vh;
+  color: #fff;
+  padding: 20px;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.header h1 {
+  font-size: 3rem;
+  background: linear-gradient(120deg, #ff6b9d, #feca57, #00d9f5);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 10px;
+}
+
+.header p {
+  color: #a1a1aa;
+  font-size: 1.2rem;
+}
+
+.wallet-connect {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.wallet-info {
+  background: rgba(30, 31, 60, 0.95);
+  border: 1px solid rgba(148, 163, 253, 0.35);
+  border-radius: 16px;
+  padding: 20px;
+  display: inline-block;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin: 30px 0;
+}
+
+.stat-card {
+  background: rgba(30, 31, 60, 0.95);
+  border: 1px solid rgba(148, 163, 253, 0.35);
+  border-radius: 20px;
+  padding: 24px;
+  text-align: center;
+}
+
+.stat-label {
+  color: #8f8f9f;
+  font-size: 0.9rem;
+  margin-bottom: 8px;
+}
+
+.stat-value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #00f5a0;
+}
+
+.staking-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  margin: 40px 0;
+}
+
+.stake-card {
+  background: rgba(30, 31, 60, 0.95);
+  border: 2px solid rgba(148, 163, 253, 0.35);
+  border-radius: 24px;
+  padding: 28px;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.stake-card:hover {
+  transform: translateY(-5px);
+  border-color: #00f5a0;
+  box-shadow: 0 10px 40px rgba(0, 245, 160, 0.3);
+}
+
+.stake-card.featured {
+  border-color: #feca57;
+  background: linear-gradient(135deg, rgba(254, 202, 87, 0.1), rgba(255, 107, 157, 0.1));
+}
+
+.stake-card .apy {
+  font-size: 3rem;
+  font-weight: 900;
+  background: linear-gradient(120deg, #ff6b9d, #feca57);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin: 10px 0;
+}
+
+.stake-card .lock-period {
+  color: #00d9f5;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.stake-card .features {
+  text-align: left;
+  margin: 20px 0;
+}
+
+.stake-card .features li {
+  color: #cfe3ff;
+  margin: 8px 0;
+  list-style: none;
+  padding-left: 20px;
+  position: relative;
+}
+
+.stake-card .features li:before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: #00f5a0;
+  font-weight: 700;
+}
+
+.btn {
+  width: 100%;
+  padding: 16px;
+  border: none;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-top: 10px;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #00f5a0, #059669);
+  color: #000;
+}
+
+.btn-primary:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 245, 160, 0.5);
+}
+
+.btn-secondary {
+  background: transparent;
+  border: 2px solid #00d9f5;
+  color: #00d9f5;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.modal.active {
+  display: flex;
+}
+
+.modal-content {
+  background: rgba(30, 31, 60, 0.98);
+  border: 1px solid rgba(148, 163, 253, 0.35);
+  border-radius: 24px;
+  padding: 40px;
+  max-width: 500px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.modal-header h2 {
+  font-size: 1.8rem;
+  color: #feca57;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 2rem;
+  cursor: pointer;
+  padding: 0;
+  width: 40px;
+  height: 40px;
+}
+
+.input-group {
+  margin: 20px 0;
+}
+
+.input-group label {
+  display: block;
+  color: #8f8f9f;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 16px;
+  background: rgba(20, 21, 45, 0.8);
+  border: 2px solid rgba(148, 163, 253, 0.35);
+  border-radius: 12px;
+  color: #fff;
+  font-size: 1.1rem;
+}
+
+.input-group input:focus {
+  outline: none;
+  border-color: #00f5a0;
+}
+
+.balance-info {
+  display: flex;
+  justify-content: space-between;
+  color: #8f8f9f;
+  font-size: 0.9rem;
+  margin-top: 8px;
+}
+
+.balance-info span {
+  color: #00d9f5;
+  cursor: pointer;
+}
+
+.reward-preview {
+  background: rgba(0, 245, 160, 0.1);
+  border: 1px solid #00f5a0;
+  border-radius: 12px;
+  padding: 16px;
+  margin: 20px 0;
+}
+
+.reward-preview h4 {
+  color: #00f5a0;
+  margin-bottom: 12px;
+}
+
+.reward-item {
+  display: flex;
+  justify-content: space-between;
+  margin: 8px 0;
+  color: #cfe3ff;
+}
+
+.my-stakes {
+  margin: 40px 0;
+}
+
+.my-stakes h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.stake-item {
+  background: rgba(30, 31, 60, 0.95);
+  border: 1px solid rgba(148, 163, 253, 0.35);
+  border-radius: 16px;
+  padding: 24px;
+  margin: 16px 0;
+}
+
+.stake-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.stake-badge {
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.badge-flexible {
+  background: rgba(0, 217, 245, 0.2);
+  color: #00d9f5;
+}
+
+.badge-locked {
+  background: rgba(254, 202, 87, 0.2);
+  color: #feca57;
+}
+
+.stake-details {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin: 16px 0;
+}
+
+.detail-item {
+  padding: 12px;
+  background: rgba(20, 21, 45, 0.5);
+  border-radius: 8px;
+}
+
+.detail-label {
+  color: #8f8f9f;
+  font-size: 0.85rem;
+}
+
+.detail-value {
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-top: 4px;
+}
+
+.stake-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.status-msg {
+  padding: 12px;
+  border-radius: 12px;
+  margin: 16px 0;
+  text-align: center;
+  display: none;
+}
+
+.status-msg.success {
+  background: rgba(34, 197, 94, 0.15);
+  border: 1px solid #22c55e;
+  color: #22c55e;
+  display: block;
+}
+
+.status-msg.error {
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid #ef4444;
+  color: #ef4444;
+  display: block;
+}
+
+.status-msg.pending {
+  background: rgba(251, 191, 36, 0.15);
+  border: 1px solid #fbbf24;
+  color: #fbbf24;
+  display: block;
+}
+
+.bonus-info {
+  background: rgba(254, 202, 87, 0.1);
+  border: 1px solid #feca57;
+  border-radius: 12px;
+  padding: 16px;
+  margin: 20px 0;
+  font-size: 0.9rem;
+}
+
+.bonus-info h4 {
+  color: #feca57;
+  margin-bottom: 10px;
+}
+
+.bonus-info ul {
+  list-style: none;
+  color: #cfe3ff;
+}
+
+.bonus-info ul li {
+  padding: 4px 0;
+  padding-left: 20px;
+  position: relative;
+}
+
+.bonus-info ul li:before {
+  content: "⭐";
+  position: absolute;
+  left: 0;
+}
+
+@media (max-width: 768px) {
+  .header h1 {
+    font-size: 2rem;
+  }
+  
+  .staking-options {
+    grid-template-columns: 1fr;
+  }
+  
+  .stake-actions {
+    flex-direction: column;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header">
+    <h1>🚀 MNODY Staking</h1>
+    <p>Onchain Staking - Earn Passive Rewards</p>
+    <div style="display: flex; justify-content: center; gap: 15px; margin-top: 15px; flex-wrap: wrap;">
+      <span style="background: rgba(0, 245, 160, 0.2); padding: 8px 16px; border-radius: 20px; font-size: 0.9rem; border: 1px solid #00f5a0;">
+        ✅ 100% Onchain
+      </span>
+      <span style="background: rgba(0, 217, 245, 0.2); padding: 8px 16px; border-radius: 20px; font-size: 0.9rem; border: 1px solid #00d9f5;">
+        🔒 Secure 
+      </span>
+      <span style="background: rgba(254, 202, 87, 0.2); padding: 8px 16px; border-radius: 20px; font-size: 0.9rem; border: 1px solid #feca57;">
+        ⚡ Instant Rewards
+      </span>
+    </div>
+  </div>
+
+  <div class="wallet-connect">
+    <div id="walletSection">
+      <button class="btn btn-primary" onclick="connectWallet()" style="max-width: 300px;">Connect Wallet</button>
+    </div>
+  </div>
+
+  <div id="mainContent">
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-label">Total Value Locked</div>
+        <div class="stat-value" id="tvl">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Your Balance</div>
+        <div class="stat-value" id="userBalance">Connect Wallet</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Your Staked</div>
+        <div class="stat-value" id="userStaked">Connect Wallet</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Pending Rewards</div>
+        <div class="stat-value" id="pendingRewards">Connect Wallet</div>
+      </div>
+    </div>
+
+    <div class="bonus-info">
+      <h4>🎁 Onchain Staking Benefits</h4>
+      <ul>
+        <li id="earlyBirdBonus">Early Bird: +50% APY (First 30 days)</li>
+        <li>Size Bonus: Up to +30% APY (10M+ tokens)</li>
+        <li>Loyalty Bonus: Up to +20% APY (10+ compounds)</li>
+        <li>Maximum APY: 300% (with all bonuses)</li>
+        <li style="color: #00f5a0;">Smart Contract Verified ✓</li>
+        <li style="color: #00d9f5;">Non-Custodial - You Own Your Keys 🔐</li>
+      </ul>
+    </div>
+
+    <div class="staking-options">
+      <div class="stake-card featured" onclick="openStakeModal(0)">
+        <div style="text-align: center; color: #feca57; font-weight: 600; margin-bottom: 10px;">⭐ RECOMMENDED</div>
+        <div class="lock-period">30-Day Lock</div>
+        <div class="apy">70%</div>
+        <p style="color: #8f8f9f;">Base APY</p>
+        <ul class="features">
+          <li>30 days lock period</li>
+          <li>Higher base rewards</li>
+          <li>Early Bird +50% bonus</li>
+          <li>Compound for loyalty bonus</li>
+          <li style="color: #00f5a0;">🔗 Onchain Verified</li>
+        </ul>
+        <button class="btn btn-primary">Stake Now</button>
+      </div>
+
+      <div class="stake-card" onclick="openStakeModal(1)">
+        <div class="lock-period">Flexible</div>
+        <div class="apy">40%</div>
+        <p style="color: #8f8f9f;">Base APY</p>
+        <ul class="features">
+          <li>Unstake anytime</li>
+          <li>No lock period</li>
+          <li>Claim rewards anytime</li>
+          <li>Perfect for flexibility</li>
+          <li style="color: #00f5a0;">🔗 Onchain Verified</li>
+        </ul>
+        <button class="btn btn-secondary">Stake Now</button>
+      </div>
+    </div>
+
+    <div class="my-stakes">
+      <h2>📊 My Stakes</h2>
+      <div id="stakesList">
+        <p style="text-align: center; color: #8f8f9f; padding: 40px;">Connect wallet to view your stakes</p>
+      </div>
+    </div>
+
+    <div class="stat-card" style="margin-top: 30px;">
+      <h3 style="margin-bottom: 20px; color: #feca57;">📈 Onchain Statistics</h3>
+      <div style="background: rgba(0, 245, 160, 0.1); border: 1px solid #00f5a0; border-radius: 12px; padding: 15px; margin-bottom: 20px;">
+        <div style="display: flex; align-items: center; justify-content: center; gap: 10px;">
+          <span style="font-size: 1.2rem;">🔗</span>
+          <div style="text-align: left;">
+            <div style="color: #8f8f9f; font-size: 0.85rem;">Smart Contract Address</div>
+            <div style="color: #00f5a0; font-size: 0.9rem; font-family: monospace; word-break: break-all;">
+              ${0xe26026798f55db7296348dE7bE8c4348eF123B69}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="stats-grid">
+        <div>
+          <div class="stat-label">Total Staked</div>
+          <div class="stat-value" style="font-size: 1.5rem;" id="totalStaked">0</div>
+        </div>
+        <div>
+          <div class="stat-label">Reward Pool</div>
+          <div class="stat-value" style="font-size: 1.5rem;" id="rewardPool">0</div>
+        </div>
+        <div>
+          <div class="stat-label">Total Rewards Paid</div>
+          <div class="stat-value" style="font-size: 1.5rem;" id="totalPaid">0</div>
+        </div>
+        <div>
+          <div class="stat-label">Pool Health</div>
+          <div class="stat-value" style="font-size: 1.5rem;" id="poolHealth">0%</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Stake Modal -->
+<div class="modal" id="stakeModal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2 id="modalTitle">Stake MNODY</h2>
+      <button class="close-btn" onclick="closeModal()">&times;</button>
+    </div>
+
+    <div class="input-group">
+      <label>Amount to Stake</label>
+      <input type="number" id="stakeAmount" placeholder="Minimum: 1,000 MNODY" step="any">
+      <div class="balance-info">
+        <span>Balance: <span id="walletBalance">0</span> MNODY</span>
+        <span onclick="setMaxAmount()">MAX</span>
+      </div>
+      <div style="color: #8f8f9f; font-size: 0.85rem; margin-top: 5px;">
+        Min: 1,000 | Max: 75,000,000 MNODY
+      </div>
+    </div>
+
+    <div class="reward-preview">
+      <h4>Estimated Rewards (Base APY)</h4>
+      <div class="reward-item">
+        <span>Daily:</span>
+        <strong id="dailyReward">0 MNODY</strong>
+      </div>
+      <div class="reward-item">
+        <span>Monthly:</span>
+        <strong id="monthlyReward">0 MNODY</strong>
+      </div>
+      <div class="reward-item">
+        <span>Yearly:</span>
+        <strong id="yearlyReward">0 MNODY</strong>
+      </div>
+    </div>
+
+    <div style="background: rgba(0, 217, 245, 0.1); border: 1px solid #00d9f5; border-radius: 12px; padding: 12px; margin: 15px 0; font-size: 0.9rem; color: #cfe3ff;">
+      💡 Actual APY will be higher with active bonuses!
+    </div>
+
+    <button class="btn btn-primary" id="confirmStakeBtn" onclick="confirmStake()">Confirm Stake</button>
+    <div class="status-msg" id="statusMsg"></div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.umd.min.js"></script>
+<script>
+const STAKING_CONTRACT = "0xe26026798f55db7296348dE7bE8c4348eF123B69";
+
+const STAKING_ABI = [
+  "function stake(uint256 amount, uint8 planId) external",
+  "function withdraw(uint256 stakeIndex) external",
+  "function emergencyWithdraw(uint256 stakeIndex) external",
+  "function claimReward(uint256 stakeIndex) external",
+  "function claimAllRewards() external",
+  "function compoundReward(uint256 stakeIndex) external",
+  "function getUserStakes(address user) external view returns (tuple(uint256 id, uint256 amount, uint256 startTime, uint256 unlockTime, uint256 lastClaimTime, uint8 planId, bool isActive)[])",
+  "function calculateReward(address user, uint256 stakeIndex) external view returns (uint256)",
+  "function getTotalPendingRewards(address user) external view returns (uint256)",
+  "function getStats() external view returns (uint256, uint256, uint256, uint256, bool)",
+  "function getPoolHealth() external view returns (uint256, uint256, bool, bool, uint256)",
+  "function totalStaked() external view returns (uint256)",
+  "function rewardPool() external view returns (uint256)",
+  "function totalRewardsPaid() external view returns (uint256)",
+  "function LAUNCH_TIME() external view returns (uint256)",
+  "function EARLY_BIRD_PERIOD() external view returns (uint256)",
+  "function MNODY() external view returns (address)"
+];
+
+const ERC20_ABI = [
+  "function balanceOf(address account) external view returns (uint256)",
+  "function approve(address spender, uint256 amount) external returns (bool)",
+  "function allowance(address owner, address spender) external view returns (uint256)"
+];
+
+let provider, signer, account;
+let currentPlanId = 0;
+
+const PLANS = {
+  0: { name: "30-Day Lock", apy: 70, lockDays: 30 },
+  1: { name: "Flexible", apy: 40, lockDays: 0 }
+};
+
+async function connectWallet() {
+  if (!window.ethereum) {
+    alert('Please install MetaMask!');
+    return;
+  }
+
+  try {
+    provider = new ethers.BrowserProvider(window.ethereum);
+    await provider.send("eth_requestAccounts", []);
+    signer = await provider.getSigner();
+    account = await signer.getAddress();
+    
+    document.getElementById('walletSection').innerHTML = `
+      <div class="wallet-info">
+        <div style="display: flex; align-items: center; gap: 15px;">
+          <div>
+            <div style="color: #00f5a0; font-weight: 600; margin-bottom: 5px;">✅ Connected</div>
+            <div style="color: #8f8f9f; font-size: 0.9rem;">${account.slice(0, 6)}...${account.slice(-4)}</div>
+          </div>
+          <button class="btn btn-secondary" onclick="disconnectWallet()" style="width: auto; padding: 10px 20px; margin: 0;">
+            Disconnect
+          </button>
+        </div>
+      </div>
+    `;
+    
+    await loadStats();
+    setInterval(loadStats, 15000);
+  } catch (e) {
+    console.error(e);
+    alert('Failed to connect wallet');
+  }
+}
+
+function disconnectWallet() {
+  account = null;
+  provider = null;
+  signer = null;
+  
+  document.getElementById('walletSection').innerHTML = `
+    <button class="btn btn-primary" onclick="connectWallet()" style="max-width: 300px;">Connect Wallet</button>
+  `;
+  
+  // Reset user-specific data
+  document.getElementById('userBalance').textContent = 'Connect Wallet';
+  document.getElementById('userStaked').textContent = 'Connect Wallet';
+  document.getElementById('pendingRewards').textContent = 'Connect Wallet';
+  document.getElementById('walletBalance').textContent = '0';
+  document.getElementById('stakesList').innerHTML = '<p style="text-align: center; color: #8f8f9f; padding: 40px;">Connect wallet to view your stakes</p>';
+  
+  // Load global stats only
+  loadGlobalStatsOnly();
+}
+
+async function loadStats() {
+  if (!account) {
+    loadGlobalStatsOnly();
+    return;
+  }
+
+  try {
+    const stakingContract = new ethers.Contract(STAKING_CONTRACT, STAKING_ABI, provider);
+    
+    // Get token address from staking contract
+    const tokenAddress = await stakingContract.MNODY();
+    const tokenContract = new ethers.Contract(tokenAddress, ERC20_ABI, provider);
+
+    // Get balance from token contract
+    const balance = await tokenContract.balanceOf(account);
+    document.getElementById('userBalance').textContent = formatNumber(ethers.formatEther(balance)) + ' MNODY';
+    document.getElementById('walletBalance').textContent = formatNumber(ethers.formatEther(balance));
+
+    // Get user stakes
+    const stakes = await stakingContract.getUserStakes(account);
+    let totalUserStaked = 0n;
+    stakes.forEach(s => {
+      if (s.isActive) totalUserStaked += s.amount;
+    });
+    document.getElementById('userStaked').textContent = formatNumber(ethers.formatEther(totalUserStaked)) + ' MNODY';
+
+    // Get pending rewards
+    const pendingRewards = await stakingContract.getTotalPendingRewards(account);
+    document.getElementById('pendingRewards').textContent = formatNumber(ethers.formatEther(pendingRewards)) + ' MNODY';
+
+    // Load global stats
+    await loadGlobalStatsOnly();
+
+    // Load user stakes
+    await loadUserStakes(stakes);
+  } catch (e) {
+    console.error('Load stats error:', e);
+    alert('Error loading data. Please make sure you are on the correct network.');
+  }
+}
+
+async function loadGlobalStatsOnly() {
+  try {
+    // Check if we have provider, if not and MetaMask available, create read-only provider
+    let tempProvider = provider;
+    
+    if (!tempProvider && window.ethereum) {
+      tempProvider = new ethers.BrowserProvider(window.ethereum);
+    }
+    
+    // If still no provider, use a public RPC (you can add your RPC here)
+    if (!tempProvider) {
+      // For now, show placeholder text instead of trying to connect
+      document.getElementById('tvl').textContent = 'Loading...';
+      document.getElementById('totalStaked').textContent = 'Loading...';
+      document.getElementById('rewardPool').textContent = 'Loading...';
+      document.getElementById('totalPaid').textContent = 'Loading...';
+      document.getElementById('poolHealth').textContent = 'N/A';
+      document.getElementById('earlyBirdBonus').textContent = 'Connect wallet to view bonus status';
+      return;
+    }
+
+    const contract = new ethers.Contract(STAKING_CONTRACT, STAKING_ABI, tempProvider);
+
+    // Get global stats using individual functions instead of getStats()
+    const totalStaked = await contract.totalStaked();
+    const rewardPoolAmount = await contract.rewardPool();
+    const totalPaid = await contract.totalRewardsPaid();
+    
+    document.getElementById('tvl').textContent = formatNumber(ethers.formatEther(totalStaked)) + ' MNODY';
+    document.getElementById('totalStaked').textContent = formatNumber(ethers.formatEther(totalStaked)) + ' MNODY';
+    document.getElementById('rewardPool').textContent = formatNumber(ethers.formatEther(rewardPoolAmount)) + ' MNODY';
+    document.getElementById('totalPaid').textContent = formatNumber(ethers.formatEther(totalPaid)) + ' MNODY';
+
+    // Get pool health
+    try {
+      const poolHealth = await contract.getPoolHealth();
+      document.getElementById('poolHealth').textContent = poolHealth[1].toString() + '%';
+    } catch (e) {
+      // Calculate pool health manually if function fails
+      if (totalStaked > 0n) {
+        const ratio = (rewardPoolAmount * 100n) / totalStaked;
+        document.getElementById('poolHealth').textContent = ratio.toString() + '%';
+      } else {
+        document.getElementById('poolHealth').textContent = '0%';
+      }
+    }
+
+    // Check early bird bonus
+    try {
+      const launchTime = await contract.LAUNCH_TIME();
+      const earlyBirdPeriod = await contract.EARLY_BIRD_PERIOD();
+      const now = Math.floor(Date.now() / 1000);
+      if (now < Number(launchTime) + Number(earlyBirdPeriod)) {
+        const remaining = Number(launchTime) + Number(earlyBirdPeriod) - now;
+        const days = Math.floor(remaining / 86400);
+        document.getElementById('earlyBirdBonus').textContent = `Early Bird: +50% APY (${days} days remaining) 🔥`;
+      } else {
+        document.getElementById('earlyBirdBonus').textContent = 'Early Bird: Expired';
+      }
+    } catch (e) {
+      document.getElementById('earlyBirdBonus').textContent = 'Early Bird: Check after connecting wallet';
+    }
+  } catch (e) {
+    console.error('Load global stats error:', e);
+    // Set default values if contract not accessible
+    document.getElementById('tvl').textContent = 'Connect wallet';
+    document.getElementById('totalStaked').textContent = 'Connect wallet';
+    document.getElementById('rewardPool').textContent = 'Connect wallet';
+    document.getElementById('totalPaid').textContent = 'Connect wallet';
+    document.getElementById('poolHealth').textContent = 'N/A';
+    document.getElementById('earlyBirdBonus').textContent = 'Connect wallet to view bonus status';
+  }
+}
+
+async function loadUserStakes(stakes) {
+  const stakesList = document.getElementById('stakesList');
+  
+  if (!stakes || stakes.length === 0) {
+    stakesList.innerHTML = '<p style="text-align: center; color: #8f8f9f; padding: 40px;">No active stakes. Start staking to earn rewards!</p>';
+    return;
+  }
+
+  const contract = new ethers.Contract(STAKING_CONTRACT, STAKING_ABI, provider);
+  let html = '';
+
+  for (let i = 0; i < stakes.length; i++) {
+    const stake = stakes[i];
+    if (!stake.isActive) continue;
+
+    const reward = await contract.calculateReward(account, i);
+    const isLocked = stake.unlockTime > 0 && Date.now() / 1000 < Number(stake.unlockTime);
+    const planInfo = PLANS[stake.planId];
+    const unlockDate = stake.unlockTime > 0 ? new Date(Number(stake.unlockTime) * 1000) : null;
+
+    html += `
+      <div class="stake-item">
+        <div class="stake-item-header">
+          <h3>${planInfo.name}</h3>
+          <span class="stake-badge ${isLocked ? 'badge-locked' : 'badge-flexible'}">
+            ${isLocked ? '🔒 Locked' : '✅ Unlocked'}
+          </span>
+        </div>
+        <div class="stake-details">
+          <div class="detail-item">
+            <div class="detail-label">Staked Amount</div>
+            <div class="detail-value">${formatNumber(ethers.formatEther(stake.amount))} MNODY</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Base APY</div>
+            <div class="detail-value" style="color: #00f5a0">${planInfo.apy}%</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Pending Rewards</div>
+            <div class="detail-value" style="color: #feca57">${formatNumber(ethers.formatEther(reward))} MNODY</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Unlock Date</div>
+            <div class="detail-value">${unlockDate ? unlockDate.toLocaleDateString() : 'Anytime'}</div>
+          </div>
+        </div>
+        <div class="stake-actions">
+          <button class="btn btn-secondary" onclick="claimReward(${i})" ${Number(reward) === 0 ? 'disabled' : ''}>
+            💰 Claim
+          </button>
+          <button class="btn btn-primary" onclick="compoundReward(${i})" ${Number(reward) === 0 ? 'disabled' : ''}>
+            📈 Compound
+          </button>
+          <button class="btn ${isLocked ? 'btn-secondary' : 'btn-primary'}" onclick="withdrawStake(${i})">
+            ${isLocked ? '⚠️ Emergency' : '💸 Withdraw'}
+          </button>
+        </div>
+      </div>
+    `;
+  }
+
+  stakesList.innerHTML = html || '<p style="text-align: center; color: #8f8f9f; padding: 40px;">No active stakes</p>';
+}
+
+function openStakeModal(planId) {
+  if (!account) {
+    connectWallet();
+    return;
+  }
+
+  currentPlanId = planId;
+  const plan = PLANS[planId];
+  document.getElementById('modalTitle').textContent = `Stake MNODY - ${plan.name}`;
+  document.getElementById('stakeModal').classList.add('active');
+  document.getElementById('stakeAmount').value = '';
+  updateRewardPreview();
+}
+
+function closeModal() {
+  document.getElementById('stakeModal').classList.remove('active');
+}
+
+function setMaxAmount() {
+  const balance = document.getElementById('walletBalance').textContent.replace(/,/g, '');
+  const maxStake = 75000000;
+  const amount = Math.min(parseFloat(balance), maxStake);
+  document.getElementById('stakeAmount').value = amount;
+  updateRewardPreview();
+}
+
+document.getElementById('stakeAmount')?.addEventListener('input', updateRewardPreview);
+
+function updateRewardPreview() {
+  const amount = parseFloat(document.getElementById('stakeAmount').value) || 0;
+  const plan = PLANS[currentPlanId];
+  const apy = plan.apy;
+  
+  const daily = (amount * apy / 100) / 365;
+  const monthly = daily * 30;
+  const yearly = amount * apy / 100;
+
+  document.getElementById('dailyReward').textContent = daily.toFixed(2) + ' MNODY';
+  document.getElementById('monthlyReward').textContent = monthly.toFixed(2) + ' MNODY';
+  document.getElementById('yearlyReward').textContent = yearly.toFixed(2) + ' MNODY';
+}
+
+async function confirmStake() {
+  const amountInput = document.getElementById('stakeAmount').value;
+  if (!amountInput || parseFloat(amountInput) <= 0) {
+    showStatus('Please enter a valid amount', 'error');
+    return;
+  }
+
+  const amount = parseFloat(amountInput);
+  if (amount < 1000) {
+    showStatus('Minimum stake is 1,000 MNODY', 'error');
+    return;
+  }
+  if (amount > 75000000) {
+    showStatus('Maximum stake is 75,000,000 MNODY', 'error');
+    return;
+  }
+
+  try {
+    showStatus('Checking allowance...', 'pending');
+    
+    const stakingContract = new ethers.Contract(STAKING_CONTRACT, STAKING_ABI, signer);
+    const tokenAddress = await stakingContract.MNODY();
+    const tokenContract = new ethers.Contract(tokenAddress, ERC20_ABI, signer);
+    
+    const amountWei = ethers.parseEther(amountInput);
+    
+    const allowance = await tokenContract.allowance(account, STAKING_CONTRACT);
+
+    if (allowance < amountWei) {
+      showStatus('Please approve MNODY spending...', 'pending');
+      const approveTx = await tokenContract.approve(STAKING_CONTRACT, ethers.MaxUint256);
+      await approveTx.wait();
+    }
+
+    showStatus('Staking tokens...', 'pending');
+    const tx = await stakingContract.stake(amountWei, currentPlanId);
+    await tx.wait();
+
+    showStatus('Successfully staked! 🎉', 'success');
+    setTimeout(() => {
+      closeModal();
+      loadStats();
+    }, 2000);
+  } catch (e) {
+    console.error(e);
+    showStatus('Transaction failed: ' + (e.reason || e.message), 'error');
+  }
+}
+
+async function claimReward(stakeIndex) {
+  try {
+    showGlobalStatus('Claiming rewards...', 'pending');
+    const contract = new ethers.Contract(STAKING_CONTRACT, STAKING_ABI, signer);
+    const tx = await contract.claimReward(stakeIndex);
+    await tx.wait();
+    showGlobalStatus('Rewards claimed! 💰', 'success');
+    loadStats();
+  } catch (e) {
+    console.error(e);
+    showGlobalStatus('Failed to claim: ' + (e.reason || e.message), 'error');
+  }
+}
+
+async function compoundReward(stakeIndex) {
+  try {
+    showGlobalStatus('Compounding rewards...', 'pending');
+    const contract = new ethers.Contract(STAKING_CONTRACT, STAKING_ABI, signer);
+    const tx = await contract.compoundReward(stakeIndex);
+    await tx.wait();
+    showGlobalStatus('Rewards compounded! 📈', 'success');
+    loadStats();
+  } catch (e) {
+    console.error(e);
+    showGlobalStatus('Failed to compound: ' + (e.reason || e.message), 'error');
+  }
+}
+
+async function withdrawStake(stakeIndex) {
+  const stakes = await new ethers.Contract(STAKING_CONTRACT, STAKING_ABI, provider).getUserStakes(account);
+  const stake = stakes[stakeIndex];
+  const isLocked = stake.unlockTime > 0 && Date.now() / 1000 < Number(stake.unlockTime);
+
+  if (isLocked) {
+    if (!confirm('⚠️ This stake is still locked. Emergency withdrawal will forfeit your rewards. Continue?')) {
+      return;
+    }
+    try {
+      showGlobalStatus('Emergency withdrawing...', 'pending');
+      const contract = new ethers.Contract(STAKING_CONTRACT, STAKING_ABI, signer);
+      const tx = await contract.emergencyWithdraw(stakeIndex);
+      await tx.wait();
+      showGlobalStatus('Emergency withdrawal successful!', 'success');
+      loadStats();
+    } catch (e) {
+      console.error(e);
+      showGlobalStatus('Withdrawal failed: ' + (e.reason || e.message), 'error');
+    }
+  } else {
+    try {
+      showGlobalStatus('Withdrawing stake...', 'pending');
+      const contract = new ethers.Contract(STAKING_CONTRACT, STAKING_ABI, signer);
+      const tx = await contract.withdraw(stakeIndex);
+      await tx.wait();
+      showGlobalStatus('Withdrawal successful! 💸', 'success');
+      loadStats();
+    } catch (e) {
+      console.error(e);
+      showGlobalStatus('Withdrawal failed: ' + (e.reason || e.message), 'error');
+    }
+  }
+}
+
+function showStatus(msg, type) {
+  const status = document.getElementById('statusMsg');
+  status.textContent = msg;
+  status.className = 'status-msg ' + type;
+}
+
+function showGlobalStatus(msg, type) {
+  alert(msg);
+}
+
+function formatNumber(num) {
+  return parseFloat(num).toLocaleString('en-US', { maximumFractionDigits: 2 });
+}
+
+// Auto-connect on page load
+window.addEventListener('load', () => {
+  // Only load global stats if MetaMask is available
+  if (window.ethereum) {
+    loadGlobalStatsOnly();
+    
+    window.ethereum.request({ method: 'eth_accounts' }).then(accounts => {
+      if (accounts.length > 0) {
+        connectWallet();
+      }
+    }).catch(err => {
+      console.log('No accounts found:', err);
+    });
+  } else {
+    // MetaMask not installed
+    document.getElementById('tvl').textContent = 'Install MetaMask';
+    document.getElementById('totalStaked').textContent = 'Install MetaMask';
+    document.getElementById('rewardPool').textContent = 'Install MetaMask';
+    document.getElementById('totalPaid').textContent = 'Install MetaMask';
+    document.getElementById('poolHealth').textContent = 'N/A';
+  }
+});
+
+// Listen for account changes
+window.ethereum?.on('accountsChanged', () => {
+  location.reload();
+});
+
+window.ethereum?.on('chainChanged', () => {
+  location.reload();
+});
+</script>
+
+</body>
+</html>
