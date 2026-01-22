@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MNODY Swap - Multi-Chain</title>
+<title>MNODY Swap - Polygon</title>
 <style>
 * {
   margin: 0;
@@ -39,12 +39,31 @@ body {
   margin-bottom: 20px;
 }
 
-.header h2 {
+.logo-section {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo-section h2 {
   font-size: 24px;
   font-weight: 600;
 }
 
-.settings-btn {
+.polygon-badge {
+  background: linear-gradient(135deg, #8247e5, #6b21a8);
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.header-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.icon-btn {
   background: rgba(255, 255, 255, 0.1);
   border: none;
   color: #fff;
@@ -52,53 +71,82 @@ body {
   height: 40px;
   border-radius: 12px;
   cursor: pointer;
-  font-size: 20px;
+  font-size: 18px;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: all 0.2s;
 }
 
-.settings-btn:hover {
+.icon-btn:hover {
   background: rgba(255, 255, 255, 0.15);
 }
 
-.network-switcher {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 20px;
-  background: rgba(20, 21, 45, 0.8);
-  padding: 6px;
-  border-radius: 16px;
-}
-
-.network-btn {
-  flex: 1;
-  padding: 12px;
-  border: none;
-  border-radius: 12px;
-  background: transparent;
-  color: #8f8f9f;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s;
-  display: flex;
-  align-items: center;
+.settings-modal, .history-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 1000;
   justify-content: center;
-  gap: 8px;
+  align-items: center;
 }
 
-.network-btn.active {
-  background: linear-gradient(135deg, #8247e5, #6b21a8);
+.settings-modal.show, .history-modal.show {
+  display: flex;
+}
+
+.modal-content {
+  background: rgba(30, 31, 60, 0.98);
+  border-radius: 20px;
+  padding: 24px;
+  width: 90%;
+  max-width: 400px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.modal-header h3 {
+  font-size: 20px;
+}
+
+.close-btn {
+  background: transparent;
+  border: none;
   color: #fff;
+  font-size: 24px;
+  cursor: pointer;
 }
 
-.network-btn.active.arbitrum {
-  background: linear-gradient(135deg, #28a0f0, #1e88e5);
+.setting-row {
+  margin: 16px 0;
 }
 
-.network-btn:hover:not(.active) {
-  background: rgba(255, 255, 255, 0.05);
+.setting-label {
+  font-size: 14px;
+  color: #8f8f9f;
+  margin-bottom: 8px;
+}
+
+.setting-input {
+  width: 100%;
+  background: rgba(20, 21, 45, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 12px;
+  color: #fff;
+  font-size: 16px;
 }
 
 .contract-info {
@@ -115,6 +163,28 @@ body {
   color: #28a0f0;
   text-decoration: none;
   word-break: break-all;
+}
+
+.price-info {
+  background: rgba(255, 107, 157, 0.1);
+  border: 1px solid rgba(255, 107, 157, 0.3);
+  border-radius: 12px;
+  padding: 12px;
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.price-left {
+  font-size: 12px;
+  color: #8f8f9f;
+}
+
+.price-right {
+  font-size: 16px;
+  font-weight: 600;
+  color: #ff6b9d;
 }
 
 .swap-box {
@@ -194,12 +264,33 @@ body {
   font-size: 13px;
   color: #8f8f9f;
   margin-top: 8px;
-  text-align: right;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.balance span {
-  color: #00d9f5;
+.balance-left {
+  color: #8f8f9f;
+}
+
+.balance-right {
+  display: flex;
+  gap: 8px;
+}
+
+.balance-btn {
+  background: rgba(255, 107, 157, 0.15);
+  border: 1px solid rgba(255, 107, 157, 0.3);
+  color: #ff6b9d;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 11px;
   cursor: pointer;
+  transition: all 0.2s;
+}
+
+.balance-btn:hover {
+  background: rgba(255, 107, 157, 0.25);
 }
 
 .swap-arrow {
@@ -345,30 +436,132 @@ body {
 @keyframes spin {
   to { transform: rotate(360deg); }
 }
+
+.history-item {
+  background: rgba(20, 21, 45, 0.5);
+  border-radius: 12px;
+  padding: 12px;
+  margin-bottom: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.history-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.history-type {
+  font-weight: 600;
+  color: #22c55e;
+}
+
+.history-time {
+  font-size: 11px;
+  color: #8f8f9f;
+}
+
+.history-details {
+  font-size: 13px;
+  color: #fff;
+  margin: 4px 0;
+}
+
+.history-link {
+  font-size: 11px;
+  margin-top: 8px;
+}
+
+.history-link a {
+  color: #28a0f0;
+  text-decoration: none;
+}
+
+.no-history {
+  text-align: center;
+  color: #8f8f9f;
+  padding: 40px 20px;
+}
+
+.quick-amounts {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.quick-btn {
+  flex: 1;
+  background: rgba(130, 71, 229, 0.15);
+  border: 1px solid rgba(130, 71, 229, 0.3);
+  color: #8247e5;
+  padding: 8px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.quick-btn:hover {
+  background: rgba(130, 71, 229, 0.25);
+}
+
+.refresh-btn {
+  background: rgba(34, 197, 94, 0.15);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  color: #22c55e;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 11px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.refresh-btn:hover {
+  background: rgba(34, 197, 94, 0.25);
+}
 </style>
 </head>
 <body>
 
 <div class="swap-container">
   <div class="header">
-    <h2>MNODY Swap</h2>
-    <button class="settings-btn">⚙</button>
+    <div class="logo-section">
+      <h2>MNODY Swap</h2>
+      <span class="polygon-badge">🟣 Polygon</span>
+    </div>
+    <div class="header-actions">
+      <button class="icon-btn" onclick="openHistory()" title="Transaction History">📜</button>
+      <button class="icon-btn" onclick="openSettings()" title="Settings">⚙</button>
+    </div>
   </div>
 
-  <div class="network-switcher">
-    <button class="network-btn active" id="polygonBtn" onclick="switchNetwork('polygon')">
-      🟣 Polygon
-    </button>
-    <button class="network-btn" id="arbitrumBtn" onclick="switchNetwork('arbitrum')">
-      🔵 Arbitrum
-    </button>
-  </div>
-
-  <div class="contract-info" id="contractInfo">
-    <strong>MNODY:</strong>
-    <a href="https://polygonscan.com/address/0x0bacbf5c435c3b0546f7cdf66f960770c7ad912c" target="_blank" id="contractLink">
+  <div class="contract-info">
+    <strong>MNODY Contract:</strong>
+    <a href="https://polygonscan.com/address/0x0bacbf5c435c3b0546f7cdf66f960770c7ad912c" target="_blank">
       0x0bacbf5c435c3b0546f7cdf66f960770c7ad912c
     </a>
+  </div>
+
+  <div class="contract-info" style="background: rgba(130, 71, 229, 0.1); border-color: rgba(130, 71, 229, 0.3);">
+    <strong>📊 LP Pool:</strong>
+    <a href="https://polygonscan.com/address/0x3cEC491A74c924aaeb74DDe821653AaFEc7b94B9" target="_blank" style="color: #8247e5;">
+      QuickSwap MNODY/USDT
+    </a>
+    <div style="margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(130, 71, 229, 0.2);">
+      <strong>🔵 Arbitrum Swap:</strong>
+      <a href="https://app.camelot.exchange/?token1=0x608B84947d77310836cAa65024F1E164d9Ba8bc7&token2=0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9" target="_blank" style="color: #28a0f0;">
+        Trade on Camelot DEX
+      </a>
+    </div>
+  </div>
+
+  <div class="price-info">
+    <div class="price-left">
+      <div>Current MNODY Price</div>
+      <button class="refresh-btn" onclick="refreshPrice()">↻ Refresh</button>
+    </div>
+    <div class="price-right" id="currentPrice">$0.000000</div>
   </div>
 
   <div class="active-tx" id="activeTx">
@@ -381,14 +574,28 @@ body {
   <div class="swap-box">
     <div class="swap-label">From</div>
     <div class="token-select">
-      <div class="token-icon">M</div>
+      <div class="token-icon" id="fromIcon">M</div>
       <div class="token-info">
-        <div class="token-name">MNODY</div>
-        <div class="token-chain" id="fromChain">Polygon</div>
+        <div class="token-name" id="fromToken">MNODY</div>
+        <div class="token-chain">Polygon</div>
       </div>
     </div>
     <input type="number" class="amount-input" id="fromAmount" placeholder="0" step="any">
-    <div class="balance">Balance: <span id="mnodyBalance">0</span> MNODY</div>
+    <div class="balance">
+      <span class="balance-left">Balance: <span id="fromBalance">0</span></span>
+      <div class="balance-right">
+        <button class="balance-btn" onclick="setAmount(25)">25%</button>
+        <button class="balance-btn" onclick="setAmount(50)">50%</button>
+        <button class="balance-btn" onclick="setAmount(75)">75%</button>
+        <button class="balance-btn" onclick="setAmount(100)">MAX</button>
+      </div>
+    </div>
+    <div class="quick-amounts">
+      <button class="quick-btn" onclick="setQuickAmount(1000000)">1M</button>
+      <button class="quick-btn" onclick="setQuickAmount(5000000)">5M</button>
+      <button class="quick-btn" onclick="setQuickAmount(10000000)">10M</button>
+      <button class="quick-btn" onclick="setQuickAmount(15000000)">15M</button>
+    </div>
   </div>
 
   <div class="swap-arrow">
@@ -396,21 +603,23 @@ body {
   </div>
 
   <div class="swap-box">
-    <div class="swap-label">To</div>
+    <div class="swap-label">To (Estimated)</div>
     <div class="token-select">
-      <div class="token-icon" style="background: linear-gradient(135deg, #26a17b, #22c55e);">U</div>
+      <div class="token-icon" id="toIcon" style="background: linear-gradient(135deg, #26a17b, #22c55e);">U</div>
       <div class="token-info">
-        <div class="token-name">USDT</div>
-        <div class="token-chain" id="toChain">Polygon</div>
+        <div class="token-name" id="toToken">USDT</div>
+        <div class="token-chain">Polygon</div>
       </div>
     </div>
     <input type="number" class="amount-input" id="toAmount" placeholder="0" readonly>
-    <div class="balance">Balance: <span id="usdtBalance">0</span> USDT</div>
+    <div class="balance">
+      <span class="balance-left">Balance: <span id="toBalance">0</span></span>
+    </div>
   </div>
 
   <div class="swap-details" id="swapDetails" style="display: none;">
     <div class="detail-row">
-      <span class="detail-label">Rate</span>
+      <span class="detail-label">Exchange Rate</span>
       <span class="detail-value" id="rate">1 MNODY = 0.00 USDT</span>
     </div>
     <div class="detail-row">
@@ -418,8 +627,16 @@ body {
       <span class="detail-value" id="priceImpact">< 0.01%</span>
     </div>
     <div class="detail-row">
-      <span class="detail-label">Slippage</span>
-      <span class="detail-value">0.5%</span>
+      <span class="detail-label">Minimum Received</span>
+      <span class="detail-value" id="minReceived">0.00</span>
+    </div>
+    <div class="detail-row">
+      <span class="detail-label">Slippage Tolerance</span>
+      <span class="detail-value" id="slippageDisplay">0.5%</span>
+    </div>
+    <div class="detail-row">
+      <span class="detail-label">Network Fee</span>
+      <span class="detail-value">~$0.01 - $0.05</span>
     </div>
   </div>
 
@@ -428,34 +645,74 @@ body {
   <div class="status" id="statusMsg"></div>
 </div>
 
-<script src="https://unpkg.com/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+<!-- Settings Modal -->
+<div class="settings-modal" id="settingsModal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3>Settings</h3>
+      <button class="close-btn" onclick="closeSettings()">×</button>
+    </div>
+    <div class="setting-row">
+      <div class="setting-label">Slippage Tolerance (%)</div>
+      <input type="number" class="setting-input" id="slippageInput" value="0.5" step="0.1" min="0.1" max="50">
+      <div style="font-size: 11px; color: #8f8f9f; margin-top: 4px;">
+        Higher slippage = less chance of failure, but worse price
+      </div>
+    </div>
+    <div class="setting-row">
+      <div class="setting-label">Transaction Deadline (minutes)</div>
+      <input type="number" class="setting-input" id="deadlineInput" value="20" step="1" min="1" max="60">
+      <div style="font-size: 11px; color: #8f8f9f; margin-top: 4px;">
+        Transaction will revert if pending for longer than this
+      </div>
+    </div>
+    <div class="setting-row">
+      <div class="setting-label">Gas Price (Optional)</div>
+      <select class="setting-input" id="gasSpeed">
+        <option value="standard">Standard</option>
+        <option value="fast">Fast</option>
+        <option value="instant">Instant</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<!-- History Modal -->
+<div class="history-modal" id="historyModal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3>Transaction History</h3>
+      <button class="close-btn" onclick="closeHistory()">×</button>
+    </div>
+    <div id="historyList"></div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
 <script>
-const NETWORKS = {
-  polygon: {
-    chainId: '0x89',
-    name: 'Polygon',
-    rpc: 'https://polygon-rpc.com',
-    explorer: 'https://polygonscan.com',
-    mnody: '0x0bacbf5c435c3b0546f7cdf66f960770c7ad912c',
-    usdt: '0xc2132D05D31c914a87C6611C10748AEb04B58e8F',
-    router: '0xa5E0829CaCEd8fFDD4De3c43696c57F7D7A678ff', // QuickSwap
-    emoji: '🟣'
-  },
-  arbitrum: {
-    chainId: '0xa4b1',
-    name: 'Arbitrum',
-    rpc: 'https://arb1.arbitrum.io/rpc',
-    explorer: 'https://arbiscan.io',
-    mnody: '0x608B84947d77310836cAa65024F1E164d9Ba8bc7',
-    usdt: '0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9',
-    router: '0xc873fEcbd354f5A56E00E710B90EF4201db2448d', // Camelot
-    emoji: '🔵'
-  }
+const POLYGON = {
+  chainId: '0x89',
+  name: 'Polygon',
+  rpc: 'https://polygon-rpc.com',
+  explorer: 'https://polygonscan.com',
+  mnody: '0x0bacbf5c435c3b0546f7cdf66f960770c7ad912c',
+  usdt: '0xc2132D05D31c914a87C6611C10748AEb04B58e8F',
+  router: '0xa5E0829CaCEd8fFDD4De3c43696c57F7D7A678ff',
+  pair: '0x3cEC491A74c924aaeb74DDe821653AaFEc7b94B9'
 };
 
-let currentNetwork = 'polygon';
 let provider, signer, account;
 let swapDirection = 'mnodyToUsdt';
+let slippageTolerance = 0.5;
+let deadlineMinutes = 20;
+let gasSpeed = 'standard';
+let swapHistory = [];
+
+const PAIR_ABI = [
+  "function getReserves() view returns (uint112 reserve0, uint112 reserve1, uint32 blockTimestampLast)",
+  "function token0() view returns (address)",
+  "function token1() view returns (address)"
+];
 
 const ERC20_ABI = [
   "function balanceOf(address) view returns (uint256)",
@@ -469,67 +726,68 @@ const ROUTER_ABI = [
   "function swapExactTokensForTokens(uint amountIn, uint amountOutMin, address[] calldata path, address to, uint deadline) returns (uint[] memory amounts)"
 ];
 
-async function switchNetwork(network) {
-  currentNetwork = network;
-  
-  document.getElementById('polygonBtn').classList.toggle('active', network === 'polygon');
-  document.getElementById('arbitrumBtn').classList.toggle('active', network === 'arbitrum');
-  
-  if (network === 'arbitrum') {
-    document.getElementById('arbitrumBtn').classList.add('arbitrum');
+// Load history from localStorage
+function loadHistory() {
+  const saved = localStorage.getItem('mnody_swap_history');
+  if (saved) {
+    swapHistory = JSON.parse(saved);
   }
-  
-  const net = NETWORKS[network];
-  document.getElementById('contractInfo').innerHTML = `
-    <strong>MNODY:</strong>
-    <a href="${net.explorer}/address/${net.mnody}" target="_blank">
-      ${net.mnody}
-    </a>
-  `;
-  
-  document.getElementById('fromChain').textContent = net.name;
-  document.getElementById('toChain').textContent = net.name;
-  
-  if (account) {
-    try {
-      await window.ethereum.request({
-        method: 'wallet_switchEthereumChain',
-        params: [{ chainId: net.chainId }]
-      });
-      provider = new ethers.providers.Web3Provider(window.ethereum);
-      signer = provider.getSigner();
-      await updateBalances();
-    } catch (e) {
-      if (e.code === 4902) {
-        await addNetwork(network);
-      }
-    }
-  }
-  
-  document.getElementById('fromAmount').value = '';
-  document.getElementById('toAmount').value = '';
-  document.getElementById('swapDetails').style.display = 'none';
 }
 
-async function addNetwork(network) {
-  const net = NETWORKS[network];
-  await window.ethereum.request({
-    method: 'wallet_addEthereumChain',
-    params: [{
-      chainId: net.chainId,
-      chainName: net.name,
-      rpcUrls: [net.rpc],
-      nativeCurrency: { 
-        name: network === 'polygon' ? 'MATIC' : 'ETH',
-        symbol: network === 'polygon' ? 'MATIC' : 'ETH',
-        decimals: 18 
-      },
-      blockExplorerUrls: [net.explorer]
-    }]
-  });
-  provider = new ethers.providers.Web3Provider(window.ethereum);
-  signer = provider.getSigner();
-  await updateBalances();
+function saveHistory() {
+  localStorage.setItem('mnody_swap_history', JSON.stringify(swapHistory));
+}
+
+function openSettings() {
+  document.getElementById('settingsModal').classList.add('show');
+  document.getElementById('slippageInput').value = slippageTolerance;
+  document.getElementById('deadlineInput').value = deadlineMinutes;
+  document.getElementById('gasSpeed').value = gasSpeed;
+}
+
+function closeSettings() {
+  document.getElementById('settingsModal').classList.remove('show');
+  slippageTolerance = parseFloat(document.getElementById('slippageInput').value);
+  deadlineMinutes = parseInt(document.getElementById('deadlineInput').value);
+  gasSpeed = document.getElementById('gasSpeed').value;
+  document.getElementById('slippageDisplay').textContent = slippageTolerance + '%';
+  
+  const fromAmount = document.getElementById('fromAmount').value;
+  if (fromAmount && parseFloat(fromAmount) > 0 && account) {
+    getQuote(fromAmount);
+  }
+}
+
+function openHistory() {
+  loadHistory();
+  const historyList = document.getElementById('historyList');
+  
+  if (swapHistory.length === 0) {
+    historyList.innerHTML = '<div class="no-history">No transactions yet</div>';
+  } else {
+    historyList.innerHTML = swapHistory.map(item => `
+      <div class="history-item">
+        <div class="history-header">
+          <span class="history-type">${item.type}</span>
+          <span class="history-time">${item.time}</span>
+        </div>
+        <div class="history-details">
+          ${item.fromAmount} ${item.fromToken} → ${item.toAmount} ${item.toToken}
+        </div>
+        <div class="history-link">
+          <a href="${POLYGON.explorer}/tx/${item.hash}" target="_blank">
+            View on PolygonScan ↗
+          </a>
+        </div>
+      </div>
+    `).join('');
+  }
+  
+  document.getElementById('historyModal').classList.add('show');
+}
+
+function closeHistory() {
+  document.getElementById('historyModal').classList.remove('show');
 }
 
 async function connectWallet() {
@@ -538,16 +796,23 @@ async function connectWallet() {
     return false;
   }
 
-  const net = NETWORKS[currentNetwork];
-  
   try {
     await window.ethereum.request({
       method: 'wallet_switchEthereumChain',
-      params: [{ chainId: net.chainId }]
+      params: [{ chainId: POLYGON.chainId }]
     });
   } catch (e) {
     if (e.code === 4902) {
-      await addNetwork(currentNetwork);
+      await window.ethereum.request({
+        method: 'wallet_addEthereumChain',
+        params: [{
+          chainId: POLYGON.chainId,
+          chainName: POLYGON.name,
+          rpcUrls: [POLYGON.rpc],
+          nativeCurrency: { name: 'MATIC', symbol: 'MATIC', decimals: 18 },
+          blockExplorerUrls: [POLYGON.explorer]
+        }]
+      });
     }
   }
 
@@ -560,6 +825,7 @@ async function connectWallet() {
   document.getElementById('swapBtn').classList.remove('connect-btn');
   
   await updateBalances();
+  await refreshPrice();
   return true;
 }
 
@@ -567,182 +833,276 @@ async function updateBalances() {
   if (!account) return;
   
   try {
-    const net = NETWORKS[currentNetwork];
-    const mnodyContract = new ethers.Contract(net.mnody, ERC20_ABI, provider);
-    const usdtContract = new ethers.Contract(net.usdt, ERC20_ABI, provider);
+    const mnodyContract = new ethers.Contract(POLYGON.mnody, ERC20_ABI, provider);
+    const usdtContract = new ethers.Contract(POLYGON.usdt, ERC20_ABI, provider);
 
     const mnodyBal = await mnodyContract.balanceOf(account);
     const usdtBal = await usdtContract.balanceOf(account);
 
-    document.getElementById('mnodyBalance').textContent = ethers.utils.formatEther(mnodyBal);
-    document.getElementById('usdtBalance').textContent = ethers.utils.formatUnits(usdtBal, 6);
+    const mnodyFormatted = parseFloat(ethers.utils.formatEther(mnodyBal)).toFixed(2);
+    const usdtFormatted = parseFloat(ethers.utils.formatUnits(usdtBal, 6)).toFixed(2);
+
+    if (swapDirection === 'mnodyToUsdt') {
+      document.getElementById('fromBalance').textContent = mnodyFormatted + ' MNODY';
+      document.getElementById('toBalance').textContent = usdtFormatted + ' USDT';
+    } else {
+      document.getElementById('fromBalance').textContent = usdtFormatted + ' USDT';
+      document.getElementById('toBalance').textContent = mnodyFormatted + ' MNODY';
+    }
   } catch (e) {
     console.error('Balance fetch error:', e);
   }
 }
 
+async function refreshPrice() {
+  if (!provider) {
+    provider = new ethers.providers.JsonRpcProvider(POLYGON.rpc);
+  }
+  
+  try {
+    const pairContract = new ethers.Contract(POLYGON.pair, PAIR_ABI, provider);
+    const reserves = await pairContract.getReserves();
+    const token0 = await pairContract.token0();
+    
+    let mnodyReserve, usdtReserve;
+    
+    // Check which token is token0
+    if (token0.toLowerCase() === POLYGON.mnody.toLowerCase()) {
+      mnodyReserve = reserves[0];
+      usdtReserve = reserves[1];
+    } else {
+      mnodyReserve = reserves[1];
+      usdtReserve = reserves[0];
+}
+// Calculate price: USDT reserve / MNODY reserve
+const mnodyReserveFormatted = parseFloat(ethers.utils.formatEther(mnodyReserve));
+const usdtReserveFormatted = parseFloat(ethers.utils.formatUnits(usdtReserve, 6));
+
+const price = usdtReserveFormatted / mnodyReserveFormatted;
+document.getElementById('currentPrice').textContent = '$' + price.toFixed(8);
+} catch (e) {
+console.error('Price fetch error:', e);
+document.getElementById('currentPrice').textContent = '$0.000000';
+}
+}
+function setAmount(percentage) {
+if (!account) {
+showStatus('Please connect wallet first', 'error');
+return;
+}
+const balanceText = document.getElementById('fromBalance').textContent;
+const balanceValue = parseFloat(balanceText.split(' ')[0]);
+if (balanceValue > 0) {
+const amount = (balanceValue * percentage / 100).toFixed(2);
+document.getElementById('fromAmount').value = amount;
+getQuote(amount);
+}
+}
+function setQuickAmount(amount) {
+document.getElementById('fromAmount').value = amount;
+if (account) {
+getQuote(amount);
+}
+}
 async function getQuote(amountIn) {
-  if (!amountIn || amountIn <= 0) return;
+if (!amountIn || amountIn <= 0) return;
+if (!provider) {
+provider = new ethers.providers.JsonRpcProvider(POLYGON.rpc);
+}
+try {
+const router = new ethers.Contract(POLYGON.router, ROUTER_ABI, provider);
+const A = swapDirection === 'mnodyToUsdt' ? POLYGON.mnody : POLYGON.usdt;
+const B = swapDirection === 'mnodyToUsdt' ? POLYGON.usdt : POLYGON.mnody;
+const path = [A, B];
 
-  try {
-    const net = NETWORKS[currentNetwork];
-    const router = new ethers.Contract(net.router, ROUTER_ABI, provider);
-    const path = swapDirection === 'mnodyToUsdt' 
-      ? [net.mnody, net.usdt]
-      : [net.usdt, net.mnody];
+const decimalsIn = swapDirection === 'mnodyToUsdt' ? 18 : 6;
+const decimalsOut = swapDirection === 'mnodyToUsdt' ? 6 : 18;
 
-    const decimalsIn = swapDirection === 'mnodyToUsdt' ? 18 : 6;
-    const decimalsOut = swapDirection === 'mnodyToUsdt' ? 6 : 18;
-    
-    const amountInWei = ethers.utils.parseUnits(amountIn.toString(), decimalsIn);
-    const amounts = await router.getAmountsOut(amountInWei, path);
-    const amountOut = ethers.utils.formatUnits(amounts[1], decimalsOut);
+const amountInWei = ethers.utils.parseUnits(amountIn.toString(), decimalsIn);
+const amounts = await router.getAmountsOut(amountInWei, path);
+const amountOut = ethers.utils.formatUnits(amounts[1], decimalsOut);
 
-    if (swapDirection === 'mnodyToUsdt') {
-      document.getElementById('toAmount').value = parseFloat(amountOut).toFixed(6);
-      document.getElementById('rate').textContent = `1 MNODY = ${(parseFloat(amountOut) / amountIn).toFixed(8)} USDT`;
-    } else {
-      document.getElementById('toAmount').value = parseFloat(amountOut).toFixed(2);
-      document.getElementById('rate').textContent = `1 USDT = ${(parseFloat(amountOut) / amountIn).toFixed(2)} MNODY`;
-    }
+const formattedOut = parseFloat(amountOut).toFixed(decimalsOut === 6 ? 6 : 2);
+document.getElementById('toAmount').value = formattedOut;
 
-    document.getElementById('swapDetails').style.display = 'block';
-    document.getElementById('swapBtn').textContent = 'Swap';
-    document.getElementById('swapBtn').disabled = false;
-  } catch (e) {
-    console.error('Quote error:', e);
-    document.getElementById('toAmount').value = '0';
-  }
+if (swapDirection === 'mnodyToUsdt') {
+  document.getElementById('rate').textContent = `1 MNODY = ${(parseFloat(amountOut) / amountIn).toFixed(8)} USDT`;
+} else {
+  document.getElementById('rate').textContent = `1 USDT = ${(parseFloat(amountOut) / amountIn).toFixed(2)} MNODY`;
 }
 
+const minReceived = (parseFloat(amountOut) * (1 - slippageTolerance / 100)).toFixed(decimalsOut === 6 ? 6 : 2);
+document.getElementById('minReceived').textContent = minReceived + (swapDirection === 'mnodyToUsdt' ? ' USDT' : ' MNODY');
+
+document.getElementById('swapDetails').style.display = 'block';
+document.getElementById('swapBtn').textContent = 'Swap';
+document.getElementById('swapBtn').disabled = false;
+} catch (e) {
+console.error('Quote error:', e);
+document.getElementById('toAmount').value = '0';
+showStatus('Unable to get quote. Check liquidity.', 'error');
+}
+}
 document.getElementById('fromAmount').addEventListener('input', (e) => {
-  const val = e.target.value;
-  if (val && parseFloat(val) > 0 && account) {
-    getQuote(val);
-  } else {
-    document.getElementById('toAmount').value = '';
-    document.getElementById('swapDetails').style.display = 'none';
-  }
+const val = e.target.value;
+if (val && parseFloat(val) > 0) {
+getQuote(val);
+} else {
+document.getElementById('toAmount').value = '';
+document.getElementById('swapDetails').style.display = 'none';
+}
 });
-
 function reverseSwap() {
-  swapDirection = swapDirection === 'mnodyToUsdt' ? 'usdtToMnody' : 'mnodyToUsdt';
-  
-  const fromBox = document.querySelectorAll('.swap-box')[0];
-  const toBox = document.querySelectorAll('.swap-box')[1];
-  const parent = fromBox.parentNode;
-  const arrow = document.querySelector('.swap-arrow');
-  
-  parent.insertBefore(toBox, fromBox);
-  parent.insertBefore(arrow, fromBox);
-  
-  document.getElementById('fromAmount').value = '';
-  document.getElementById('toAmount').value = '';
-  document.getElementById('swapDetails').style.display = 'none';
+swapDirection = swapDirection === 'mnodyToUsdt' ? 'usdtToMnody' : 'mnodyToUsdt';
+if (swapDirection === 'mnodyToUsdt') {
+document.getElementById('fromToken').textContent = 'MNODY';
+document.getElementById('toToken').textContent = 'USDT';
+document.getElementById('fromIcon').textContent = 'M';
+document.getElementById('fromIcon').style.background = 'linear-gradient(135deg, #ff6b9d, #feca57)';
+document.getElementById('toIcon').textContent = 'U';
+document.getElementById('toIcon').style.background = 'linear-gradient(135deg, #26a17b, #22c55e)';
+} else {
+document.getElementById('fromToken').textContent = 'USDT';
+document.getElementById('toToken').textContent = 'MNODY';
+document.getElementById('fromIcon').textContent = 'U';
+document.getElementById('fromIcon').style.background = 'linear-gradient(135deg, #26a17b, #22c55e)';
+document.getElementById('toIcon').textContent = 'M';
+document.getElementById('toIcon').style.background = 'linear-gradient(135deg, #ff6b9d, #feca57)';
 }
-
+document.getElementById('fromAmount').value = '';
+document.getElementById('toAmount').value = '';
+document.getElementById('swapDetails').style.display = 'none';
+if (account) {
+updateBalances();
+}
+}
 async function handleSwap() {
-  const btn = document.getElementById('swapBtn');
-  
-  if (btn.textContent === 'Connect Wallet') {
-    await connectWallet();
-    return;
-  }
+const btn = document.getElementById('swapBtn');
+if (btn.textContent === 'Connect Wallet') {
+await connectWallet();
+return;
+}
+const amountIn = document.getElementById('fromAmount').value;
+if (!amountIn || parseFloat(amountIn) <= 0) {
+showStatus('Please enter an amount', 'error');
+return;
+}
+try {
+showActiveTx();
+showStatus('Checking allowance...', 'pending');
+const tokenIn = swapDirection === 'mnodyToUsdt' ? POLYGON.mnody : POLYGON.usdt;
+const decimalsIn = swapDirection === 'mnodyToUsdt' ? 18 : 6;
+const amountInWei = ethers.utils.parseUnits(amountIn, decimalsIn);
 
-  const amountIn = document.getElementById('fromAmount').value;
-  if (!amountIn || parseFloat(amountIn) <= 0) {
-    showStatus('Please enter an amount', 'error');
-    return;
-  }
+const tokenContract = new ethers.Contract(tokenIn, ERC20_ABI, signer);
+const allowance = await tokenContract.allowance(account, POLYGON.router);
 
-  try {
-    showActiveTx();
-    showStatus('Checking allowance...', 'pending');
-
-    const net = NETWORKS[currentNetwork];
-    const tokenIn = swapDirection === 'mnodyToUsdt' ? net.mnody : net.usdt;
-    const decimalsIn = swapDirection === 'mnodyToUsdt' ? 18 : 6;
-    const amountInWei = ethers.utils.parseUnits(amountIn, decimalsIn);
-
-    const tokenContract = new ethers.Contract(tokenIn, ERC20_ABI, signer);
-    const allowance = await tokenContract.allowance(account, net.router);
-
-    if (allowance.lt(amountInWei)) {
-      showStatus('Please approve token spending...', 'pending');
-      const approveTx = await tokenContract.approve(net.router, ethers.constants.MaxUint256);
-      showStatus('Approving... Please wait', 'pending');
-      await approveTx.wait();
-    }
-
-    showStatus('Executing swap...', 'pending');
-
-    const router = new ethers.Contract(net.router, ROUTER_ABI, signer);
-    const path = swapDirection === 'mnodyToUsdt'
-      ? [net.mnody, net.usdt]
-      : [net.usdt, net.mnody];
-
-    const amountOut = document.getElementById('toAmount').value;
-    const decimalsOut = swapDirection === 'mnodyToUsdt' ? 6 : 18;
-    const amountOutMin = ethers.utils.parseUnits((parseFloat(amountOut) * 0.995).toFixed(decimalsOut), decimalsOut);
-    
-    const deadline = Math.floor(Date.now() / 1000) + 60 * 20;
-
-    const tx = await router.swapExactTokensForTokens(
-      amountInWei,
-      amountOutMin,
-      path,
-      account,
-      deadline,
-      { gasLimit: 300000 }
-    );
-
-    showStatus('Transaction sent! Waiting for confirmation...', 'pending');
-    const receipt = await tx.wait();
-
-    hideActiveTx();
-    showStatus(`✅ Swap successful! <a href="${net.explorer}/tx/${receipt.transactionHash}" target="_blank" style="color:#00d9f5;text-decoration:underline">View Transaction</a>`, 'success');
-
-    document.getElementById('fromAmount').value = '';
-    document.getElementById('toAmount').value = '';
-    document.getElementById('swapDetails').style.display = 'none';
-    
-    await updateBalances();
-  } catch (e) {
-    console.error('Swap error:', e);
-    hideActiveTx();
-    
-    if (e.code === 4001) {
-      showStatus('Transaction rejected by user', 'error');
-    } else {
-      showStatus('Swap failed: ' + (e.reason || e.message), 'error');
-    }
-  }
+if (allowance.lt(amountInWei)) {
+  showStatus('Please approve token spending...', 'pending');
+  const approveTx = await tokenContract.approve(POLYGON.router, ethers.constants.MaxUint256);
+  showStatus('Approving... Please wait', 'pending');
+  await approveTx.wait();
 }
 
+showStatus('Executing swap...', 'pending');
+
+const router = new ethers.Contract(POLYGON.router, ROUTER_ABI, signer);
+const A = swapDirection === 'mnodyToUsdt' ? POLYGON.mnody : POLYGON.usdt;
+const B = swapDirection === 'mnodyToUsdt' ? POLYGON.usdt : POLYGON.mnody;
+const path = [A, B];
+
+const amountOut = document.getElementById('toAmount').value;
+const decimalsOut = swapDirection === 'mnodyToUsdt' ? 6 : 18;
+const slippageMultiplier = 1 - (slippageTolerance / 100);
+const amountOutMin = ethers.utils.parseUnits(
+  (parseFloat(amountOut) * slippageMultiplier).toFixed(decimalsOut), 
+  decimalsOut
+);
+
+const deadline = Math.floor(Date.now() / 1000) + 60 * deadlineMinutes;
+
+let gasLimit = 300000;
+if (gasSpeed === 'fast') gasLimit = 350000;
+if (gasSpeed === 'instant') gasLimit = 400000;
+
+const tx = await router.swapExactTokensForTokens(
+  amountInWei,
+  amountOutMin,
+  path,
+  account,
+  deadline,
+  { gasLimit }
+);
+
+showStatus('Transaction sent! Waiting for confirmation...', 'pending');
+const receipt = await tx.wait();
+
+hideActiveTx();
+showStatus(`✅ Swap successful! <a href="${POLYGON.explorer}/tx/${receipt.transactionHash}" target="_blank" style="color:#00d9f5;text-decoration:underline">View Transaction</a>`, 'success');
+
+// Add to history
+const historyItem = {
+  type: swapDirection === 'mnodyToUsdt' ? 'MNODY → USDT' : 'USDT → MNODY',
+  fromAmount: amountIn,
+  fromToken: swapDirection === 'mnodyToUsdt' ? 'MNODY' : 'USDT',
+  toAmount: amountOut,
+  toToken: swapDirection === 'mnodyToUsdt' ? 'USDT' : 'MNODY',
+  hash: receipt.transactionHash,
+  time: new Date().toLocaleString()
+};
+swapHistory.unshift(historyItem);
+if (swapHistory.length > 10) swapHistory.pop();
+saveHistory();
+
+document.getElementById('fromAmount').value = '';
+document.getElementById('toAmount').value = '';
+document.getElementById('swapDetails').style.display = 'none';
+
+await updateBalances();
+await refreshPrice();
+} catch (e) {
+console.error('Swap error:', e);
+hideActiveTx();
+if (e.code === 4001) {
+  showStatus('Transaction rejected by user', 'error');
+} else {
+  showStatus('Swap failed: ' + (e.reason || e.message), 'error');
+}
+}
+}
 function showStatus(msg, type) {
-  const status = document.getElementById('statusMsg');
-  status.innerHTML = msg;
-  status.className = 'status ' + type;
+const status = document.getElementById('statusMsg');
+status.innerHTML = msg;
+status.className = 'status ' + type;
 }
-
 function showActiveTx() {
-  document.getElementById('activeTx').classList.add('show');
+document.getElementById('activeTx').classList.add('show');
 }
-
 function hideActiveTx() {
-  setTimeout(() => {
-    document.getElementById('activeTx').classList.remove('show');
-  }, 2000);
+setTimeout(() => {
+document.getElementById('activeTx').classList.remove('show');
+}, 2000);
 }
-
+// Auto-refresh price every 30 seconds
+setInterval(() => {
+if (provider) {
+refreshPrice();
+}
+}, 30000);
+// Initialize
+loadHistory();
 if (window.ethereum) {
-  window.ethereum.request({ method: 'eth_accounts' }).then(accounts => {
-    if (accounts.length > 0) {
-      connectWallet();
-    }
-  });
+window.ethereum.request({ method: 'eth_accounts' }).then(accounts => {
+if (accounts.length > 0) {
+connectWallet();
+} else {
+refreshPrice();
+}
+});
+} else {
+refreshPrice();
 }
 </script>
-
 </body>
 </html>
+```
