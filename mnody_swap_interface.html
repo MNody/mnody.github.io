@@ -150,8 +150,8 @@ body {
 }
 
 .contract-info {
-  background: rgba(40, 160, 240, 0.1);
-  border: 1px solid rgba(40, 160, 240, 0.3);
+  background: rgba(130, 71, 229, 0.1);
+  border: 1px solid rgba(130, 71, 229, 0.3);
   border-radius: 12px;
   padding: 12px;
   margin-bottom: 16px;
@@ -160,7 +160,7 @@ body {
 }
 
 .contract-info a {
-  color: #28a0f0;
+  color: #8247e5;
   text-decoration: none;
   word-break: break-all;
 }
@@ -473,7 +473,7 @@ body {
 }
 
 .history-link a {
-  color: #28a0f0;
+  color: #8247e5;
   text-decoration: none;
 }
 
@@ -527,7 +527,7 @@ body {
 <div class="swap-container">
   <div class="header">
     <div class="logo-section">
-      <h2>MNODY Swap</h2>
+      <h2>🐕 MNODY Swap</h2>
       <span class="polygon-badge">🟣 Polygon</span>
     </div>
     <div class="header-actions">
@@ -536,22 +536,16 @@ body {
     </div>
   </div>
 
+  <!-- Contract Info - Polygon only -->
   <div class="contract-info">
-    <strong>MNODY Contract:</strong>
+    <strong>MNODY Contract (Polygon):</strong><br>
     <a href="https://polygonscan.com/address/0x0bacbf5c435c3b0546f7cdf66f960770c7ad912c" target="_blank">
       0x0bacbf5c435c3b0546f7cdf66f960770c7ad912c
     </a>
-  </div>
-
-  <div class="contract-info" style="background: rgba(130, 71, 229, 0.1); border-color: rgba(130, 71, 229, 0.3);">
-    <strong>📊 LP Pool:</strong>
-    <a href="https://polygonscan.com/address/0x3cEC491A74c924aaeb74DDe821653AaFEc7b94B9" target="_blank" style="color: #8247e5;">
-      QuickSwap MNODY/USDT
-    </a>
     <div style="margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(130, 71, 229, 0.2);">
-      <strong>🔵 Arbitrum Swap:</strong>
-      <a href="https://app.camelot.exchange/?token1=0x608B84947d77310836cAa65024F1E164d9Ba8bc7&token2=0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9" target="_blank" style="color: #28a0f0;">
-        Trade on Camelot DEX
+      <strong>📊 LP Pool:</strong>
+      <a href="https://polygonscan.com/address/0x3cEC491A74c924aaeb74DDe821653AaFEc7b94B9" target="_blank">
+        QuickSwap MNODY/USDT
       </a>
     </div>
   </div>
@@ -667,7 +661,7 @@ body {
       </div>
     </div>
     <div class="setting-row">
-      <div class="setting-label">Gas Price (Optional)</div>
+      <div class="setting-label">Gas Price</div>
       <select class="setting-input" id="gasSpeed">
         <option value="standard">Standard</option>
         <option value="fast">Fast</option>
@@ -726,12 +720,9 @@ const ROUTER_ABI = [
   "function swapExactTokensForTokens(uint amountIn, uint amountOutMin, address[] calldata path, address to, uint deadline) returns (uint[] memory amounts)"
 ];
 
-// Load history from localStorage
 function loadHistory() {
   const saved = localStorage.getItem('mnody_swap_history');
-  if (saved) {
-    swapHistory = JSON.parse(saved);
-  }
+  if (saved) swapHistory = JSON.parse(saved);
 }
 
 function saveHistory() {
@@ -751,17 +742,13 @@ function closeSettings() {
   deadlineMinutes = parseInt(document.getElementById('deadlineInput').value);
   gasSpeed = document.getElementById('gasSpeed').value;
   document.getElementById('slippageDisplay').textContent = slippageTolerance + '%';
-  
   const fromAmount = document.getElementById('fromAmount').value;
-  if (fromAmount && parseFloat(fromAmount) > 0 && account) {
-    getQuote(fromAmount);
-  }
+  if (fromAmount && parseFloat(fromAmount) > 0 && account) getQuote(fromAmount);
 }
 
 function openHistory() {
   loadHistory();
   const historyList = document.getElementById('historyList');
-  
   if (swapHistory.length === 0) {
     historyList.innerHTML = '<div class="no-history">No transactions yet</div>';
   } else {
@@ -775,14 +762,11 @@ function openHistory() {
           ${item.fromAmount} ${item.fromToken} → ${item.toAmount} ${item.toToken}
         </div>
         <div class="history-link">
-          <a href="${POLYGON.explorer}/tx/${item.hash}" target="_blank">
-            View on PolygonScan ↗
-          </a>
+          <a href="${POLYGON.explorer}/tx/${item.hash}" target="_blank">View on PolygonScan ↗</a>
         </div>
       </div>
     `).join('');
   }
-  
   document.getElementById('historyModal').classList.add('show');
 }
 
@@ -795,7 +779,6 @@ async function connectWallet() {
     showStatus('Please install MetaMask', 'error');
     return false;
   }
-
   try {
     await window.ethereum.request({
       method: 'wallet_switchEthereumChain',
@@ -815,15 +798,12 @@ async function connectWallet() {
       });
     }
   }
-
   provider = new ethers.providers.Web3Provider(window.ethereum);
   const accounts = await provider.send("eth_requestAccounts", []);
   account = accounts[0];
   signer = provider.getSigner();
-
   document.getElementById('swapBtn').textContent = 'Enter Amount';
   document.getElementById('swapBtn').classList.remove('connect-btn');
-  
   await updateBalances();
   await refreshPrice();
   return true;
@@ -831,17 +811,13 @@ async function connectWallet() {
 
 async function updateBalances() {
   if (!account) return;
-  
   try {
     const mnodyContract = new ethers.Contract(POLYGON.mnody, ERC20_ABI, provider);
     const usdtContract = new ethers.Contract(POLYGON.usdt, ERC20_ABI, provider);
-
     const mnodyBal = await mnodyContract.balanceOf(account);
     const usdtBal = await usdtContract.balanceOf(account);
-
     const mnodyFormatted = parseFloat(ethers.utils.formatEther(mnodyBal)).toFixed(2);
     const usdtFormatted = parseFloat(ethers.utils.formatUnits(usdtBal, 6)).toFixed(2);
-
     if (swapDirection === 'mnodyToUsdt') {
       document.getElementById('fromBalance').textContent = mnodyFormatted + ' MNODY';
       document.getElementById('toBalance').textContent = usdtFormatted + ' USDT';
@@ -855,254 +831,211 @@ async function updateBalances() {
 }
 
 async function refreshPrice() {
-  if (!provider) {
-    provider = new ethers.providers.JsonRpcProvider(POLYGON.rpc);
-  }
-  
+  if (!provider) provider = new ethers.providers.JsonRpcProvider(POLYGON.rpc);
   try {
     const pairContract = new ethers.Contract(POLYGON.pair, PAIR_ABI, provider);
     const reserves = await pairContract.getReserves();
     const token0 = await pairContract.token0();
-    
     let mnodyReserve, usdtReserve;
-    
-    // Check which token is token0
     if (token0.toLowerCase() === POLYGON.mnody.toLowerCase()) {
       mnodyReserve = reserves[0];
       usdtReserve = reserves[1];
     } else {
       mnodyReserve = reserves[1];
       usdtReserve = reserves[0];
+    }
+    const mnodyReserveFormatted = parseFloat(ethers.utils.formatEther(mnodyReserve));
+    const usdtReserveFormatted = parseFloat(ethers.utils.formatUnits(usdtReserve, 6));
+    const price = usdtReserveFormatted / mnodyReserveFormatted;
+    document.getElementById('currentPrice').textContent = '$' + price.toFixed(8);
+  } catch (e) {
+    console.error('Price fetch error:', e);
+    document.getElementById('currentPrice').textContent = '$0.000000';
+  }
 }
-// Calculate price: USDT reserve / MNODY reserve
-const mnodyReserveFormatted = parseFloat(ethers.utils.formatEther(mnodyReserve));
-const usdtReserveFormatted = parseFloat(ethers.utils.formatUnits(usdtReserve, 6));
 
-const price = usdtReserveFormatted / mnodyReserveFormatted;
-document.getElementById('currentPrice').textContent = '$' + price.toFixed(8);
-} catch (e) {
-console.error('Price fetch error:', e);
-document.getElementById('currentPrice').textContent = '$0.000000';
-}
-}
 function setAmount(percentage) {
-if (!account) {
-showStatus('Please connect wallet first', 'error');
-return;
+  if (!account) { showStatus('Please connect wallet first', 'error'); return; }
+  const balanceText = document.getElementById('fromBalance').textContent;
+  const balanceValue = parseFloat(balanceText.split(' ')[0]);
+  if (balanceValue > 0) {
+    const amount = (balanceValue * percentage / 100).toFixed(2);
+    document.getElementById('fromAmount').value = amount;
+    getQuote(amount);
+  }
 }
-const balanceText = document.getElementById('fromBalance').textContent;
-const balanceValue = parseFloat(balanceText.split(' ')[0]);
-if (balanceValue > 0) {
-const amount = (balanceValue * percentage / 100).toFixed(2);
-document.getElementById('fromAmount').value = amount;
-getQuote(amount);
-}
-}
+
 function setQuickAmount(amount) {
-document.getElementById('fromAmount').value = amount;
-if (account) {
-getQuote(amount);
+  document.getElementById('fromAmount').value = amount;
+  if (account) getQuote(amount);
 }
-}
+
 async function getQuote(amountIn) {
-if (!amountIn || amountIn <= 0) return;
-if (!provider) {
-provider = new ethers.providers.JsonRpcProvider(POLYGON.rpc);
+  if (!amountIn || amountIn <= 0) return;
+  if (!provider) provider = new ethers.providers.JsonRpcProvider(POLYGON.rpc);
+  try {
+    const router = new ethers.Contract(POLYGON.router, ROUTER_ABI, provider);
+    const A = swapDirection === 'mnodyToUsdt' ? POLYGON.mnody : POLYGON.usdt;
+    const B = swapDirection === 'mnodyToUsdt' ? POLYGON.usdt : POLYGON.mnody;
+    const decimalsIn = swapDirection === 'mnodyToUsdt' ? 18 : 6;
+    const decimalsOut = swapDirection === 'mnodyToUsdt' ? 6 : 18;
+    const amountInWei = ethers.utils.parseUnits(amountIn.toString(), decimalsIn);
+    const amounts = await router.getAmountsOut(amountInWei, [A, B]);
+    const amountOut = ethers.utils.formatUnits(amounts[1], decimalsOut);
+    const formattedOut = parseFloat(amountOut).toFixed(decimalsOut === 6 ? 6 : 2);
+    document.getElementById('toAmount').value = formattedOut;
+    if (swapDirection === 'mnodyToUsdt') {
+      document.getElementById('rate').textContent = `1 MNODY = ${(parseFloat(amountOut) / amountIn).toFixed(8)} USDT`;
+    } else {
+      document.getElementById('rate').textContent = `1 USDT = ${(parseFloat(amountOut) / amountIn).toFixed(2)} MNODY`;
+    }
+    const minReceived = (parseFloat(amountOut) * (1 - slippageTolerance / 100)).toFixed(decimalsOut === 6 ? 6 : 2);
+    document.getElementById('minReceived').textContent = minReceived + (swapDirection === 'mnodyToUsdt' ? ' USDT' : ' MNODY');
+    document.getElementById('swapDetails').style.display = 'block';
+    document.getElementById('swapBtn').textContent = 'Swap';
+    document.getElementById('swapBtn').disabled = false;
+  } catch (e) {
+    console.error('Quote error:', e);
+    document.getElementById('toAmount').value = '0';
+    showStatus('Unable to get quote. Check liquidity.', 'error');
+  }
 }
-try {
-const router = new ethers.Contract(POLYGON.router, ROUTER_ABI, provider);
-const A = swapDirection === 'mnodyToUsdt' ? POLYGON.mnody : POLYGON.usdt;
-const B = swapDirection === 'mnodyToUsdt' ? POLYGON.usdt : POLYGON.mnody;
-const path = [A, B];
 
-const decimalsIn = swapDirection === 'mnodyToUsdt' ? 18 : 6;
-const decimalsOut = swapDirection === 'mnodyToUsdt' ? 6 : 18;
-
-const amountInWei = ethers.utils.parseUnits(amountIn.toString(), decimalsIn);
-const amounts = await router.getAmountsOut(amountInWei, path);
-const amountOut = ethers.utils.formatUnits(amounts[1], decimalsOut);
-
-const formattedOut = parseFloat(amountOut).toFixed(decimalsOut === 6 ? 6 : 2);
-document.getElementById('toAmount').value = formattedOut;
-
-if (swapDirection === 'mnodyToUsdt') {
-  document.getElementById('rate').textContent = `1 MNODY = ${(parseFloat(amountOut) / amountIn).toFixed(8)} USDT`;
-} else {
-  document.getElementById('rate').textContent = `1 USDT = ${(parseFloat(amountOut) / amountIn).toFixed(2)} MNODY`;
-}
-
-const minReceived = (parseFloat(amountOut) * (1 - slippageTolerance / 100)).toFixed(decimalsOut === 6 ? 6 : 2);
-document.getElementById('minReceived').textContent = minReceived + (swapDirection === 'mnodyToUsdt' ? ' USDT' : ' MNODY');
-
-document.getElementById('swapDetails').style.display = 'block';
-document.getElementById('swapBtn').textContent = 'Swap';
-document.getElementById('swapBtn').disabled = false;
-} catch (e) {
-console.error('Quote error:', e);
-document.getElementById('toAmount').value = '0';
-showStatus('Unable to get quote. Check liquidity.', 'error');
-}
-}
 document.getElementById('fromAmount').addEventListener('input', (e) => {
-const val = e.target.value;
-if (val && parseFloat(val) > 0) {
-getQuote(val);
-} else {
-document.getElementById('toAmount').value = '';
-document.getElementById('swapDetails').style.display = 'none';
-}
+  const val = e.target.value;
+  if (val && parseFloat(val) > 0) {
+    getQuote(val);
+  } else {
+    document.getElementById('toAmount').value = '';
+    document.getElementById('swapDetails').style.display = 'none';
+  }
 });
+
 function reverseSwap() {
-swapDirection = swapDirection === 'mnodyToUsdt' ? 'usdtToMnody' : 'mnodyToUsdt';
-if (swapDirection === 'mnodyToUsdt') {
-document.getElementById('fromToken').textContent = 'MNODY';
-document.getElementById('toToken').textContent = 'USDT';
-document.getElementById('fromIcon').textContent = 'M';
-document.getElementById('fromIcon').style.background = 'linear-gradient(135deg, #ff6b9d, #feca57)';
-document.getElementById('toIcon').textContent = 'U';
-document.getElementById('toIcon').style.background = 'linear-gradient(135deg, #26a17b, #22c55e)';
-} else {
-document.getElementById('fromToken').textContent = 'USDT';
-document.getElementById('toToken').textContent = 'MNODY';
-document.getElementById('fromIcon').textContent = 'U';
-document.getElementById('fromIcon').style.background = 'linear-gradient(135deg, #26a17b, #22c55e)';
-document.getElementById('toIcon').textContent = 'M';
-document.getElementById('toIcon').style.background = 'linear-gradient(135deg, #ff6b9d, #feca57)';
+  swapDirection = swapDirection === 'mnodyToUsdt' ? 'usdtToMnody' : 'mnodyToUsdt';
+  if (swapDirection === 'mnodyToUsdt') {
+    document.getElementById('fromToken').textContent = 'MNODY';
+    document.getElementById('toToken').textContent = 'USDT';
+    document.getElementById('fromIcon').textContent = 'M';
+    document.getElementById('fromIcon').style.background = 'linear-gradient(135deg, #ff6b9d, #feca57)';
+    document.getElementById('toIcon').textContent = 'U';
+    document.getElementById('toIcon').style.background = 'linear-gradient(135deg, #26a17b, #22c55e)';
+  } else {
+    document.getElementById('fromToken').textContent = 'USDT';
+    document.getElementById('toToken').textContent = 'MNODY';
+    document.getElementById('fromIcon').textContent = 'U';
+    document.getElementById('fromIcon').style.background = 'linear-gradient(135deg, #26a17b, #22c55e)';
+    document.getElementById('toIcon').textContent = 'M';
+    document.getElementById('toIcon').style.background = 'linear-gradient(135deg, #ff6b9d, #feca57)';
+  }
+  document.getElementById('fromAmount').value = '';
+  document.getElementById('toAmount').value = '';
+  document.getElementById('swapDetails').style.display = 'none';
+  if (account) updateBalances();
 }
-document.getElementById('fromAmount').value = '';
-document.getElementById('toAmount').value = '';
-document.getElementById('swapDetails').style.display = 'none';
-if (account) {
-updateBalances();
-}
-}
+
 async function handleSwap() {
-const btn = document.getElementById('swapBtn');
-if (btn.textContent === 'Connect Wallet') {
-await connectWallet();
-return;
+  const btn = document.getElementById('swapBtn');
+  if (btn.textContent === 'Connect Wallet') {
+    await connectWallet();
+    return;
+  }
+  const amountIn = document.getElementById('fromAmount').value;
+  if (!amountIn || parseFloat(amountIn) <= 0) {
+    showStatus('Please enter an amount', 'error');
+    return;
+  }
+  try {
+    showActiveTx();
+    showStatus('Checking allowance...', 'pending');
+    const tokenIn = swapDirection === 'mnodyToUsdt' ? POLYGON.mnody : POLYGON.usdt;
+    const decimalsIn = swapDirection === 'mnodyToUsdt' ? 18 : 6;
+    const amountInWei = ethers.utils.parseUnits(amountIn, decimalsIn);
+    const tokenContract = new ethers.Contract(tokenIn, ERC20_ABI, signer);
+    const allowance = await tokenContract.allowance(account, POLYGON.router);
+    if (allowance.lt(amountInWei)) {
+      showStatus('Please approve token spending...', 'pending');
+      const approveTx = await tokenContract.approve(POLYGON.router, ethers.constants.MaxUint256);
+      showStatus('Approving... Please wait', 'pending');
+      await approveTx.wait();
+    }
+    showStatus('Executing swap...', 'pending');
+    const router = new ethers.Contract(POLYGON.router, ROUTER_ABI, signer);
+    const A = swapDirection === 'mnodyToUsdt' ? POLYGON.mnody : POLYGON.usdt;
+    const B = swapDirection === 'mnodyToUsdt' ? POLYGON.usdt : POLYGON.mnody;
+    const amountOut = document.getElementById('toAmount').value;
+    const decimalsOut = swapDirection === 'mnodyToUsdt' ? 6 : 18;
+    const slippageMultiplier = 1 - (slippageTolerance / 100);
+    const amountOutMin = ethers.utils.parseUnits(
+      (parseFloat(amountOut) * slippageMultiplier).toFixed(decimalsOut),
+      decimalsOut
+    );
+    const deadline = Math.floor(Date.now() / 1000) + 60 * deadlineMinutes;
+    let gasLimit = 300000;
+    if (gasSpeed === 'fast') gasLimit = 350000;
+    if (gasSpeed === 'instant') gasLimit = 400000;
+    const tx = await router.swapExactTokensForTokens(
+      amountInWei, amountOutMin, [A, B], account, deadline, { gasLimit }
+    );
+    showStatus('Transaction sent! Waiting for confirmation...', 'pending');
+    const receipt = await tx.wait();
+    hideActiveTx();
+    showStatus(`✅ Swap successful! <a href="${POLYGON.explorer}/tx/${receipt.transactionHash}" target="_blank" style="color:#8247e5;text-decoration:underline">View on PolygonScan</a>`, 'success');
+    const historyItem = {
+      type: swapDirection === 'mnodyToUsdt' ? 'MNODY → USDT' : 'USDT → MNODY',
+      fromAmount: amountIn,
+      fromToken: swapDirection === 'mnodyToUsdt' ? 'MNODY' : 'USDT',
+      toAmount: amountOut,
+      toToken: swapDirection === 'mnodyToUsdt' ? 'USDT' : 'MNODY',
+      hash: receipt.transactionHash,
+      time: new Date().toLocaleString()
+    };
+    swapHistory.unshift(historyItem);
+    if (swapHistory.length > 10) swapHistory.pop();
+    saveHistory();
+    document.getElementById('fromAmount').value = '';
+    document.getElementById('toAmount').value = '';
+    document.getElementById('swapDetails').style.display = 'none';
+    await updateBalances();
+    await refreshPrice();
+  } catch (e) {
+    console.error('Swap error:', e);
+    hideActiveTx();
+    if (e.code === 4001) {
+      showStatus('Transaction rejected by user', 'error');
+    } else {
+      showStatus('Swap failed: ' + (e.reason || e.message), 'error');
+    }
+  }
 }
-const amountIn = document.getElementById('fromAmount').value;
-if (!amountIn || parseFloat(amountIn) <= 0) {
-showStatus('Please enter an amount', 'error');
-return;
-}
-try {
-showActiveTx();
-showStatus('Checking allowance...', 'pending');
-const tokenIn = swapDirection === 'mnodyToUsdt' ? POLYGON.mnody : POLYGON.usdt;
-const decimalsIn = swapDirection === 'mnodyToUsdt' ? 18 : 6;
-const amountInWei = ethers.utils.parseUnits(amountIn, decimalsIn);
 
-const tokenContract = new ethers.Contract(tokenIn, ERC20_ABI, signer);
-const allowance = await tokenContract.allowance(account, POLYGON.router);
-
-if (allowance.lt(amountInWei)) {
-  showStatus('Please approve token spending...', 'pending');
-  const approveTx = await tokenContract.approve(POLYGON.router, ethers.constants.MaxUint256);
-  showStatus('Approving... Please wait', 'pending');
-  await approveTx.wait();
-}
-
-showStatus('Executing swap...', 'pending');
-
-const router = new ethers.Contract(POLYGON.router, ROUTER_ABI, signer);
-const A = swapDirection === 'mnodyToUsdt' ? POLYGON.mnody : POLYGON.usdt;
-const B = swapDirection === 'mnodyToUsdt' ? POLYGON.usdt : POLYGON.mnody;
-const path = [A, B];
-
-const amountOut = document.getElementById('toAmount').value;
-const decimalsOut = swapDirection === 'mnodyToUsdt' ? 6 : 18;
-const slippageMultiplier = 1 - (slippageTolerance / 100);
-const amountOutMin = ethers.utils.parseUnits(
-  (parseFloat(amountOut) * slippageMultiplier).toFixed(decimalsOut), 
-  decimalsOut
-);
-
-const deadline = Math.floor(Date.now() / 1000) + 60 * deadlineMinutes;
-
-let gasLimit = 300000;
-if (gasSpeed === 'fast') gasLimit = 350000;
-if (gasSpeed === 'instant') gasLimit = 400000;
-
-const tx = await router.swapExactTokensForTokens(
-  amountInWei,
-  amountOutMin,
-  path,
-  account,
-  deadline,
-  { gasLimit }
-);
-
-showStatus('Transaction sent! Waiting for confirmation...', 'pending');
-const receipt = await tx.wait();
-
-hideActiveTx();
-showStatus(`✅ Swap successful! <a href="${POLYGON.explorer}/tx/${receipt.transactionHash}" target="_blank" style="color:#00d9f5;text-decoration:underline">View Transaction</a>`, 'success');
-
-// Add to history
-const historyItem = {
-  type: swapDirection === 'mnodyToUsdt' ? 'MNODY → USDT' : 'USDT → MNODY',
-  fromAmount: amountIn,
-  fromToken: swapDirection === 'mnodyToUsdt' ? 'MNODY' : 'USDT',
-  toAmount: amountOut,
-  toToken: swapDirection === 'mnodyToUsdt' ? 'USDT' : 'MNODY',
-  hash: receipt.transactionHash,
-  time: new Date().toLocaleString()
-};
-swapHistory.unshift(historyItem);
-if (swapHistory.length > 10) swapHistory.pop();
-saveHistory();
-
-document.getElementById('fromAmount').value = '';
-document.getElementById('toAmount').value = '';
-document.getElementById('swapDetails').style.display = 'none';
-
-await updateBalances();
-await refreshPrice();
-} catch (e) {
-console.error('Swap error:', e);
-hideActiveTx();
-if (e.code === 4001) {
-  showStatus('Transaction rejected by user', 'error');
-} else {
-  showStatus('Swap failed: ' + (e.reason || e.message), 'error');
-}
-}
-}
 function showStatus(msg, type) {
-const status = document.getElementById('statusMsg');
-status.innerHTML = msg;
-status.className = 'status ' + type;
+  const status = document.getElementById('statusMsg');
+  status.innerHTML = msg;
+  status.className = 'status ' + type;
 }
+
 function showActiveTx() {
-document.getElementById('activeTx').classList.add('show');
+  document.getElementById('activeTx').classList.add('show');
 }
+
 function hideActiveTx() {
-setTimeout(() => {
-document.getElementById('activeTx').classList.remove('show');
-}, 2000);
+  setTimeout(() => document.getElementById('activeTx').classList.remove('show'), 2000);
 }
+
 // Auto-refresh price every 30 seconds
-setInterval(() => {
-if (provider) {
-refreshPrice();
-}
-}, 30000);
+setInterval(() => { if (provider) refreshPrice(); }, 30000);
+
 // Initialize
 loadHistory();
 if (window.ethereum) {
-window.ethereum.request({ method: 'eth_accounts' }).then(accounts => {
-if (accounts.length > 0) {
-connectWallet();
+  window.ethereum.request({ method: 'eth_accounts' }).then(accounts => {
+    if (accounts.length > 0) connectWallet();
+    else refreshPrice();
+  });
 } else {
-refreshPrice();
-}
-});
-} else {
-refreshPrice();
+  refreshPrice();
 }
 </script>
 </body>
 </html>
-```
