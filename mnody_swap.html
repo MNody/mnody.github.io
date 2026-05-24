@@ -328,7 +328,24 @@ const MAX_UINT = ethers.constants.MaxUint256;
 
 // ─── HELPERS ───────────────────────────────────────────────────────────────
 function fmtNum(n){if(n>=1e6)return(n/1e6).toFixed(2)+'M';if(n>=1e3)return(n/1e3).toFixed(2)+'K';return n.toFixed(2);}
-function fmtPrice(p){if(p<0.000001)return p.toExponential(4);return p.toPrecision(6);}
+function fmtPrice(p){
+  if(p<=0) return '—';
+  // Convert to full decimal string, no scientific notation
+  if(p<0.0001){
+    // e.g. 0.000000005699 → find significant digits position
+    const s = p.toFixed(20);
+    // Count leading zeros after decimal
+    const m = s.match(/^0\.0*(\d+)/);
+    if(m){
+      const sigStart = s.indexOf(m[1]);
+      const decimals = sigStart + 3; // show 4 significant digits
+      return '$' + p.toFixed(Math.min(decimals, 18));
+    }
+    return '$' + p.toFixed(12);
+  }
+  if(p<1) return '$'+p.toPrecision(6);
+  return '$'+p.toFixed(4);
+}
 function showStatus(msg,type){const el=document.getElementById('statusMsg');el.innerHTML=msg;el.className='status show '+type;}
 function clearStatus(){const el=document.getElementById('statusMsg');el.className='status';}
 function showToast(msg){document.getElementById('toast').classList.add('show');document.getElementById('toastMsg').textContent=msg;}
@@ -421,8 +438,8 @@ async function fetchPrice(){
     const pair = data.pair || (data.pairs && data.pairs[0]);
     if(!pair || !pair.priceUsd) throw new Error('No price data');
     const p = parseFloat(pair.priceUsd);
-    document.getElementById('livePrice').textContent  = '$'+fmtPrice(p);
-    document.getElementById('infoPrice').textContent  = '$'+fmtPrice(p);
+    document.getElementById('livePrice').textContent  = fmtPrice(p);
+    document.getElementById('infoPrice').textContent  = fmtPrice(p);
     document.getElementById('lastUpdate').textContent = 'Updated '+new Date().toLocaleTimeString();
     const c = pair.priceChange?.h24;
     if(c!=null){
@@ -440,20 +457,16 @@ async function fetchPrice(){
     try{
       const prov = new ethers.providers.JsonRpcProvider(CFG.rpc);
       const pairC = new ethers.Contract(CFG.pair, PAIR_ABI, prov);
-      const [r0,r1,,t0] = await Promise.all([
-        pairC.getReserves().then(r=>[r[0],r[1]]),
-        pairC.token0()
-      ]).catch(()=>[[0,0],'0x0']);
-      // Can't destructure that way, redo:
       const reserves = await pairC.getReserves();
       const token0   = await pairC.token0();
       const isMnody0 = token0.toLowerCase()===CFG.mnody.toLowerCase();
       const mnodyR   = parseFloat(ethers.utils.formatUnits(isMnody0?reserves[0]:reserves[1], CFG.mnodyDec));
       const usdtR    = parseFloat(ethers.utils.formatUnits(isMnody0?reserves[1]:reserves[0], CFG.usdtDec));
       const price    = mnodyR>0 ? usdtR/mnodyR : 0;
+      console.log('On-chain price fallback: MNODY=',mnodyR,'USDT=',usdtR,'Price=',price);
       if(price>0){
-        document.getElementById('livePrice').textContent = '$'+fmtPrice(price);
-        document.getElementById('infoPrice').textContent = '$'+fmtPrice(price);
+        document.getElementById('livePrice').textContent = fmtPrice(price);
+        document.getElementById('infoPrice').textContent = fmtPrice(price);
       }
     }catch(e2){console.error('Fallback price error:',e2);}
   }
@@ -475,7 +488,7 @@ async function getQuote(amtStr){
     const path = isBuy ? [CFG.usdt, CFG.mnody] : [CFG.mnody, CFG.usdt];
     const inDec = isBuy ? CFG.usdtDec : CFG.mnodyDec;
     const outDec= isBuy ? CFG.mnodyDec: CFG.usdtDec;
-    const amtIn  = ethers.utils.parseUnits(amt.toFixed(inDec), inDec);
+    const amtIn  = ethers.utils.parseUnits(amt.toFixed(Math.min(inDec,6)), inDec);
     const amounts = await router.getAmountsOut(amtIn, path);
     const outAmt  = parseFloat(ethers.utils.formatUnits(amounts[1], outDec));
     document.getElementById('toAmt').value = outAmt.toFixed(outDec===6?4:2);
@@ -531,7 +544,7 @@ function setPct(pct){
   let amt = bal*pct/100;
   // Leave a tiny bit for gas if POL
   const inDec = isBuy ? CFG.usdtDec : CFG.mnodyDec;
-  const fixed = amt.toFixed(inDec);
+  const fixed = amt.toFixed(Math.min(inDec,6));
   document.getElementById('fromAmt').value = fixed;
   getQuote(fixed);
 }
@@ -569,7 +582,7 @@ async function doSwap(){
     // 1. Check & request approval
     showStatus('Checking approval...','info');
     const tokenC  = new ethers.Contract(tokenIn, ERC20, signer);
-    const amtIn   = ethers.utils.parseUnits(amt.toFixed(inDec), inDec);
+    const amtIn   = ethers.utils.parseUnits(amt.toFixed(Math.min(inDec,6)), inDec);
     const allowed = await tokenC.allowance(account, CFG.router);
 
     if(allowed.lt(amtIn)){
@@ -586,7 +599,7 @@ async function doSwap(){
     showStatus('Confirm the swap in MetaMask...','pending');
     showToast('Swapping...');
     const router   = new ethers.Contract(CFG.router, ROUTER, signer);
-    const amtOutMin= ethers.utils.parseUnits((out*(1-slippage/100)).toFixed(outDec), outDec);
+    const amtOutMin= ethers.utils.parseUnits((out*(1-slippage/100)).toFixed(Math.min(outDec,6)), outDec);
     const dl       = Math.floor(Date.now()/1000) + 60*(parseInt(document.getElementById('deadline').value)||20);
     const feeData  = await provider.getFeeData();
     const gasPrice = feeData.gasPrice ? feeData.gasPrice.mul(110).div(100) : undefined; // +10% buffer
