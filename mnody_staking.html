@@ -12,8 +12,7 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
 .bg-stars{position:fixed;inset:0;z-index:-1;background:radial-gradient(ellipse at 20% 20%,rgba(123,47,255,.22) 0%,transparent 55%),radial-gradient(ellipse at 80% 80%,rgba(255,60,172,.18) 0%,transparent 55%),var(--bg)}
 .floaty{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
 .fe{position:absolute;opacity:.1;animation:floatUp linear infinite}
-@keyframes floatUp{0%{transform:translateY(110vh) rotate(0);opacity:0}10%{opacity:.12}90%{opacity:.08}100%{transform:translateY(-10vh) rotate(360deg);opacity:0}}
-/* TOPBAR */
+@keyframes floatUp{0%{transform:translateY(110vh) rotate(0);opacity:0}10%{opacity:.1}90%{opacity:.07}100%{transform:translateY(-10vh) rotate(360deg);opacity:0}}
 .topbar{background:rgba(8,0,26,.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:12px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
 .topbar-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
 .topbar-logo img{width:38px;height:38px;border-radius:50%;border:2px solid var(--pink);box-shadow:0 0 14px rgba(255,60,172,.5)}
@@ -21,122 +20,106 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-
 .topbar-nav{display:flex;gap:6px;margin-left:auto;flex-wrap:wrap}
 .topbar-nav a{color:var(--muted);text-decoration:none;padding:6px 14px;border-radius:50px;font-weight:700;font-size:.82rem;transition:all .2s}
 .topbar-nav a:hover,.topbar-nav a.active{background:rgba(255,60,172,.18);color:var(--pink)}
-/* LAYOUT */
-.main{max-width:1200px;margin:auto;padding:30px 20px}
-.back-btn{display:inline-flex;align-items:center;gap:6px;color:var(--muted);text-decoration:none;font-size:.85rem;font-weight:700;margin-bottom:18px;transition:color .2s}
+.main{max-width:1160px;margin:auto;padding:28px 16px}
+.back-btn{display:inline-flex;align-items:center;gap:5px;color:var(--muted);text-decoration:none;font-size:.82rem;font-weight:700;margin-bottom:16px;transition:color .2s}
 .back-btn:hover{color:var(--pink)}
-/* HERO */
-.hero{text-align:center;padding:20px 0 36px}
-.hero-logo{width:110px;height:110px;border-radius:50%;border:4px solid var(--pink);box-shadow:0 0 50px rgba(255,60,172,.6);animation:float 3s ease-in-out infinite;margin-bottom:16px}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
-.hero h1{font-family:'Bangers',cursive;font-size:clamp(2.5rem,7vw,5rem);letter-spacing:4px;background:linear-gradient(135deg,var(--green),var(--cyan),var(--yellow));-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1;margin-bottom:8px}
-.hero p{color:var(--muted);font-size:1rem;max-width:560px;margin:0 auto 16px;line-height:1.7}
-.apy-big{font-family:'Bangers',cursive;font-size:4rem;letter-spacing:4px;color:var(--yellow);display:block;filter:drop-shadow(0 0 24px rgba(255,208,0,.5));margin:8px 0}
-/* LIVE STATS TICKER */
-.stats-bar{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin:20px 0}
-.stat-chip{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:50px;padding:8px 18px;font-size:.82rem;display:flex;align-items:center;gap:8px}
-.stat-chip strong{color:var(--cyan);font-size:1rem}
-/* WALLET INFO */
-.wallet-bar{background:rgba(0,255,157,.07);border:1px solid rgba(0,255,157,.25);border-radius:14px;padding:12px 18px;margin-bottom:18px;display:none;align-items:center;flex-wrap:wrap;gap:10px}
+.hero{text-align:center;padding:16px 0 30px}
+.hero-logo{width:100px;height:100px;border-radius:50%;border:4px solid var(--pink);box-shadow:0 0 44px rgba(255,60,172,.6);animation:float 3s ease-in-out infinite;margin-bottom:14px}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+.hero h1{font-family:'Bangers',cursive;font-size:clamp(2.2rem,6vw,4.5rem);letter-spacing:4px;background:linear-gradient(135deg,var(--green),var(--cyan),var(--yellow));-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1;margin-bottom:7px}
+.hero p{color:var(--muted);font-size:.95rem;max-width:520px;margin:0 auto 14px;line-height:1.7}
+.apy-big{font-family:'Bangers',cursive;font-size:3.5rem;letter-spacing:4px;color:var(--yellow);display:block;filter:drop-shadow(0 0 22px rgba(255,208,0,.5));margin:6px 0}
+.stats-row{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin:18px 0}
+.stat-chip{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:50px;padding:7px 16px;font-size:.8rem;display:flex;align-items:center;gap:8px}
+.stat-chip strong{color:var(--cyan)}
+.wallet-bar{background:rgba(0,255,157,.07);border:1px solid rgba(0,255,157,.25);border-radius:12px;padding:11px 16px;margin-bottom:16px;display:none;align-items:center;flex-wrap:wrap;gap:10px}
 .wallet-bar.show{display:flex}
-.wallet-addr{font-size:.82rem;color:var(--green);font-weight:700}
+.wallet-addr-txt{font-size:.8rem;color:var(--green);font-weight:700}
 .wallet-bals{display:flex;gap:14px;flex-wrap:wrap;margin-left:auto}
-.bal-item{font-size:.82rem;font-weight:800}
+.bal-item{font-size:.8rem;font-weight:800}
 /* PLAN CARDS */
-.plans-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:22px;margin-bottom:28px}
-.plan-card{background:var(--card);border:2px solid rgba(148,163,253,.2);border-radius:22px;padding:28px;cursor:pointer;transition:all .3s;position:relative;overflow:hidden}
-.plan-card::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at top left,rgba(123,47,255,.06),transparent 60%);pointer-events:none}
-.plan-card:hover{transform:translateY(-4px);border-color:var(--cyan);box-shadow:0 10px 40px rgba(0,245,255,.15)}
-.plan-card.selected{border-color:var(--green);box-shadow:0 0 0 3px rgba(0,255,157,.2),0 10px 40px rgba(0,255,157,.18)}
-.plan-card.featured{border-color:var(--yellow)}
-.featured-badge{position:absolute;top:16px;right:16px;background:linear-gradient(135deg,var(--yellow),var(--orange));color:#000;padding:4px 12px;border-radius:50px;font-size:.72rem;font-weight:900;letter-spacing:1px}
-.plan-icon{font-size:2.2rem;margin-bottom:10px}
-.plan-name{font-family:'Bangers',cursive;font-size:1.8rem;letter-spacing:2px;margin-bottom:6px}
-.plan-apy{font-family:'Bangers',cursive;font-size:3.2rem;letter-spacing:2px;color:var(--yellow);line-height:1}
-.plan-apy-label{font-size:.75rem;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px}
-.plan-features{list-style:none;margin-top:14px}
-.plan-features li{padding:5px 0 5px 22px;position:relative;color:#c0b0e0;font-size:.88rem}
-.plan-features li::before{content:'✓ ';position:absolute;left:0;color:var(--green);font-weight:900}
-.plan-tag{display:inline-block;background:rgba(123,47,255,.2);border:1px solid var(--purple);color:#c0a0ff;padding:3px 10px;border-radius:50px;font-size:.7rem;font-weight:800;margin-top:12px}
-/* STAKING INTERFACE */
-.stake-interface{background:var(--card);border:1px solid var(--border);border-radius:22px;padding:28px;margin-bottom:22px;box-shadow:0 16px 60px rgba(0,0,0,.55)}
-.interface-title{font-family:'Bangers',cursive;font-size:1.8rem;letter-spacing:2px;margin-bottom:22px;display:flex;align-items:center;gap:12px}
-.tabs{display:flex;gap:6px;margin-bottom:22px;background:rgba(255,255,255,.04);border-radius:14px;padding:5px}
-.tab{flex:1;padding:10px;border:none;border-radius:10px;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:800;font-size:.9rem;transition:all .2s;background:transparent;color:var(--muted)}
-.tab.active{background:linear-gradient(135deg,var(--pink),var(--purple));color:#fff;box-shadow:0 4px 16px rgba(255,60,172,.3)}
-/* INPUT AREA */
-.input-section{margin:18px 0}
-.input-label{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:.85rem;font-weight:800}
+.plans-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;margin-bottom:24px}
+.plan-card{background:var(--card);border:2px solid rgba(148,163,253,.2);border-radius:20px;padding:24px;cursor:pointer;transition:all .28s;position:relative;overflow:hidden}
+.plan-card:hover{transform:translateY(-3px);border-color:var(--cyan);box-shadow:0 8px 36px rgba(0,245,255,.14)}
+.plan-card.sel{border-color:var(--green);box-shadow:0 0 0 3px rgba(0,255,157,.18),0 8px 36px rgba(0,255,157,.15)}
+.plan-card.feat{border-color:rgba(255,208,0,.5)}
+.feat-badge{position:absolute;top:14px;right:14px;background:linear-gradient(135deg,var(--yellow),var(--orange));color:#000;padding:3px 11px;border-radius:50px;font-size:.68rem;font-weight:900;letter-spacing:1px}
+.plan-icon{font-size:2rem;margin-bottom:8px}
+.plan-name{font-family:'Bangers',cursive;font-size:1.7rem;letter-spacing:2px;margin-bottom:5px}
+.plan-apy{font-family:'Bangers',cursive;font-size:3rem;letter-spacing:2px;color:var(--yellow);line-height:1}
+.plan-apy-lbl{font-size:.72rem;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px}
+.plan-feats{list-style:none;margin-top:12px}
+.plan-feats li{padding:4px 0 4px 20px;position:relative;color:#c0b0e0;font-size:.85rem}
+.plan-feats li::before{content:'✓ ';position:absolute;left:0;color:var(--green);font-weight:900}
+.plan-tag{display:inline-block;background:rgba(123,47,255,.18);border:1px solid var(--purple);color:#c0a0ff;padding:3px 10px;border-radius:50px;font-size:.68rem;font-weight:800;margin-top:10px}
+/* INTERFACE */
+.stake-ui{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:24px;margin-bottom:20px;box-shadow:0 14px 52px rgba(0,0,0,.5)}
+.ui-title{font-family:'Bangers',cursive;font-size:1.7rem;letter-spacing:2px;margin-bottom:20px;display:flex;align-items:center;gap:12px}
+.tabs{display:flex;gap:5px;margin-bottom:20px;background:rgba(255,255,255,.04);border-radius:12px;padding:4px}
+.tab{flex:1;padding:9px;border:none;border-radius:9px;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:800;font-size:.85rem;transition:all .2s;background:transparent;color:var(--muted)}
+.tab.active{background:linear-gradient(135deg,var(--pink),var(--purple));color:#fff;box-shadow:0 4px 14px rgba(255,60,172,.28)}
+.input-section{margin:16px 0}
+.input-label{display:flex;justify-content:space-between;align-items:center;margin-bottom:7px;font-size:.82rem;font-weight:800}
 .input-label span{color:var(--muted)}
-.max-btn{background:rgba(255,60,172,.15);border:1px solid rgba(255,60,172,.3);color:var(--pink);padding:4px 12px;border-radius:8px;cursor:pointer;font-size:.75rem;font-weight:900;font-family:'Nunito',sans-serif;transition:all .2s}
-.max-btn:hover{background:rgba(255,60,172,.28)}
-.amount-box{background:rgba(0,0,0,.4);border:2px solid rgba(255,255,255,.08);border-radius:14px;padding:16px;display:flex;align-items:center;gap:12px;transition:border-color .3s}
-.amount-box:focus-within{border-color:rgba(0,245,255,.4)}
-.amount-input{background:transparent;border:none;color:#fff;font-size:1.8rem;font-weight:700;flex:1;outline:none;font-family:'Nunito',sans-serif;min-width:0}
-.amount-input::placeholder{color:rgba(255,255,255,.2)}
-.tok-badge{background:linear-gradient(135deg,var(--pink),var(--yellow));color:#000;padding:8px 16px;border-radius:10px;font-weight:900;font-size:.9rem;flex-shrink:0}
-.quick-btns{display:flex;gap:6px;margin-top:10px}
-.qbtn{background:rgba(255,60,172,.1);border:1px solid rgba(255,60,172,.25);color:var(--pink);padding:5px 12px;border-radius:8px;cursor:pointer;font-size:.78rem;font-weight:800;font-family:'Nunito',sans-serif;transition:all .2s}
-.qbtn:hover{background:rgba(255,60,172,.22)}
-/* CALCULATOR */
-.calc-box{background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:16px;margin:16px 0}
-.calc-row{display:flex;justify-content:space-between;padding:6px 0;font-size:.85rem;border-bottom:1px solid rgba(255,255,255,.04)}
-.calc-row:last-child{border-bottom:none;padding-top:10px;margin-top:4px}
-.calc-row .label{color:var(--muted)}
-.calc-row .val{font-weight:800;color:var(--text)}
-.calc-row.highlight .val{color:var(--yellow);font-size:1rem}
-.calc-row.total-row .label{color:var(--text);font-weight:800}
-.calc-row.total-row .val{color:var(--green);font-size:1.05rem}
-/* BUTTONS */
-.action-btn{width:100%;padding:16px;border:none;border-radius:14px;font-size:1.1rem;font-weight:900;cursor:pointer;font-family:'Bangers',cursive;letter-spacing:2px;transition:all .2s;margin-top:14px}
-.action-btn.connect-btn{background:linear-gradient(135deg,var(--pink),var(--orange));color:#fff;box-shadow:0 8px 28px rgba(255,60,172,.35)}
-.action-btn.stake-btn{background:linear-gradient(135deg,var(--green),#059669);color:#000;box-shadow:0 8px 28px rgba(0,255,157,.3)}
-.action-btn.unstake-btn{background:linear-gradient(135deg,#ef4444,#b91c1c);color:#fff;box-shadow:0 8px 28px rgba(239,68,68,.25)}
-.action-btn.claim-btn{background:linear-gradient(135deg,var(--yellow),var(--orange));color:#000;box-shadow:0 8px 28px rgba(255,208,0,.3)}
+.max-btn{background:rgba(255,60,172,.14);border:1px solid rgba(255,60,172,.28);color:var(--pink);padding:3px 10px;border-radius:7px;cursor:pointer;font-size:.72rem;font-weight:900;font-family:'Nunito',sans-serif;transition:all .2s}
+.max-btn:hover{background:rgba(255,60,172,.26)}
+.amt-box{background:rgba(0,0,0,.4);border:2px solid rgba(255,255,255,.08);border-radius:13px;padding:14px;display:flex;align-items:center;gap:10px;transition:border-color .25s}
+.amt-box:focus-within{border-color:rgba(0,245,255,.4)}
+.amt-input{background:transparent;border:none;color:#fff;font-size:1.6rem;font-weight:700;flex:1;outline:none;font-family:'Nunito',sans-serif;min-width:0}
+.amt-input::placeholder{color:rgba(255,255,255,.2)}
+.tok-badge{background:linear-gradient(135deg,var(--pink),var(--yellow));color:#000;padding:7px 14px;border-radius:9px;font-weight:900;font-size:.85rem;flex-shrink:0}
+.quick-btns{display:flex;gap:5px;margin-top:9px}
+.qbtn{background:rgba(255,60,172,.1);border:1px solid rgba(255,60,172,.22);color:var(--pink);padding:4px 11px;border-radius:7px;cursor:pointer;font-size:.75rem;font-weight:800;font-family:'Nunito',sans-serif;transition:all .2s}
+.qbtn:hover{background:rgba(255,60,172,.2)}
+.calc-box{background:rgba(0,0,0,.22);border:1px solid rgba(255,255,255,.06);border-radius:11px;padding:14px;margin:14px 0}
+.calc-row{display:flex;justify-content:space-between;padding:5px 0;font-size:.82rem;border-bottom:1px solid rgba(255,255,255,.04)}
+.calc-row:last-child{border-bottom:none;padding-top:8px}
+.calc-row .lbl{color:var(--muted)}
+.calc-row .val{font-weight:800}
+.calc-row.hl .val{color:var(--yellow);font-size:.95rem}
+.calc-row.tot .lbl{color:var(--text);font-weight:800}
+.calc-row.tot .val{color:var(--green);font-size:1rem}
+.action-btn{width:100%;padding:15px;border:none;border-radius:13px;font-size:1rem;font-weight:900;cursor:pointer;font-family:'Bangers',cursive;letter-spacing:2px;transition:all .2s;margin-top:13px}
 .action-btn:hover:not(:disabled){transform:translateY(-2px)}
-.action-btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
-/* STATUS */
-.status-msg{padding:12px 16px;border-radius:10px;margin:12px 0;text-align:center;font-size:.88rem;font-weight:700;display:none}
+.action-btn:disabled{opacity:.42;cursor:not-allowed;transform:none}
+.btn-connect{background:linear-gradient(135deg,var(--pink),var(--orange));color:#fff;box-shadow:0 7px 26px rgba(255,60,172,.32)}
+.btn-stake{background:linear-gradient(135deg,var(--green),#059669);color:#000;box-shadow:0 7px 26px rgba(0,255,157,.28)}
+.btn-unstake{background:linear-gradient(135deg,#ef4444,#b91c1c);color:#fff;box-shadow:0 7px 26px rgba(239,68,68,.22)}
+.btn-claim{background:linear-gradient(135deg,var(--yellow),var(--orange));color:#000;box-shadow:0 7px 26px rgba(255,208,0,.28)}
+.btn-compound{background:linear-gradient(135deg,var(--purple),var(--pink));color:#fff;box-shadow:0 7px 26px rgba(123,47,255,.28)}
+.status-msg{padding:11px 14px;border-radius:9px;margin:10px 0;text-align:center;font-size:.84rem;font-weight:700;display:none}
 .status-msg.show{display:block}
-.status-msg.info{background:rgba(0,245,255,.08);border:1px solid rgba(0,245,255,.4);color:var(--cyan)}
-.status-msg.success{background:rgba(0,255,157,.08);border:1px solid var(--green);color:var(--green)}
-.status-msg.error{background:rgba(239,68,68,.08);border:1px solid #ef4444;color:#ef4444}
-.status-msg.pending{background:rgba(255,208,0,.08);border:1px solid var(--yellow);color:var(--yellow)}
-/* POSITIONS TABLE */
-.positions-card{background:var(--card);border:1px solid var(--border);border-radius:22px;padding:28px;margin-bottom:22px;box-shadow:0 16px 60px rgba(0,0,0,.55)}
-.pos-row{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:16px;margin:12px 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;align-items:center}
-.pos-item .label{font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:3px}
-.pos-item .value{font-weight:800;color:var(--text);font-size:.92rem}
-.pos-item .value.green{color:var(--green)}
-.pos-item .value.yellow{color:var(--yellow)}
-.pos-badge{display:inline-block;padding:3px 10px;border-radius:50px;font-size:.7rem;font-weight:900}
-.pos-badge.live{background:rgba(0,255,157,.15);color:var(--green);border:1px solid rgba(0,255,157,.4)}
-.pos-badge.locked{background:rgba(255,208,0,.12);color:var(--yellow);border:1px solid rgba(255,208,0,.35)}
-.pos-actions{display:flex;gap:8px;flex-wrap:wrap}
-.pos-btn{padding:7px 14px;border:none;border-radius:8px;font-family:'Nunito',sans-serif;font-weight:800;font-size:.8rem;cursor:pointer;transition:all .2s}
+.status-msg.info{background:rgba(0,245,255,.08);border:1px solid rgba(0,245,255,.38);color:var(--cyan)}
+.status-msg.success{background:rgba(0,255,157,.07);border:1px solid var(--green);color:var(--green)}
+.status-msg.error{background:rgba(239,68,68,.07);border:1px solid #ef4444;color:#ef4444}
+.status-msg.pending{background:rgba(255,208,0,.07);border:1px solid var(--yellow);color:var(--yellow)}
+.positions-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:24px;margin-bottom:20px;box-shadow:0 14px 52px rgba(0,0,0,.5)}
+.pos-row{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:13px;padding:14px;margin:10px 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px;align-items:center}
+.pos-lbl{font-size:.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:3px}
+.pos-val{font-weight:800;font-size:.88rem}
+.pos-val.grn{color:var(--green)}
+.pos-val.yel{color:var(--yellow)}
+.pos-badge-live{display:inline-block;padding:3px 9px;border-radius:50px;font-size:.68rem;font-weight:900;background:rgba(0,255,157,.13);color:var(--green);border:1px solid rgba(0,255,157,.38)}
+.pos-btns{display:flex;gap:7px;flex-wrap:wrap}
+.pos-btn{padding:6px 13px;border:none;border-radius:7px;font-family:'Nunito',sans-serif;font-weight:800;font-size:.76rem;cursor:pointer;transition:all .2s}
 .pos-btn.claim{background:linear-gradient(135deg,var(--yellow),var(--orange));color:#000}
 .pos-btn.unstake{background:linear-gradient(135deg,#ef4444,#b91c1c);color:#fff}
-.pos-btn:hover{transform:translateY(-1px);opacity:.9}
-.pos-btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
-/* BONUS TABLE */
-.bonus-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px;margin-top:14px}
-.bonus-item{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:16px}
-.bonus-item .bonus-title{font-weight:800;color:var(--yellow);margin-bottom:6px;font-size:.9rem}
-.bonus-item .bonus-desc{color:var(--muted);font-size:.82rem;line-height:1.7}
-/* HL */
-.hl{background:linear-gradient(135deg,rgba(0,255,157,.06),rgba(0,245,255,.06));border:2px solid var(--green);padding:18px;border-radius:14px;margin:18px 0}
-/* CONTRACT BOX */
-.contract-box{background:rgba(0,0,0,.3);border:1px solid rgba(0,245,255,.2);border-radius:12px;padding:14px;margin:14px 0;font-size:.82rem}
-code{background:rgba(0,0,0,.4);border:1px solid rgba(0,245,255,.18);padding:4px 9px;border-radius:7px;word-break:break-all;color:var(--cyan);font-size:.78rem}
-.copy-btn{background:rgba(0,245,255,.08);border:1px solid rgba(0,245,255,.25);color:var(--cyan);padding:4px 11px;border-radius:7px;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:700;font-size:.78rem;margin-left:6px;transition:all .2s}
+.pos-btn:hover{transform:translateY(-1px);opacity:.88}
+.bonus-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:13px;margin-top:13px}
+.bonus-item{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:11px;padding:15px}
+.bonus-title{font-weight:800;color:var(--yellow);margin-bottom:5px;font-size:.88rem}
+.bonus-desc{color:var(--muted);font-size:.8rem;line-height:1.7}
+.hl{background:linear-gradient(135deg,rgba(0,255,157,.05),rgba(0,245,255,.05));border:2px solid var(--green);padding:16px;border-radius:13px;margin:16px 0}
+.warn-box{background:rgba(255,208,0,.07);border:2px solid rgba(255,208,0,.32);border-radius:13px;padding:14px;margin:12px 0;display:none}
+.warn-box p{color:#e0d090;font-size:.84rem;margin:0}
+code{background:rgba(0,0,0,.4);border:1px solid rgba(0,245,255,.18);padding:3px 8px;border-radius:6px;word-break:break-all;color:var(--cyan);font-size:.75rem}
+.copy-btn{background:rgba(0,245,255,.08);border:1px solid rgba(0,245,255,.25);color:var(--cyan);padding:3px 10px;border-radius:6px;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:700;font-size:.75rem;margin-left:5px;transition:all .2s}
 .copy-btn:hover{background:rgba(0,245,255,.18)}
-/* LOADING SPINNER */
-.spinner{display:inline-block;width:18px;height:18px;border:3px solid rgba(255,255,255,.2);border-top-color:var(--cyan);border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:6px}
+.toast{position:fixed;bottom:22px;right:22px;background:rgba(20,5,50,.98);border:1px solid var(--yellow);border-radius:13px;padding:13px 18px;display:none;align-items:center;gap:10px;z-index:999;box-shadow:0 10px 40px rgba(0,0,0,.6);font-size:.82rem;max-width:300px}
+.toast.show{display:flex}
+.spinner{width:18px;height:18px;border:3px solid rgba(255,208,0,.2);border-top-color:var(--yellow);border-radius:50%;animation:spin .7s linear infinite;flex-shrink:0}
 @keyframes spin{to{transform:rotate(360deg)}}
-/* TX TOAST */
-.tx-toast{position:fixed;bottom:24px;right:24px;background:rgba(20,5,50,.98);border:1px solid var(--yellow);border-radius:14px;padding:14px 20px;display:none;align-items:center;gap:12px;z-index:999;box-shadow:0 10px 40px rgba(0,0,0,.6);font-size:.85rem;max-width:320px}
-.tx-toast.show{display:flex}
-@media(max-width:700px){.pos-row{grid-template-columns:1fr 1fr}.plans-grid{grid-template-columns:1fr}.main{padding:20px 14px}}
+@media(max-width:700px){.pos-row{grid-template-columns:1fr 1fr}.plans-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -160,47 +143,48 @@ code{background:rgba(0,0,0,.4);border:1px solid rgba(0,245,255,.18);padding:4px 
 <div class="main">
   <a href="index.html" class="back-btn">← Back to Home</a>
 
-  <!-- HERO -->
   <div class="hero">
     <img src="https://plum-top-lamprey-24.mypinata.cloud/ipfs/bafybeig32vvtms3362676kum4zl2rxu37ghnt4e3uccpidyn32my5q5v6y" class="hero-logo" alt="MNODY"/>
     <h1>💰 MNODY Staking</h1>
-    <p>Stake your MNODY and earn passive rewards. Pool-based, sustainable, fully on Polygon.</p>
+    <p>Stake MNODY and earn passive rewards. Pool-based, sustainable, fully on Polygon.</p>
     <span class="apy-big">Up to 170% APY</span>
-    <div style="color:var(--muted);font-size:.88rem">500,000,000 MNODY Rewards Pool • Polygon Mainnet</div>
+    <div style="color:var(--muted);font-size:.85rem">500,000,000 MNODY Rewards Pool • Polygon Mainnet</div>
   </div>
 
-  <!-- LIVE STATS -->
-  <div class="stats-bar">
-    <div class="stat-chip">🏊 Total Staked: <strong id="totalStaked">Loading...</strong></div>
+  <div class="stats-row">
+    <div class="stat-chip">🏊 Total Staked: <strong id="totalStaked">—</strong></div>
+    <div class="stat-chip">👥 Stakers: <strong id="totalStakers">—</strong></div>
     <div class="stat-chip">💰 Rewards Pool: <strong>500M MNODY</strong></div>
-    <div class="stat-chip">👥 Stakers: <strong id="totalStakers">Loading...</strong></div>
-    <div class="stat-chip">📊 Pool Share: <strong id="poolShare">—</strong></div>
+    <div class="stat-chip">🔒 LP Locked: <strong style="color:var(--green)">Until 2031</strong></div>
   </div>
 
   <!-- WALLET BAR -->
   <div class="wallet-bar" id="walletBar">
     <div>
-      <div style="font-size:.7rem;color:var(--muted);font-weight:700;margin-bottom:2px">CONNECTED WALLET</div>
-      <div class="wallet-addr" id="walletAddr">—</div>
+      <div style="font-size:.68rem;color:var(--muted);font-weight:700;margin-bottom:2px">CONNECTED</div>
+      <div class="wallet-addr-txt" id="walletAddrTxt">—</div>
     </div>
     <div class="wallet-bals">
       <div class="bal-item">MNODY: <span style="color:var(--yellow)" id="mnodyBal">—</span></div>
       <div class="bal-item">POL: <span style="color:var(--cyan)" id="polBal">—</span></div>
+      <div class="bal-item">Staked: <span style="color:var(--green)" id="myStakedBal">—</span></div>
+      <div class="bal-item">Pending: <span style="color:var(--pink)" id="myPendingBal">—</span></div>
     </div>
   </div>
 
   <!-- PLAN SELECTOR -->
-  <div style="font-family:'Bangers',cursive;font-size:1.8rem;letter-spacing:3px;text-align:center;margin-bottom:18px;background:linear-gradient(120deg,var(--yellow),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent">Choose Your Plan</div>
+  <div style="font-family:'Bangers',cursive;font-size:1.7rem;letter-spacing:3px;text-align:center;margin-bottom:16px;background:linear-gradient(120deg,var(--yellow),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent">Choose Your Plan</div>
+
   <div class="plans-grid">
-    <div class="plan-card featured selected" id="plan0" onclick="selectPlan(0)">
-      <div class="featured-badge">⭐ POPULAR</div>
+    <div class="plan-card feat sel" id="planCard0" onclick="selectPlan(0)">
+      <div class="feat-badge">⭐ POPULAR</div>
       <div class="plan-icon">🐾</div>
       <div class="plan-name" style="color:var(--cyan)">Flexible</div>
       <div class="plan-apy">40%</div>
-      <div class="plan-apy-label">Base APY</div>
-      <ul class="plan-features">
+      <div class="plan-apy-lbl">Base APY</div>
+      <ul class="plan-feats">
         <li>Unstake anytime, no lock</li>
-        <li>Rewards accumulate daily</li>
+        <li>Rewards accumulate every block</li>
         <li>Claim anytime</li>
         <li>Compound anytime</li>
         <li>Max 365 days earning</li>
@@ -208,429 +192,524 @@ code{background:rgba(0,0,0,.4);border:1px solid rgba(0,245,255,.18);padding:4px 
       <div class="plan-tag">Up to 140% with bonuses 🔥</div>
     </div>
 
-    <div class="plan-card" id="plan1" onclick="selectPlan(1)">
+    <div class="plan-card" id="planCard1" onclick="selectPlan(1)">
       <div class="plan-icon">🔒</div>
       <div class="plan-name" style="color:var(--yellow)">30-Day Lock</div>
       <div class="plan-apy">70%</div>
-      <div class="plan-apy-label">Base APY</div>
-      <ul class="plan-features">
+      <div class="plan-apy-lbl">Base APY</div>
+      <ul class="plan-feats">
         <li>30-day lock period</li>
         <li>Higher base rewards</li>
         <li>Claim rewards anytime</li>
-        <li>Auto-compound option</li>
+        <li>Compound to boost APY</li>
         <li>Early unstake: 15% penalty</li>
       </ul>
       <div class="plan-tag">Up to 170% with bonuses 🚀</div>
     </div>
   </div>
 
-  <!-- STAKING INTERFACE -->
-  <div class="stake-interface">
-    <div class="interface-title">
+  <!-- STAKING UI -->
+  <div class="stake-ui">
+    <div class="ui-title">
       <span id="planLabel">🐾 Flexible Staking</span>
-      <span style="font-family:'Nunito',sans-serif;font-size:.85rem;color:var(--muted);font-weight:700" id="planApyLabel">Base 40% APY</span>
+      <span style="font-family:'Nunito',sans-serif;font-size:.82rem;color:var(--muted);font-weight:700" id="planApyLbl">Base 40% APY</span>
     </div>
 
     <div class="tabs">
-      <button class="tab active" id="tab-stake" onclick="switchTab('stake')">📥 Stake</button>
-      <button class="tab" id="tab-unstake" onclick="switchTab('unstake')">📤 Unstake</button>
-      <button class="tab" id="tab-claim" onclick="switchTab('claim')">🎁 Claim Rewards</button>
+      <button class="tab active" id="tabStakeBtn" onclick="switchTab('stake')">📥 Stake</button>
+      <button class="tab" id="tabUnstakeBtn" onclick="switchTab('unstake')">📤 Unstake</button>
+      <button class="tab" id="tabClaimBtn" onclick="switchTab('claim')">🎁 Claim</button>
     </div>
 
-    <!-- STAKE TAB -->
-    <div id="tabStake">
+    <!-- STAKE -->
+    <div id="paneStake">
       <div class="input-section">
         <div class="input-label">
           <span>Amount to Stake</span>
-          <div style="display:flex;align-items:center;gap:8px"><span id="stakeBalLabel">Balance: —</span><button class="max-btn" onclick="setMax('stakeAmt')">MAX</button></div>
+          <div style="display:flex;align-items:center;gap:7px">
+            <span id="stakeBalLbl">Wallet: —</span>
+            <button class="max-btn" onclick="setMaxStake()">MAX</button>
+          </div>
         </div>
-        <div class="amount-box">
-          <input class="amount-input" id="stakeAmt" type="number" placeholder="0.00" min="0" oninput="calcStake()"/>
+        <div class="amt-box">
+          <input class="amt-input" id="stakeAmt" type="number" placeholder="0.00" min="0" step="any" oninput="calcRewards()"/>
           <div class="tok-badge">🐶 MNODY</div>
         </div>
         <div class="quick-btns">
-          <button class="qbtn" onclick="setPct('stakeAmt',25)">25%</button>
-          <button class="qbtn" onclick="setPct('stakeAmt',50)">50%</button>
-          <button class="qbtn" onclick="setPct('stakeAmt',75)">75%</button>
-          <button class="qbtn" onclick="setPct('stakeAmt',100)">MAX</button>
+          <button class="qbtn" onclick="setPctStake(25)">25%</button>
+          <button class="qbtn" onclick="setPctStake(50)">50%</button>
+          <button class="qbtn" onclick="setPctStake(75)">75%</button>
+          <button class="qbtn" onclick="setPctStake(100)">MAX</button>
         </div>
       </div>
-
-      <div class="calc-box" id="stakeCalc" style="display:none">
-        <div class="calc-row highlight"><span class="label">Base APY</span><span class="val" id="calcBaseApy">40%</span></div>
-        <div class="calc-row"><span class="label">Staking Amount</span><span class="val" id="calcAmt">—</span></div>
-        <div class="calc-row"><span class="label">Est. Daily Rewards</span><span class="val" id="calcDaily">—</span></div>
-        <div class="calc-row"><span class="label">Est. Monthly Rewards</span><span class="val" id="calcMonthly">—</span></div>
-        <div class="calc-row total-row"><span class="label">Est. Yearly Rewards</span><span class="val" id="calcYearly">—</span></div>
+      <div class="calc-box" id="calcBox" style="display:none">
+        <div class="calc-row hl"><span class="lbl">Selected APY</span><span class="val" id="calcApy">40%</span></div>
+        <div class="calc-row"><span class="lbl">Your Stake</span><span class="val" id="calcAmt">—</span></div>
+        <div class="calc-row"><span class="lbl">Daily Rewards</span><span class="val" id="calcDaily">—</span></div>
+        <div class="calc-row"><span class="lbl">Monthly Rewards</span><span class="val" id="calcMonth">—</span></div>
+        <div class="calc-row tot"><span class="lbl">Yearly Rewards</span><span class="val" id="calcYear">—</span></div>
       </div>
-
       <div class="status-msg" id="stakeStatus"></div>
-      <button class="action-btn connect-btn" id="stakeBtn" onclick="handleStake()">🦊 Connect MetaMask to Stake</button>
-
-      <div class="contract-box" style="margin-top:16px">
-        <span style="font-weight:800;color:var(--text)">Staking Contract (Polygon): </span>
+      <button class="action-btn btn-connect" id="stakeBtn" onclick="handleStake()">🦊 Connect MetaMask to Stake</button>
+      <div style="background:rgba(0,0,0,.25);border:1px solid rgba(0,245,255,.18);border-radius:10px;padding:11px;margin-top:13px;font-size:.75rem">
+        <strong style="color:var(--text)">Staking Contract (Polygon):</strong><br>
         <code>0x7C5adb8d3F98F97Ff23A41E738Bac40E3b3aeA53</code>
-        <button class="copy-btn" onclick="copyText('0x7C5adb8d3F98F97Ff23A41E738Bac40E3b3aeA53',this)">Copy</button>
+        <button class="copy-btn" onclick="copyTxt('0x7C5adb8d3F98F97Ff23A41E738Bac40E3b3aeA53',this)">Copy</button>
       </div>
     </div>
 
-    <!-- UNSTAKE TAB -->
-    <div id="tabUnstake" style="display:none">
+    <!-- UNSTAKE -->
+    <div id="paneUnstake" style="display:none">
       <div class="input-section">
         <div class="input-label">
           <span>Amount to Unstake</span>
-          <div style="display:flex;align-items:center;gap:8px"><span id="unstakeBalLabel">Staked: —</span><button class="max-btn" onclick="setMax('unstakeAmt')">MAX</button></div>
+          <div style="display:flex;align-items:center;gap:7px">
+            <span id="unstakeBalLbl">Staked: —</span>
+            <button class="max-btn" onclick="setMaxUnstake()">MAX</button>
+          </div>
         </div>
-        <div class="amount-box">
-          <input class="amount-input" id="unstakeAmt" type="number" placeholder="0.00" min="0"/>
+        <div class="amt-box">
+          <input class="amt-input" id="unstakeAmt" type="number" placeholder="0.00" min="0" step="any"/>
           <div class="tok-badge">🐶 MNODY</div>
         </div>
       </div>
-      <div class="hl" id="earlyWarn" style="display:none">
-        <p style="color:var(--yellow);font-size:.88rem;margin:0">⚠️ <strong>Early Unstake Penalty:</strong> Unstaking before the lock period ends incurs a 15% penalty on your staked amount. This penalty goes back to the rewards pool.</p>
+      <div class="warn-box" id="earlyWarnBox">
+        <p>⚠️ <strong>Early Unstake Penalty:</strong> Unstaking before the 30-day lock ends incurs a <strong>15% penalty</strong> on your stake amount. This returns to the rewards pool.</p>
       </div>
       <div class="status-msg" id="unstakeStatus"></div>
-      <button class="action-btn unstake-btn" id="unstakeBtn" onclick="handleUnstake()">🦊 Connect MetaMask to Unstake</button>
+      <button class="action-btn btn-connect" id="unstakeBtn" onclick="handleUnstake()">🦊 Connect MetaMask to Unstake</button>
     </div>
 
-    <!-- CLAIM TAB -->
-    <div id="tabClaim" style="display:none">
+    <!-- CLAIM -->
+    <div id="paneClaim" style="display:none">
       <div class="calc-box">
-        <div class="calc-row highlight"><span class="label">Pending Rewards</span><span class="val" id="pendingRewards">—</span></div>
-        <div class="calc-row"><span class="label">Total Staked</span><span class="val" id="myStaked">—</span></div>
-        <div class="calc-row"><span class="label">Staking Since</span><span class="val" id="stakingSince">—</span></div>
-        <div class="calc-row"><span class="label">Current APY</span><span class="val" id="myApy">—</span></div>
+        <div class="calc-row hl"><span class="lbl">Pending Rewards</span><span class="val" id="claimPending">—</span></div>
+        <div class="calc-row"><span class="lbl">Total Staked</span><span class="val" id="claimStaked">—</span></div>
+        <div class="calc-row"><span class="lbl">Staking Since</span><span class="val" id="claimSince">—</span></div>
+        <div class="calc-row"><span class="lbl">Plan APY</span><span class="val" id="claimApy">—</span></div>
       </div>
       <div class="status-msg" id="claimStatus"></div>
-      <button class="action-btn claim-btn" id="claimBtn" onclick="handleClaim()">🦊 Connect & Claim Rewards</button>
-      <button class="action-btn" style="background:linear-gradient(135deg,var(--purple),var(--pink));color:#fff;margin-top:8px" id="compoundBtn" onclick="handleCompound()">🔄 Compound Rewards</button>
+      <button class="action-btn btn-claim" id="claimBtn" onclick="handleClaim()">🦊 Connect & Claim Rewards</button>
+      <button class="action-btn btn-compound" id="compoundBtn" onclick="handleCompound()" style="display:none">🔄 Compound Rewards</button>
     </div>
   </div>
 
   <!-- MY POSITIONS -->
-  <div class="positions-card" id="positionsCard" style="display:none">
-    <div style="font-family:'Bangers',cursive;font-size:1.8rem;letter-spacing:2px;margin-bottom:18px;color:var(--yellow)">📋 My Staking Positions</div>
-    <div id="positionsList"><p style="color:var(--muted);text-align:center;padding:20px">No active positions</p></div>
+  <div class="positions-card" id="posCard" style="display:none">
+    <div style="font-family:'Bangers',cursive;font-size:1.7rem;letter-spacing:2px;margin-bottom:16px;color:var(--yellow)">📋 My Staking Positions</div>
+    <div id="positionsList"></div>
   </div>
 
-  <!-- BONUS SECTION -->
+  <!-- BONUS SYSTEM -->
   <div class="positions-card">
-    <div style="font-family:'Bangers',cursive;font-size:1.8rem;letter-spacing:2px;margin-bottom:6px;color:var(--green)">🎁 Bonus APY System</div>
-    <p style="color:var(--muted);font-size:.88rem;margin-bottom:18px">Stack bonuses on top of your base APY for maximum returns</p>
+    <div style="font-family:'Bangers',cursive;font-size:1.7rem;letter-spacing:2px;margin-bottom:5px;color:var(--green)">🎁 Bonus APY System</div>
+    <p style="color:var(--muted);font-size:.84rem;margin-bottom:16px">Stack multiple bonuses on top of your base APY</p>
     <div class="bonus-grid">
-      <div class="bonus-item">
-        <div class="bonus-title">🐣 Early Bird Bonus</div>
-        <div class="bonus-desc">+50% APY bonus for stakers in the first 30 days after platform launch. The earlier you stake, the longer you earn at boosted rates.</div>
-      </div>
-      <div class="bonus-item">
-        <div class="bonus-title">🐋 Whale Bonus</div>
-        <div class="bonus-desc">
-          10M+ MNODY → +10% APY<br>
-          25M+ MNODY → +20% APY<br>
-          50M+ MNODY → +30% APY<br>
-          Larger stakes earn proportionally more.
-        </div>
-      </div>
-      <div class="bonus-item">
-        <div class="bonus-title">🔄 Compound Loyalty</div>
-        <div class="bonus-desc">
-          2+ compounds → +5% APY<br>
-          5+ compounds → +10% APY<br>
-          10+ compounds → +20% APY<br>
-          Reward compounders for staying active.
-        </div>
-      </div>
-      <div class="bonus-item">
-        <div class="bonus-title">📊 Max APY Example</div>
-        <div class="bonus-desc">
-          30-Day Lock: 70% base<br>
-          + Early Bird: +50%<br>
-          + Whale (50M+): +30%<br>
-          + Compound (10+): +20%<br>
-          = <strong style="color:var(--yellow)">170% Total APY 🚀</strong>
-        </div>
-      </div>
+      <div class="bonus-item"><div class="bonus-title">🐣 Early Bird</div><div class="bonus-desc">+50% APY for stakers in the first 30 days after platform launch. Earlier = longer at boosted rate.</div></div>
+      <div class="bonus-item"><div class="bonus-title">🐋 Whale Bonus</div><div class="bonus-desc">10M+ MNODY → +10% APY<br>25M+ MNODY → +20% APY<br>50M+ MNODY → +30% APY</div></div>
+      <div class="bonus-item"><div class="bonus-title">🔄 Compound Loyalty</div><div class="bonus-desc">2+ compounds → +5% APY<br>5+ compounds → +10% APY<br>10+ compounds → +20% APY</div></div>
+      <div class="bonus-item"><div class="bonus-title">📊 Max APY Example</div><div class="bonus-desc">30-Day Lock: 70%<br>+ Early Bird: +50%<br>+ Whale (50M+): +30%<br>+ Compound (10+): +20%<br>= <strong style="color:var(--yellow)">170% Total APY 🚀</strong></div></div>
     </div>
   </div>
 
   <!-- HOW IT WORKS -->
   <div class="positions-card">
-    <div style="font-family:'Bangers',cursive;font-size:1.8rem;letter-spacing:2px;margin-bottom:18px;color:var(--cyan)">⚙️ How Staking Works</div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px">
-      <div style="background:rgba(255,255,255,.04);border:1px solid rgba(0,255,157,.2);border-radius:14px;padding:18px">
-        <h4 style="color:var(--green);margin-bottom:8px">1️⃣ Choose a Plan</h4>
-        <p style="color:#c0b0e0;font-size:.88rem;line-height:1.7">Select Flexible (40% base) or 30-Day Lock (70% base). You can have multiple positions.</p>
-      </div>
-      <div style="background:rgba(255,255,255,.04);border:1px solid rgba(0,245,255,.2);border-radius:14px;padding:18px">
-        <h4 style="color:var(--cyan);margin-bottom:8px">2️⃣ Approve & Stake</h4>
-        <p style="color:#c0b0e0;font-size:.88rem;line-height:1.7">Connect MetaMask on Polygon. Approve once, then stake your MNODY. Gas fees are minimal on Polygon.</p>
-      </div>
-      <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,208,0,.2);border-radius:14px;padding:18px">
-        <h4 style="color:var(--yellow);margin-bottom:8px">3️⃣ Earn Daily</h4>
-        <p style="color:#c0b0e0;font-size:.88rem;line-height:1.7">Rewards accumulate every block. View pending rewards in real-time. Claim or compound whenever you want.</p>
-      </div>
-      <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,60,172,.2);border-radius:14px;padding:18px">
-        <h4 style="color:var(--pink);margin-bottom:8px">4️⃣ Compound & Boost</h4>
-        <p style="color:#c0b0e0;font-size:.88rem;line-height:1.7">Compound rewards back into your stake to maximize APY. Loyalty bonus rewards frequent compounders.</p>
-      </div>
+    <div style="font-family:'Bangers',cursive;font-size:1.7rem;letter-spacing:2px;margin-bottom:16px;color:var(--cyan)">⚙️ How It Works</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:13px">
+      <div style="background:rgba(255,255,255,.03);border:1px solid rgba(0,255,157,.18);border-radius:13px;padding:16px"><h4 style="color:var(--green);margin-bottom:7px">1️⃣ Choose Plan</h4><p style="color:#c0b0e0;font-size:.84rem;line-height:1.7">Flexible (40% base) or 30-Day Lock (70% base). Multiple positions allowed.</p></div>
+      <div style="background:rgba(255,255,255,.03);border:1px solid rgba(0,245,255,.18);border-radius:13px;padding:16px"><h4 style="color:var(--cyan);margin-bottom:7px">2️⃣ Approve & Stake</h4><p style="color:#c0b0e0;font-size:.84rem;line-height:1.7">Connect MetaMask on Polygon. Approve once, then stake. Gas fees are minimal.</p></div>
+      <div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,208,0,.18);border-radius:13px;padding:16px"><h4 style="color:var(--yellow);margin-bottom:7px">3️⃣ Earn Daily</h4><p style="color:#c0b0e0;font-size:.84rem;line-height:1.7">Rewards accumulate every block. View pending rewards in real-time.</p></div>
+      <div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,60,172,.18);border-radius:13px;padding:16px"><h4 style="color:var(--pink);margin-bottom:7px">4️⃣ Compound & Boost</h4><p style="color:#c0b0e0;font-size:.84rem;line-height:1.7">Compound rewards into your stake. Loyalty bonus rewards active compounders.</p></div>
     </div>
   </div>
-
 </div>
 
-<!-- TX TOAST -->
-<div class="tx-toast" id="txToast">
-  <div style="width:20px;height:20px;border:3px solid rgba(255,208,0,.2);border-top-color:var(--yellow);border-radius:50%;animation:spin .7s linear infinite;flex-shrink:0"></div>
+<div class="toast" id="toast">
+  <div class="spinner"></div>
   <span id="toastMsg">Processing...</span>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/web3@1.9.0/dist/web3.min.js"></script>
+<script src="https://unpkg.com/ethers@5.7.2/dist/ethers.umd.min.js"></script>
 <script>
-const POLYGON_RPC='https://polygon-rpc.com';
-const POLYGON_CHAIN='0x89';
-const MNODY='0x0bacbf5c435c3b0546f7cdf66f960770c7ad912c';
-const STAKING_CONTRACT='0x7C5adb8d3F98F97Ff23A41E738Bac40E3b3aeA53';
-const ERC20_ABI=['function balanceOf(address) view returns(uint256)','function allowance(address,address) view returns(uint256)','function approve(address,uint256) returns(bool)','function decimals() view returns(uint8)'];
-const STAKING_ABI=['function stake(uint256 amount,bool lock) external','function unstake(uint256 amount) external','function claimRewards() external','function compound() external','function pendingRewards(address) view returns(uint256)','function stakedBalance(address) view returns(uint256)','function totalStaked() view returns(uint256)','function totalStakers() view returns(uint256)','function isLocked(address) view returns(bool)','function lockEnd(address) view returns(uint256)','function stakeTimestamp(address) view returns(uint256)'];
+// ─── CONFIG ────────────────────────────────────────────────────────────────
+const CFG = {
+  chainId: 137,
+  chainIdHex: '0x89',
+  rpc: 'https://polygon-rpc.com',
+  explorer: 'https://polygonscan.com',
+  mnody: '0x0bacbf5c435c3b0546f7cdf66f960770c7ad912c',
+  staking: '0x7C5adb8d3F98F97Ff23A41E738Bac40E3b3aeA53',
+  dec: 18
+};
 
-let web3,account,selectedPlan=0,activeTab='stake',mnodyBalance=0,stakedBal=0,currentApy=40;
+const ERC20_ABI = [
+  'function balanceOf(address) view returns (uint256)',
+  'function allowance(address,address) view returns (uint256)',
+  'function approve(address,uint256) returns (bool)'
+];
 
-function copyText(t,btn){navigator.clipboard.writeText(t).then(()=>{const o=btn.innerText;btn.innerText='✓';setTimeout(()=>btn.innerText=o,1400);});}
+// Staking contract ABI — these are the standard functions
+// If contract not yet deployed, all read calls gracefully return 0
+const STAKING_ABI = [
+  'function stake(uint256 amount, bool lockPeriod) external',
+  'function unstake(uint256 amount) external',
+  'function claimRewards() external',
+  'function compound() external',
+  'function pendingReward(address user) view returns (uint256)',
+  'function userStaked(address user) view returns (uint256)',
+  'function userLocked(address user) view returns (bool)',
+  'function userStakeTime(address user) view returns (uint256)',
+  'function lockEndTime(address user) view returns (uint256)',
+  'function totalStaked() view returns (uint256)',
+  'function totalUsers() view returns (uint256)'
+];
 
-// Floating emojis
+// ─── STATE ─────────────────────────────────────────────────────────────────
+let provider, signer, account;
+let selectedPlan = 0;   // 0=flexible, 1=30day
+let activeTab = 'stake';
+let walletMnody = 0;
+let stakedAmount = 0;
+let pendingAmount = 0;
+
+// ─── FLOATING BG ───────────────────────────────────────────────────────────
 const emojis=['🐶','💰','🌙','💎','🔥','⭐','✨','🪙','🎯','🐾'];
 const fc=document.getElementById('floaty');
-for(let i=0;i<18;i++){const el=document.createElement('span');el.className='fe';el.textContent=emojis[Math.floor(Math.random()*emojis.length)];el.style.left=Math.random()*100+'%';el.style.animationDuration=(14+Math.random()*18)+'s';el.style.animationDelay=(Math.random()*18)+'s';el.style.fontSize=(1+Math.random()*1.2)+'rem';fc.appendChild(el);}
+for(let i=0;i<16;i++){const el=document.createElement('span');el.className='fe';el.textContent=emojis[Math.floor(Math.random()*emojis.length)];el.style.left=Math.random()*100+'%';el.style.animationDuration=(14+Math.random()*18)+'s';el.style.animationDelay=(Math.random()*18)+'s';el.style.fontSize=(1+Math.random()*1.2)+'rem';fc.appendChild(el);}
 
+// ─── HELPERS ───────────────────────────────────────────────────────────────
+function copyTxt(t,btn){navigator.clipboard.writeText(t).then(()=>{const o=btn.textContent;btn.textContent='✓';setTimeout(()=>btn.textContent=o,1300)});}
+function showStatus(tab,msg,type){const el=document.getElementById(tab+'Status');if(el){el.innerHTML=msg;el.className='status-msg show '+type;}}
+function clearStatus(tab){const el=document.getElementById(tab+'Status');if(el)el.className='status-msg';}
+function showToast(m){document.getElementById('toast').classList.add('show');document.getElementById('toastMsg').textContent=m;}
+function hideToast(){setTimeout(()=>document.getElementById('toast').classList.remove('show'),2000);}
+function fmtBal(n){if(n>=1e6)return(n/1e6).toFixed(2)+'M';if(n>=1e3)return(n/1e3).toFixed(2)+'K';return n.toFixed(2);}
+
+// ─── PLAN SELECT ───────────────────────────────────────────────────────────
 function selectPlan(idx){
-  selectedPlan=idx;
-  document.getElementById('plan0').classList.toggle('selected',idx===0);
-  document.getElementById('plan1').classList.toggle('selected',idx===1);
-  currentApy=idx===0?40:70;
-  document.getElementById('planLabel').textContent=idx===0?'🐾 Flexible Staking':'🔒 30-Day Lock Staking';
-  document.getElementById('planApyLabel').textContent='Base '+(idx===0?'40%':'70%')+' APY';
-  document.getElementById('calcBaseApy').textContent=idx===0?'40%':'70%';
-  document.getElementById('earlyWarn').style.display=idx===1?'block':'none';
-  calcStake();
+  selectedPlan = idx;
+  document.getElementById('planCard0').classList.toggle('sel', idx===0);
+  document.getElementById('planCard1').classList.toggle('sel', idx===1);
+  const apy = idx===0 ? 40 : 70;
+  document.getElementById('planLabel').textContent = idx===0 ? '🐾 Flexible Staking' : '🔒 30-Day Lock';
+  document.getElementById('planApyLbl').textContent = 'Base '+(idx===0?'40%':'70%')+' APY';
+  document.getElementById('calcApy').textContent = apy+'%';
+  document.getElementById('claimApy').textContent = apy+'% base';
+  document.getElementById('earlyWarnBox').style.display = idx===1 ? 'block' : 'none';
+  calcRewards();
 }
 
-function switchTab(t){
-  activeTab=t;
-  ['stake','unstake','claim'].forEach(tab=>{
-    document.getElementById('tab-'+tab).classList.toggle('active',tab===t);
-    document.getElementById('tab'+tab.charAt(0).toUpperCase()+tab.slice(1)).style.display=tab===t?'block':'none';
+// ─── TABS ──────────────────────────────────────────────────────────────────
+function switchTab(tab){
+  activeTab = tab;
+  ['stake','unstake','claim'].forEach(t=>{
+    document.getElementById('tab'+cap(t)+'Btn').classList.toggle('active', t===tab);
+    document.getElementById('pane'+cap(t)).style.display = t===tab ? 'block' : 'none';
   });
-  if(t==='claim'&&account)loadUserData();
+  if(tab==='claim' && account) refreshUserData();
+}
+function cap(s){return s.charAt(0).toUpperCase()+s.slice(1);}
+
+// ─── CALCULATOR ────────────────────────────────────────────────────────────
+function calcRewards(){
+  const v = parseFloat(document.getElementById('stakeAmt').value)||0;
+  if(v<=0){document.getElementById('calcBox').style.display='none';return;}
+  const apy = selectedPlan===0 ? 0.40 : 0.70;
+  document.getElementById('calcBox').style.display='block';
+  document.getElementById('calcAmt').textContent = fmtBal(v)+' MNODY';
+  document.getElementById('calcDaily').textContent = fmtBal(v*apy/365)+' MNODY';
+  document.getElementById('calcMonth').textContent = fmtBal(v*apy/12)+' MNODY';
+  document.getElementById('calcYear').textContent  = fmtBal(v*apy)+' MNODY';
 }
 
-function calcStake(){
-  const v=parseFloat(document.getElementById('stakeAmt').value)||0;
-  if(v<=0){document.getElementById('stakeCalc').style.display='none';return;}
-  document.getElementById('stakeCalc').style.display='block';
-  const apy=currentApy/100;
-  const daily=v*apy/365,monthly=v*apy/12,yearly=v*apy;
-  document.getElementById('calcAmt').textContent=v.toLocaleString()+' MNODY';
-  document.getElementById('calcDaily').textContent=daily.toFixed(2)+' MNODY';
-  document.getElementById('calcMonthly').textContent=monthly.toFixed(2)+' MNODY';
-  document.getElementById('calcYearly').textContent=yearly.toFixed(2)+' MNODY';
+function setMaxStake(){
+  if(!account){showStatus('stake','Connect wallet first','error');return;}
+  document.getElementById('stakeAmt').value = walletMnody.toFixed(2);
+  calcRewards();
+}
+function setMaxUnstake(){
+  if(!account){showStatus('unstake','Connect wallet first','error');return;}
+  document.getElementById('unstakeAmt').value = stakedAmount.toFixed(2);
+}
+function setPctStake(pct){
+  if(!account){showStatus('stake','Connect wallet first','error');return;}
+  document.getElementById('stakeAmt').value = (walletMnody*pct/100).toFixed(2);
+  calcRewards();
 }
 
-function setMax(id){
-  if(!account){showToast('Connect wallet first');return;}
-  if(id==='stakeAmt'){document.getElementById('stakeAmt').value=mnodyBalance.toFixed(2);calcStake();}
-  else if(id==='unstakeAmt'){document.getElementById('unstakeAmt').value=stakedBal.toFixed(2);}
-}
-function setPct(id,pct){
-  const src=id==='stakeAmt'?mnodyBalance:stakedBal;
-  const v=(src*pct/100).toFixed(2);
-  document.getElementById(id).value=v;
-  if(id==='stakeAmt')calcStake();
-}
-
+// ─── NETWORK ───────────────────────────────────────────────────────────────
 async function ensurePolygon(){
-  try{await window.ethereum.request({method:'wallet_switchEthereumChain',params:[{chainId:POLYGON_CHAIN}]});}
-  catch(e){if(e.code===4902)await window.ethereum.request({method:'wallet_addEthereumChain',params:[{chainId:'0x89',chainName:'Polygon Mainnet',rpcUrls:['https://polygon-rpc.com'],nativeCurrency:{name:'POL',symbol:'POL',decimals:18},blockExplorerUrls:['https://polygonscan.com']}]});}
+  try{await window.ethereum.request({method:'wallet_switchEthereumChain',params:[{chainId:CFG.chainIdHex}]});}
+  catch(e){if(e.code===4902){await window.ethereum.request({method:'wallet_addEthereumChain',params:[{chainId:'0x89',chainName:'Polygon Mainnet',rpcUrls:['https://polygon-rpc.com'],nativeCurrency:{name:'POL',symbol:'POL',decimals:18},blockExplorerUrls:['https://polygonscan.com']}]});}}
 }
 
+// ─── CONNECT ───────────────────────────────────────────────────────────────
 async function connectWallet(){
-  if(!window.ethereum){showStatusOnTab('Please install MetaMask','error');return false;}
+  if(!window.ethereum){alert('Please install MetaMask!');return false;}
   try{
     await ensurePolygon();
-    const accs=await window.ethereum.request({method:'eth_requestAccounts'});
-    account=accs[0];
-    web3=new Web3(window.ethereum);
-    const short=account.slice(0,6)+'...'+account.slice(-4);
-    document.getElementById('walletAddr').textContent=short;
+    const accounts = await window.ethereum.request({method:'eth_requestAccounts'});
+    account = accounts[0];
+    provider = new ethers.providers.Web3Provider(window.ethereum, 'any');
+    signer   = provider.getSigner();
+    const net = await provider.getNetwork();
+    if(net.chainId !== CFG.chainId){
+      showStatus(activeTab,'Please switch MetaMask to Polygon Mainnet','error');
+      return false;
+    }
+    // Show wallet bar
     document.getElementById('walletBar').classList.add('show');
-    // Update all action buttons
-    document.getElementById('stakeBtn').textContent='📥 Stake MNODY';
-    document.getElementById('stakeBtn').className='action-btn stake-btn';
-    document.getElementById('unstakeBtn').textContent='📤 Unstake MNODY';
-    document.getElementById('unstakeBtn').className='action-btn unstake-btn';
-    document.getElementById('claimBtn').textContent='🎁 Claim Rewards';
-    document.getElementById('claimBtn').className='action-btn claim-btn';
+    document.getElementById('walletAddrTxt').textContent = account.slice(0,6)+'...'+account.slice(-4);
+    // Update all buttons
+    updateAllBtns();
+    document.getElementById('posCard').style.display='block';
     document.getElementById('compoundBtn').style.display='block';
-    await loadBalances();
-    await loadUserData();
-    await loadGlobalStats();
-    document.getElementById('positionsCard').style.display='block';
+    // Fetch data
+    await fetchWalletBalances();
+    await refreshUserData();
+    await fetchGlobalStats();
     return true;
-  }catch(e){showStatusOnTab('Connection failed: '+e.message,'error');return false;}
+  }catch(e){
+    const msg = e.code===4001 ? 'Connection rejected' : 'Connection failed: '+e.message;
+    showStatus(activeTab, msg, 'error');
+    return false;
+  }
 }
 
-async function loadBalances(){
-  if(!account||!web3)return;
-  try{
-    const tc=new web3.eth.Contract(ERC20_ABI,MNODY);
-    const mb=await tc.methods.balanceOf(account).call();
-    mnodyBalance=mb/1e18;
-    const pb=await web3.eth.getBalance(account);
-    document.getElementById('mnodyBal').textContent=mnodyBalance.toFixed(2);
-    document.getElementById('polBal').textContent=(pb/1e18).toFixed(4);
-    document.getElementById('stakeBalLabel').textContent='Balance: '+mnodyBalance.toFixed(2)+' MNODY';
-  }catch(e){console.error('Balance error',e);}
+function updateAllBtns(){
+  if(!account) return;
+  document.getElementById('stakeBtn').className='action-btn btn-stake';
+  document.getElementById('stakeBtn').textContent='📥 Stake MNODY';
+  document.getElementById('unstakeBtn').className='action-btn btn-unstake';
+  document.getElementById('unstakeBtn').textContent='📤 Unstake MNODY';
+  document.getElementById('claimBtn').className='action-btn btn-claim';
+  document.getElementById('claimBtn').textContent='🎁 Claim Rewards';
 }
 
-async function loadUserData(){
-  if(!account||!web3)return;
+// ─── BALANCES ──────────────────────────────────────────────────────────────
+async function fetchWalletBalances(){
+  if(!account||!provider) return;
   try{
-    const sc=new web3.eth.Contract(STAKING_ABI,STAKING_CONTRACT);
-    const [sb,pr,ts]=await Promise.all([
-      sc.methods.stakedBalance(account).call().catch(()=>'0'),
-      sc.methods.pendingRewards(account).call().catch(()=>'0'),
-      sc.methods.stakeTimestamp(account).call().catch(()=>'0'),
+    const mnodyC = new ethers.Contract(CFG.mnody, ERC20_ABI, provider);
+    const [mb, pb] = await Promise.all([
+      mnodyC.balanceOf(account),
+      provider.getBalance(account)
     ]);
-    stakedBal=parseFloat(sb)/1e18;
-    const pend=parseFloat(pr)/1e18;
-    document.getElementById('myStaked').textContent=stakedBal.toFixed(2)+' MNODY';
-    document.getElementById('pendingRewards').textContent=pend.toFixed(4)+' MNODY';
-    document.getElementById('unstakeBalLabel').textContent='Staked: '+stakedBal.toFixed(2)+' MNODY';
-    document.getElementById('myApy').textContent=currentApy+'% base';
-    if(ts&&ts!=='0'){const d=new Date(parseInt(ts)*1000);document.getElementById('stakingSince').textContent=d.toLocaleDateString();}
-    // Pool share
-    try{const tot=await sc.methods.totalStaked().call();const share=tot>0?(stakedBal/(tot/1e18)*100).toFixed(3)+'%':'0%';document.getElementById('poolShare').textContent=share;}catch{}
-    // Render positions
-    if(stakedBal>0){
-      document.getElementById('positionsList').innerHTML=`
-        <div class="pos-row">
-          <div class="pos-item"><div class="label">Plan</div><div class="value">${selectedPlan===0?'🐾 Flexible':'🔒 30-Day Lock'}</div></div>
-          <div class="pos-item"><div class="label">Staked</div><div class="value yellow">${stakedBal.toFixed(2)} MNODY</div></div>
-          <div class="pos-item"><div class="label">Pending</div><div class="value green">${pend.toFixed(4)} MNODY</div></div>
-          <div class="pos-item"><div class="label">APY</div><div class="value">${currentApy}%</div></div>
-          <div class="pos-item"><div class="label">Status</div><div><span class="pos-badge live">● LIVE</span></div></div>
-          <div class="pos-item">
-            <div class="pos-actions">
-              <button class="pos-btn claim" onclick="handleClaim()">Claim</button>
-              <button class="pos-btn unstake" onclick="switchTab('unstake')">Unstake</button>
-            </div>
-          </div>
-        </div>`;
-    }else{document.getElementById('positionsList').innerHTML='<p style="color:var(--muted);text-align:center;padding:20px">No active positions. Stake MNODY to start earning!</p>';}
-  }catch(e){console.error('Load user data error',e);}
+    walletMnody = parseFloat(ethers.utils.formatUnits(mb, CFG.dec));
+    const polBal = parseFloat(ethers.utils.formatEther(pb));
+    document.getElementById('mnodyBal').textContent   = fmtBal(walletMnody)+' MNODY';
+    document.getElementById('polBal').textContent     = polBal.toFixed(4)+' POL';
+    document.getElementById('stakeBalLbl').textContent = 'Wallet: '+fmtBal(walletMnody)+' MNODY';
+  }catch(e){console.error('Wallet balance error:',e);}
 }
 
-async function loadGlobalStats(){
-  if(!web3)return;
+async function refreshUserData(){
+  if(!account||!provider) return;
   try{
-    const sc=new web3.eth.Contract(STAKING_ABI,STAKING_CONTRACT);
-    const [ts,tn]=await Promise.all([sc.methods.totalStaked().call().catch(()=>'0'),sc.methods.totalStakers().call().catch(()=>'0')]);
-    document.getElementById('totalStaked').textContent=(parseFloat(ts)/1e18).toLocaleString(undefined,{maximumFractionDigits:0})+' MNODY';
-    document.getElementById('totalStakers').textContent=tn;
-  }catch{document.getElementById('totalStaked').textContent='N/A';document.getElementById('totalStakers').textContent='N/A';}
+    const sc = new ethers.Contract(CFG.staking, STAKING_ABI, provider);
+    // Wrap each call to handle if contract not yet live
+    const safe = fn => fn.catch(()=>ethers.BigNumber.from(0));
+    const [sb, pr, ts] = await Promise.all([
+      safe(sc.userStaked(account)),
+      safe(sc.pendingReward(account)),
+      safe(sc.userStakeTime(account))
+    ]);
+    stakedAmount  = parseFloat(ethers.utils.formatUnits(sb, CFG.dec));
+    pendingAmount = parseFloat(ethers.utils.formatUnits(pr, CFG.dec));
+    document.getElementById('myStakedBal').textContent  = fmtBal(stakedAmount)+' MNODY';
+    document.getElementById('myPendingBal').textContent = fmtBal(pendingAmount)+' MNODY';
+    document.getElementById('unstakeBalLbl').textContent = 'Staked: '+fmtBal(stakedAmount)+' MNODY';
+    // Claim pane
+    document.getElementById('claimPending').textContent = fmtBal(pendingAmount)+' MNODY';
+    document.getElementById('claimStaked').textContent  = fmtBal(stakedAmount)+' MNODY';
+    document.getElementById('claimApy').textContent     = (selectedPlan===0?40:70)+'% base';
+    if(ts && !ts.isZero()){
+      document.getElementById('claimSince').textContent = new Date(ts.toNumber()*1000).toLocaleDateString();
+    }
+    // Render position
+    renderPosition();
+  }catch(e){console.error('User data error:',e);}
 }
 
+function renderPosition(){
+  const el = document.getElementById('positionsList');
+  if(stakedAmount<=0){
+    el.innerHTML='<p style="color:var(--muted);text-align:center;padding:18px">No active positions. Stake MNODY to start earning!</p>';
+    return;
+  }
+  el.innerHTML=`
+    <div class="pos-row">
+      <div><div class="pos-lbl">Plan</div><div class="pos-val">${selectedPlan===0?'🐾 Flexible':'🔒 30-Day Lock'}</div></div>
+      <div><div class="pos-lbl">Staked</div><div class="pos-val yel">${fmtBal(stakedAmount)} MNODY</div></div>
+      <div><div class="pos-lbl">Pending</div><div class="pos-val grn">${fmtBal(pendingAmount)} MNODY</div></div>
+      <div><div class="pos-lbl">APY</div><div class="pos-val">${selectedPlan===0?40:70}% base</div></div>
+      <div><div class="pos-lbl">Status</div><span class="pos-badge-live">● LIVE</span></div>
+      <div class="pos-btns">
+        <button class="pos-btn claim" onclick="handleClaim()">Claim</button>
+        <button class="pos-btn unstake" onclick="switchTab('unstake')">Unstake</button>
+      </div>
+    </div>`;
+}
+
+async function fetchGlobalStats(){
+  try{
+    const prov = provider || new ethers.providers.JsonRpcProvider(CFG.rpc);
+    const sc   = new ethers.Contract(CFG.staking, STAKING_ABI, prov);
+    const safe = fn => fn.catch(()=>ethers.BigNumber.from(0));
+    const [ts, tn] = await Promise.all([safe(sc.totalStaked()), safe(sc.totalUsers())]);
+    const tsNum = parseFloat(ethers.utils.formatUnits(ts, CFG.dec));
+    document.getElementById('totalStaked').textContent  = fmtBal(tsNum)+' MNODY';
+    document.getElementById('totalStakers').textContent = tn.toString();
+  }catch(e){
+    document.getElementById('totalStaked').textContent  = 'N/A';
+    document.getElementById('totalStakers').textContent = 'N/A';
+  }
+}
+
+// ─── STAKE ─────────────────────────────────────────────────────────────────
 async function handleStake(){
   if(!account){const ok=await connectWallet();if(!ok)return;}
-  const amtVal=document.getElementById('stakeAmt').value;
-  const amt=parseFloat(amtVal);
-  if(!amt||amt<=0){showStatusOnTab('Enter a valid amount to stake','error');return;}
-  if(amt>mnodyBalance){showStatusOnTab('Insufficient MNODY balance','error');return;}
+  const amtStr = document.getElementById('stakeAmt').value;
+  const amt    = parseFloat(amtStr);
+  if(!amt||amt<=0){showStatus('stake','Enter an amount to stake','error');return;}
+  if(amt>walletMnody){showStatus('stake','Insufficient MNODY balance','error');return;}
+  const btn = document.getElementById('stakeBtn');
   try{
-    document.getElementById('stakeBtn').disabled=true;
-    showStatusOnTab('Checking approval...','info');showToast('Checking approval...');
-    const tc=new web3.eth.Contract(ERC20_ABI,MNODY);
-    const amtWei=web3.utils.toBN(Math.floor(amt*1e18).toString());
-    const allow=await tc.methods.allowance(account,STAKING_CONTRACT).call();
-    if(web3.utils.toBN(allow).lt(amtWei)){
-      showStatusOnTab('Approve MNODY in MetaMask...','pending');showToast('Approve MNODY...');
-      await tc.methods.approve(STAKING_CONTRACT,'115792089237316195423570985008687907853269984665640564039457584007913129639935').send({from:account,gas:100000});
-      showStatusOnTab('Approved! Staking now...','info');
+    btn.disabled=true;
+    showStatus('stake','Checking allowance...','info');
+    const mnodyC  = new ethers.Contract(CFG.mnody, ERC20_ABI, signer);
+    const stakingC= new ethers.Contract(CFG.staking, STAKING_ABI, signer);
+    const amtWei  = ethers.utils.parseUnits(amt.toFixed(CFG.dec), CFG.dec);
+    const allowed = await mnodyC.allowance(account, CFG.staking);
+    if(allowed.lt(amtWei)){
+      showStatus('stake','Approve MNODY in MetaMask...','pending');
+      showToast('Approving MNODY...');
+      const aTx = await mnodyC.approve(CFG.staking, ethers.constants.MaxUint256);
+      await aTx.wait();
+      hideToast();
+      showStatus('stake','Approved! Confirm stake now...','info');
     }
-    showStatusOnTab('Confirm stake in MetaMask...','pending');showToast('Staking...');
-    const sc=new web3.eth.Contract(STAKING_ABI,STAKING_CONTRACT);
-    const isLock=selectedPlan===1;
-    const tx=await sc.methods.stake(amtWei.toString(),isLock).send({from:account,gas:300000});
-    showStatusOnTab(`✅ Successfully staked ${amt.toFixed(2)} MNODY! <a href="https://polygonscan.com/tx/${tx.transactionHash}" target="_blank" style="color:var(--cyan)">View ↗</a>`,'success');
-    document.getElementById('stakeAmt').value='';document.getElementById('stakeCalc').style.display='none';
-    await loadBalances();await loadUserData();
-  }catch(e){let m='❌ Stake failed. ';if(e.code===4001)m+='Cancelled.';else m+=e.reason||e.message;showStatusOnTab(m,'error');}
-  finally{document.getElementById('stakeBtn').disabled=false;hideToast();}
+    showStatus('stake','Confirm stake in MetaMask...','pending');
+    showToast('Staking MNODY...');
+    const isLock = selectedPlan===1;
+    const tx = await stakingC.stake(amtWei, isLock);
+    showStatus('stake','Transaction sent, confirming...','pending');
+    const receipt = await tx.wait();
+    hideToast();
+    showStatus('stake',`✅ Staked ${amt.toFixed(2)} MNODY! <a href="${CFG.explorer}/tx/${receipt.transactionHash}" target="_blank" style="color:var(--cyan)">View ↗</a>`,'success');
+    document.getElementById('stakeAmt').value='';
+    document.getElementById('calcBox').style.display='none';
+    await fetchWalletBalances();
+    await refreshUserData();
+    await fetchGlobalStats();
+  }catch(e){
+    hideToast();
+    const msg = e.code===4001||e.code==='ACTION_REJECTED' ? 'Transaction rejected' :
+                e.message?.includes('insufficient funds') ? 'Not enough POL for gas' :
+                'Stake failed: '+(e.reason||e.message||'Unknown error');
+    showStatus('stake',msg,'error');
+    console.error('Stake error:',e);
+  }finally{btn.disabled=false;}
 }
 
+// ─── UNSTAKE ───────────────────────────────────────────────────────────────
 async function handleUnstake(){
   if(!account){const ok=await connectWallet();if(!ok)return;}
-  const amt=parseFloat(document.getElementById('unstakeAmt').value);
-  if(!amt||amt<=0){showStatusOnTab('Enter a valid amount','error');return;}
-  if(amt>stakedBal){showStatusOnTab('Exceeds your staked balance','error');return;}
+  const amtStr = document.getElementById('unstakeAmt').value;
+  const amt    = parseFloat(amtStr);
+  if(!amt||amt<=0){showStatus('unstake','Enter amount to unstake','error');return;}
+  if(amt>stakedAmount){showStatus('unstake','Exceeds your staked balance ('+fmtBal(stakedAmount)+' MNODY)','error');return;}
+  const btn = document.getElementById('unstakeBtn');
   try{
-    document.getElementById('unstakeBtn').disabled=true;
-    showStatusOnTab('Confirm unstake in MetaMask...','pending');showToast('Unstaking...');
-    const sc=new web3.eth.Contract(STAKING_ABI,STAKING_CONTRACT);
-    const amtWei=web3.utils.toBN(Math.floor(amt*1e18).toString());
-    const tx=await sc.methods.unstake(amtWei.toString()).send({from:account,gas:300000});
-    showStatusOnTab(`✅ Unstaked ${amt.toFixed(2)} MNODY! <a href="https://polygonscan.com/tx/${tx.transactionHash}" target="_blank" style="color:var(--cyan)">View ↗</a>`,'success');
+    btn.disabled=true;
+    showStatus('unstake','Confirm unstake in MetaMask...','pending');
+    showToast('Unstaking...');
+    const stakingC = new ethers.Contract(CFG.staking, STAKING_ABI, signer);
+    const amtWei   = ethers.utils.parseUnits(amt.toFixed(CFG.dec), CFG.dec);
+    const tx       = await stakingC.unstake(amtWei);
+    showStatus('unstake','Waiting for confirmation...','pending');
+    const receipt  = await tx.wait();
+    hideToast();
+    showStatus('unstake',`✅ Unstaked ${amt.toFixed(2)} MNODY! <a href="${CFG.explorer}/tx/${receipt.transactionHash}" target="_blank" style="color:var(--cyan)">View ↗</a>`,'success');
     document.getElementById('unstakeAmt').value='';
-    await loadBalances();await loadUserData();
-  }catch(e){let m='❌ Unstake failed. ';if(e.code===4001)m+='Cancelled.';else m+=e.reason||e.message;showStatusOnTab(m,'error');}
-  finally{document.getElementById('unstakeBtn').disabled=false;hideToast();}
+    await fetchWalletBalances();
+    await refreshUserData();
+  }catch(e){
+    hideToast();
+    const msg = e.code===4001||e.code==='ACTION_REJECTED' ? 'Transaction rejected' :
+                e.message?.includes('insufficient funds') ? 'Not enough POL for gas' :
+                'Unstake failed: '+(e.reason||e.message||'Unknown error');
+    showStatus('unstake',msg,'error');
+    console.error('Unstake error:',e);
+  }finally{btn.disabled=false;}
 }
 
+// ─── CLAIM ─────────────────────────────────────────────────────────────────
 async function handleClaim(){
   if(!account){const ok=await connectWallet();if(!ok)return;}
+  const btn = document.getElementById('claimBtn');
   try{
-    document.getElementById('claimBtn').disabled=true;
-    showStatusOnTab('Claim rewards in MetaMask...','pending');showToast('Claiming...');
-    const sc=new web3.eth.Contract(STAKING_ABI,STAKING_CONTRACT);
-    const tx=await sc.methods.claimRewards().send({from:account,gas:250000});
-    showStatusOnTab(`🎁 Rewards claimed! <a href="https://polygonscan.com/tx/${tx.transactionHash}" target="_blank" style="color:var(--cyan)">View ↗</a>`,'success');
-    await loadBalances();await loadUserData();
-  }catch(e){let m='❌ Claim failed. ';if(e.code===4001)m+='Cancelled.';else m+=e.reason||e.message;showStatusOnTab(m,'error');}
-  finally{document.getElementById('claimBtn').disabled=false;hideToast();}
+    btn.disabled=true;
+    showStatus('claim','Confirm claim in MetaMask...','pending');
+    showToast('Claiming rewards...');
+    const stakingC = new ethers.Contract(CFG.staking, STAKING_ABI, signer);
+    const tx       = await stakingC.claimRewards();
+    showStatus('claim','Waiting for confirmation...','pending');
+    const receipt  = await tx.wait();
+    hideToast();
+    showStatus('claim',`🎁 Rewards claimed! <a href="${CFG.explorer}/tx/${receipt.transactionHash}" target="_blank" style="color:var(--cyan)">View ↗</a>`,'success');
+    await fetchWalletBalances();
+    await refreshUserData();
+  }catch(e){
+    hideToast();
+    const msg = e.code===4001||e.code==='ACTION_REJECTED' ? 'Transaction rejected' :
+                'Claim failed: '+(e.reason||e.message||'Unknown error');
+    showStatus('claim',msg,'error');
+    console.error('Claim error:',e);
+  }finally{btn.disabled=false;}
 }
 
+// ─── COMPOUND ──────────────────────────────────────────────────────────────
 async function handleCompound(){
   if(!account){const ok=await connectWallet();if(!ok)return;}
+  const btn = document.getElementById('compoundBtn');
   try{
-    document.getElementById('compoundBtn').disabled=true;
-    showStatusOnTab('Compounding in MetaMask...','pending');showToast('Compounding...');
-    const sc=new web3.eth.Contract(STAKING_ABI,STAKING_CONTRACT);
-    const tx=await sc.methods.compound().send({from:account,gas:280000});
-    showStatusOnTab(`🔄 Compounded! <a href="https://polygonscan.com/tx/${tx.transactionHash}" target="_blank" style="color:var(--cyan)">View ↗</a>`,'success');
-    await loadBalances();await loadUserData();
-  }catch(e){let m='❌ Compound failed. ';if(e.code===4001)m+='Cancelled.';else m+=e.reason||e.message;showStatusOnTab(m,'error');}
-  finally{document.getElementById('compoundBtn').disabled=false;hideToast();}
+    btn.disabled=true;
+    showStatus('claim','Confirm compound in MetaMask...','pending');
+    showToast('Compounding...');
+    const stakingC = new ethers.Contract(CFG.staking, STAKING_ABI, signer);
+    const tx       = await stakingC.compound();
+    const receipt  = await tx.wait();
+    hideToast();
+    showStatus('claim',`🔄 Compounded! <a href="${CFG.explorer}/tx/${receipt.transactionHash}" target="_blank" style="color:var(--cyan)">View ↗</a>`,'success');
+    await fetchWalletBalances();
+    await refreshUserData();
+  }catch(e){
+    hideToast();
+    showStatus('claim','Compound failed: '+(e.reason||e.message||'Unknown'),'error');
+    console.error('Compound error:',e);
+  }finally{btn.disabled=false;}
 }
 
-function showStatusOnTab(msg,type){
-  const ids={stake:'stakeStatus',unstake:'unstakeStatus',claim:'claimStatus'};
-  const el=document.getElementById(ids[activeTab]);
-  if(el){el.innerHTML=msg;el.className='status-msg show '+type;}
-}
-let toastTimer;
-function showToast(msg){const t=document.getElementById('txToast');t.classList.add('show');document.getElementById('toastMsg').textContent=msg;}
-function hideToast(){toastTimer=setTimeout(()=>document.getElementById('txToast').classList.remove('show'),2500);}
-
-// Auto-connect if already connected
-window.addEventListener('load',async()=>{
+// ─── INIT ──────────────────────────────────────────────────────────────────
+async function init(){
+  // Try to load global stats without wallet
+  fetchGlobalStats();
   if(window.ethereum){
-    const accs=await window.ethereum.request({method:'eth_accounts'});
-    if(accs.length>0)await connectWallet();
-    window.ethereum.on('accountsChanged',()=>location.reload());
+    try{
+      const accs = await window.ethereum.request({method:'eth_accounts'});
+      if(accs.length>0) await connectWallet();
+    }catch{}
+    window.ethereum.on('accountsChanged', accs=>{
+      if(accs.length>0){account=accs[0];provider=new ethers.providers.Web3Provider(window.ethereum,'any');signer=provider.getSigner();fetchWalletBalances();refreshUserData();}
+      else{account=null;signer=null;document.getElementById('walletBar').classList.remove('show');}
+    });
     window.ethereum.on('chainChanged',()=>location.reload());
   }
-  // Load public stats even without wallet
-  try{const w=new Web3(POLYGON_RPC);const sc=new w.eth.Contract(STAKING_ABI,STAKING_CONTRACT);const [ts,tn]=await Promise.all([sc.methods.totalStaked().call().catch(()=>'0'),sc.methods.totalStakers().call().catch(()=>'0')]);document.getElementById('totalStaked').textContent=(parseFloat(ts)/1e18).toLocaleString(undefined,{maximumFractionDigits:0})+' MNODY';document.getElementById('totalStakers').textContent=tn;}catch{document.getElementById('totalStaked').textContent='N/A';document.getElementById('totalStakers').textContent='N/A';}
-});
+}
+window.addEventListener('load', init);
+// Refresh user data every 30s when connected
+setInterval(()=>{if(account)refreshUserData();}, 30000);
 </script>
 </body>
 </html>
