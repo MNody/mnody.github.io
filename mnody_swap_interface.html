@@ -1,1041 +1,636 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MNODY Swap - Polygon</title>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>MNODY Staking — Earn Up to 170% APY</title>
+<link href="https://fonts.googleapis.com/css2?family=Bangers&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
 <style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  background: linear-gradient(135deg, #1a1b3d 0%, #0a0b1e 100%);
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-  padding: 20px;
-}
-
-.swap-container {
-  background: rgba(30, 31, 60, 0.95);
-  border-radius: 24px;
-  padding: 24px;
-  width: 100%;
-  max-width: 480px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-.logo-section {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.logo-section h2 {
-  font-size: 24px;
-  font-weight: 600;
-}
-
-.polygon-badge {
-  background: linear-gradient(135deg, #8247e5, #6b21a8);
-  padding: 4px 10px;
-  border-radius: 8px;
-  font-size: 11px;
-  font-weight: 600;
-}
-
-.header-actions {
-  display: flex;
-  gap: 8px;
-}
-
-.icon-btn {
-  background: rgba(255, 255, 255, 0.1);
-  border: none;
-  color: #fff;
-  width: 40px;
-  height: 40px;
-  border-radius: 12px;
-  cursor: pointer;
-  font-size: 18px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s;
-}
-
-.icon-btn:hover {
-  background: rgba(255, 255, 255, 0.15);
-}
-
-.settings-modal, .history-modal {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.7);
-  z-index: 1000;
-  justify-content: center;
-  align-items: center;
-}
-
-.settings-modal.show, .history-modal.show {
-  display: flex;
-}
-
-.modal-content {
-  background: rgba(30, 31, 60, 0.98);
-  border-radius: 20px;
-  padding: 24px;
-  width: 90%;
-  max-width: 400px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  max-height: 80vh;
-  overflow-y: auto;
-}
-
-.modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-.modal-header h3 {
-  font-size: 20px;
-}
-
-.close-btn {
-  background: transparent;
-  border: none;
-  color: #fff;
-  font-size: 24px;
-  cursor: pointer;
-}
-
-.setting-row {
-  margin: 16px 0;
-}
-
-.setting-label {
-  font-size: 14px;
-  color: #8f8f9f;
-  margin-bottom: 8px;
-}
-
-.setting-input {
-  width: 100%;
-  background: rgba(20, 21, 45, 0.8);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-  padding: 12px;
-  color: #fff;
-  font-size: 16px;
-}
-
-.contract-info {
-  background: rgba(130, 71, 229, 0.1);
-  border: 1px solid rgba(130, 71, 229, 0.3);
-  border-radius: 12px;
-  padding: 12px;
-  margin-bottom: 16px;
-  font-size: 11px;
-  text-align: center;
-}
-
-.contract-info a {
-  color: #8247e5;
-  text-decoration: none;
-  word-break: break-all;
-}
-
-.price-info {
-  background: rgba(255, 107, 157, 0.1);
-  border: 1px solid rgba(255, 107, 157, 0.3);
-  border-radius: 12px;
-  padding: 12px;
-  margin-bottom: 16px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.price-left {
-  font-size: 12px;
-  color: #8f8f9f;
-}
-
-.price-right {
-  font-size: 16px;
-  font-weight: 600;
-  color: #ff6b9d;
-}
-
-.swap-box {
-  background: rgba(20, 21, 45, 0.8);
-  border-radius: 16px;
-  padding: 16px;
-  margin-bottom: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.swap-label {
-  font-size: 13px;
-  color: #8f8f9f;
-  margin-bottom: 12px;
-  font-weight: 500;
-}
-
-.token-select {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 12px;
-  cursor: pointer;
-  transition: all 0.2s;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.token-select:hover {
-  background: rgba(255, 255, 255, 0.08);
-}
-
-.token-icon {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #ff6b9d, #feca57);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
-  font-size: 14px;
-}
-
-.token-info {
-  flex: 1;
-}
-
-.token-name {
-  font-size: 16px;
-  font-weight: 600;
-  color: #fff;
-}
-
-.token-chain {
-  font-size: 12px;
-  color: #8f8f9f;
-}
-
-.amount-input {
-  background: transparent;
-  border: none;
-  color: #fff;
-  font-size: 28px;
-  font-weight: 600;
-  width: 100%;
-  margin-top: 12px;
-  outline: none;
-}
-
-.amount-input::placeholder {
-  color: rgba(255, 255, 255, 0.3);
-}
-
-.balance {
-  font-size: 13px;
-  color: #8f8f9f;
-  margin-top: 8px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.balance-left {
-  color: #8f8f9f;
-}
-
-.balance-right {
-  display: flex;
-  gap: 8px;
-}
-
-.balance-btn {
-  background: rgba(255, 107, 157, 0.15);
-  border: 1px solid rgba(255, 107, 157, 0.3);
-  color: #ff6b9d;
-  padding: 4px 8px;
-  border-radius: 6px;
-  font-size: 11px;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.balance-btn:hover {
-  background: rgba(255, 107, 157, 0.25);
-}
-
-.swap-arrow {
-  display: flex;
-  justify-content: center;
-  margin: -8px 0;
-  position: relative;
-  z-index: 2;
-}
-
-.swap-arrow-btn {
-  background: rgba(30, 31, 60, 0.95);
-  border: 4px solid rgba(20, 21, 45, 0.8);
-  width: 40px;
-  height: 40px;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.2s;
-  color: #fff;
-  font-size: 20px;
-}
-
-.swap-arrow-btn:hover {
-  transform: rotate(180deg);
-  background: rgba(255, 107, 157, 0.2);
-}
-
-.swap-details {
-  background: rgba(20, 21, 45, 0.5);
-  border-radius: 12px;
-  padding: 16px;
-  margin: 16px 0;
-}
-
-.detail-row {
-  display: flex;
-  justify-content: space-between;
-  margin: 8px 0;
-  font-size: 14px;
-}
-
-.detail-label {
-  color: #8f8f9f;
-}
-
-.detail-value {
-  color: #fff;
-  font-weight: 500;
-}
-
-.swap-btn {
-  width: 100%;
-  padding: 18px;
-  background: linear-gradient(135deg, #ff6b9d, #ff9a56);
-  border: none;
-  border-radius: 16px;
-  color: #fff;
-  font-size: 18px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.2s;
-  margin-top: 16px;
-}
-
-.swap-btn:hover:not(:disabled) {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 30px rgba(255, 107, 157, 0.5);
-}
-
-.swap-btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.connect-btn {
-  background: linear-gradient(135deg, #00f5a0, #059669);
-  color: #000;
-}
-
-.status {
-  text-align: center;
-  margin-top: 16px;
-  padding: 12px;
-  border-radius: 12px;
-  font-size: 14px;
-  display: none;
-}
-
-.status.success {
-  background: rgba(34, 197, 94, 0.15);
-  border: 1px solid #22c55e;
-  color: #22c55e;
-  display: block;
-}
-
-.status.error {
-  background: rgba(239, 68, 68, 0.15);
-  border: 1px solid #ef4444;
-  color: #ef4444;
-  display: block;
-}
-
-.status.pending {
-  background: rgba(251, 191, 36, 0.15);
-  border: 1px solid #fbbf24;
-  color: #fbbf24;
-  display: block;
-}
-
-.active-tx {
-  background: rgba(139, 92, 246, 0.15);
-  border: 1px solid #8b5cf6;
-  border-radius: 12px;
-  padding: 12px;
-  margin-bottom: 16px;
-  display: none;
-}
-
-.active-tx.show {
-  display: block;
-}
-
-.tx-status {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  color: #c4b5fd;
-  font-size: 14px;
-}
-
-.spinner {
-  width: 16px;
-  height: 16px;
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  border-top-color: #8b5cf6;
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
-.history-item {
-  background: rgba(20, 21, 45, 0.5);
-  border-radius: 12px;
-  padding: 12px;
-  margin-bottom: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.history-header {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 8px;
-}
-
-.history-type {
-  font-weight: 600;
-  color: #22c55e;
-}
-
-.history-time {
-  font-size: 11px;
-  color: #8f8f9f;
-}
-
-.history-details {
-  font-size: 13px;
-  color: #fff;
-  margin: 4px 0;
-}
-
-.history-link {
-  font-size: 11px;
-  margin-top: 8px;
-}
-
-.history-link a {
-  color: #8247e5;
-  text-decoration: none;
-}
-
-.no-history {
-  text-align: center;
-  color: #8f8f9f;
-  padding: 40px 20px;
-}
-
-.quick-amounts {
-  display: flex;
-  gap: 8px;
-  margin-top: 12px;
-}
-
-.quick-btn {
-  flex: 1;
-  background: rgba(130, 71, 229, 0.15);
-  border: 1px solid rgba(130, 71, 229, 0.3);
-  color: #8247e5;
-  padding: 8px;
-  border-radius: 8px;
-  font-size: 12px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.quick-btn:hover {
-  background: rgba(130, 71, 229, 0.25);
-}
-
-.refresh-btn {
-  background: rgba(34, 197, 94, 0.15);
-  border: 1px solid rgba(34, 197, 94, 0.3);
-  color: #22c55e;
-  padding: 6px 12px;
-  border-radius: 8px;
-  font-size: 11px;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.refresh-btn:hover {
-  background: rgba(34, 197, 94, 0.25);
-}
+:root{--pink:#ff3cac;--yellow:#ffd000;--cyan:#00f5ff;--green:#00ff9d;--purple:#7b2fff;--orange:#ff6a00;--bg:#08001a;--card:rgba(20,5,50,0.95);--border:rgba(255,60,172,0.3);--text:#f0e6ff;--muted:#9980c4}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+.bg-stars{position:fixed;inset:0;z-index:-1;background:radial-gradient(ellipse at 20% 20%,rgba(123,47,255,.22) 0%,transparent 55%),radial-gradient(ellipse at 80% 80%,rgba(255,60,172,.18) 0%,transparent 55%),var(--bg)}
+.floaty{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
+.fe{position:absolute;opacity:.1;animation:floatUp linear infinite}
+@keyframes floatUp{0%{transform:translateY(110vh) rotate(0);opacity:0}10%{opacity:.12}90%{opacity:.08}100%{transform:translateY(-10vh) rotate(360deg);opacity:0}}
+/* TOPBAR */
+.topbar{background:rgba(8,0,26,.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:12px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.topbar-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.topbar-logo img{width:38px;height:38px;border-radius:50%;border:2px solid var(--pink);box-shadow:0 0 14px rgba(255,60,172,.5)}
+.topbar-logo span{font-family:'Bangers',cursive;font-size:1.5rem;letter-spacing:2px;background:linear-gradient(135deg,var(--pink),var(--yellow));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.topbar-nav{display:flex;gap:6px;margin-left:auto;flex-wrap:wrap}
+.topbar-nav a{color:var(--muted);text-decoration:none;padding:6px 14px;border-radius:50px;font-weight:700;font-size:.82rem;transition:all .2s}
+.topbar-nav a:hover,.topbar-nav a.active{background:rgba(255,60,172,.18);color:var(--pink)}
+/* LAYOUT */
+.main{max-width:1200px;margin:auto;padding:30px 20px}
+.back-btn{display:inline-flex;align-items:center;gap:6px;color:var(--muted);text-decoration:none;font-size:.85rem;font-weight:700;margin-bottom:18px;transition:color .2s}
+.back-btn:hover{color:var(--pink)}
+/* HERO */
+.hero{text-align:center;padding:20px 0 36px}
+.hero-logo{width:110px;height:110px;border-radius:50%;border:4px solid var(--pink);box-shadow:0 0 50px rgba(255,60,172,.6);animation:float 3s ease-in-out infinite;margin-bottom:16px}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.hero h1{font-family:'Bangers',cursive;font-size:clamp(2.5rem,7vw,5rem);letter-spacing:4px;background:linear-gradient(135deg,var(--green),var(--cyan),var(--yellow));-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1;margin-bottom:8px}
+.hero p{color:var(--muted);font-size:1rem;max-width:560px;margin:0 auto 16px;line-height:1.7}
+.apy-big{font-family:'Bangers',cursive;font-size:4rem;letter-spacing:4px;color:var(--yellow);display:block;filter:drop-shadow(0 0 24px rgba(255,208,0,.5));margin:8px 0}
+/* LIVE STATS TICKER */
+.stats-bar{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin:20px 0}
+.stat-chip{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:50px;padding:8px 18px;font-size:.82rem;display:flex;align-items:center;gap:8px}
+.stat-chip strong{color:var(--cyan);font-size:1rem}
+/* WALLET INFO */
+.wallet-bar{background:rgba(0,255,157,.07);border:1px solid rgba(0,255,157,.25);border-radius:14px;padding:12px 18px;margin-bottom:18px;display:none;align-items:center;flex-wrap:wrap;gap:10px}
+.wallet-bar.show{display:flex}
+.wallet-addr{font-size:.82rem;color:var(--green);font-weight:700}
+.wallet-bals{display:flex;gap:14px;flex-wrap:wrap;margin-left:auto}
+.bal-item{font-size:.82rem;font-weight:800}
+/* PLAN CARDS */
+.plans-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:22px;margin-bottom:28px}
+.plan-card{background:var(--card);border:2px solid rgba(148,163,253,.2);border-radius:22px;padding:28px;cursor:pointer;transition:all .3s;position:relative;overflow:hidden}
+.plan-card::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at top left,rgba(123,47,255,.06),transparent 60%);pointer-events:none}
+.plan-card:hover{transform:translateY(-4px);border-color:var(--cyan);box-shadow:0 10px 40px rgba(0,245,255,.15)}
+.plan-card.selected{border-color:var(--green);box-shadow:0 0 0 3px rgba(0,255,157,.2),0 10px 40px rgba(0,255,157,.18)}
+.plan-card.featured{border-color:var(--yellow)}
+.featured-badge{position:absolute;top:16px;right:16px;background:linear-gradient(135deg,var(--yellow),var(--orange));color:#000;padding:4px 12px;border-radius:50px;font-size:.72rem;font-weight:900;letter-spacing:1px}
+.plan-icon{font-size:2.2rem;margin-bottom:10px}
+.plan-name{font-family:'Bangers',cursive;font-size:1.8rem;letter-spacing:2px;margin-bottom:6px}
+.plan-apy{font-family:'Bangers',cursive;font-size:3.2rem;letter-spacing:2px;color:var(--yellow);line-height:1}
+.plan-apy-label{font-size:.75rem;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px}
+.plan-features{list-style:none;margin-top:14px}
+.plan-features li{padding:5px 0 5px 22px;position:relative;color:#c0b0e0;font-size:.88rem}
+.plan-features li::before{content:'✓ ';position:absolute;left:0;color:var(--green);font-weight:900}
+.plan-tag{display:inline-block;background:rgba(123,47,255,.2);border:1px solid var(--purple);color:#c0a0ff;padding:3px 10px;border-radius:50px;font-size:.7rem;font-weight:800;margin-top:12px}
+/* STAKING INTERFACE */
+.stake-interface{background:var(--card);border:1px solid var(--border);border-radius:22px;padding:28px;margin-bottom:22px;box-shadow:0 16px 60px rgba(0,0,0,.55)}
+.interface-title{font-family:'Bangers',cursive;font-size:1.8rem;letter-spacing:2px;margin-bottom:22px;display:flex;align-items:center;gap:12px}
+.tabs{display:flex;gap:6px;margin-bottom:22px;background:rgba(255,255,255,.04);border-radius:14px;padding:5px}
+.tab{flex:1;padding:10px;border:none;border-radius:10px;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:800;font-size:.9rem;transition:all .2s;background:transparent;color:var(--muted)}
+.tab.active{background:linear-gradient(135deg,var(--pink),var(--purple));color:#fff;box-shadow:0 4px 16px rgba(255,60,172,.3)}
+/* INPUT AREA */
+.input-section{margin:18px 0}
+.input-label{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:.85rem;font-weight:800}
+.input-label span{color:var(--muted)}
+.max-btn{background:rgba(255,60,172,.15);border:1px solid rgba(255,60,172,.3);color:var(--pink);padding:4px 12px;border-radius:8px;cursor:pointer;font-size:.75rem;font-weight:900;font-family:'Nunito',sans-serif;transition:all .2s}
+.max-btn:hover{background:rgba(255,60,172,.28)}
+.amount-box{background:rgba(0,0,0,.4);border:2px solid rgba(255,255,255,.08);border-radius:14px;padding:16px;display:flex;align-items:center;gap:12px;transition:border-color .3s}
+.amount-box:focus-within{border-color:rgba(0,245,255,.4)}
+.amount-input{background:transparent;border:none;color:#fff;font-size:1.8rem;font-weight:700;flex:1;outline:none;font-family:'Nunito',sans-serif;min-width:0}
+.amount-input::placeholder{color:rgba(255,255,255,.2)}
+.tok-badge{background:linear-gradient(135deg,var(--pink),var(--yellow));color:#000;padding:8px 16px;border-radius:10px;font-weight:900;font-size:.9rem;flex-shrink:0}
+.quick-btns{display:flex;gap:6px;margin-top:10px}
+.qbtn{background:rgba(255,60,172,.1);border:1px solid rgba(255,60,172,.25);color:var(--pink);padding:5px 12px;border-radius:8px;cursor:pointer;font-size:.78rem;font-weight:800;font-family:'Nunito',sans-serif;transition:all .2s}
+.qbtn:hover{background:rgba(255,60,172,.22)}
+/* CALCULATOR */
+.calc-box{background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:16px;margin:16px 0}
+.calc-row{display:flex;justify-content:space-between;padding:6px 0;font-size:.85rem;border-bottom:1px solid rgba(255,255,255,.04)}
+.calc-row:last-child{border-bottom:none;padding-top:10px;margin-top:4px}
+.calc-row .label{color:var(--muted)}
+.calc-row .val{font-weight:800;color:var(--text)}
+.calc-row.highlight .val{color:var(--yellow);font-size:1rem}
+.calc-row.total-row .label{color:var(--text);font-weight:800}
+.calc-row.total-row .val{color:var(--green);font-size:1.05rem}
+/* BUTTONS */
+.action-btn{width:100%;padding:16px;border:none;border-radius:14px;font-size:1.1rem;font-weight:900;cursor:pointer;font-family:'Bangers',cursive;letter-spacing:2px;transition:all .2s;margin-top:14px}
+.action-btn.connect-btn{background:linear-gradient(135deg,var(--pink),var(--orange));color:#fff;box-shadow:0 8px 28px rgba(255,60,172,.35)}
+.action-btn.stake-btn{background:linear-gradient(135deg,var(--green),#059669);color:#000;box-shadow:0 8px 28px rgba(0,255,157,.3)}
+.action-btn.unstake-btn{background:linear-gradient(135deg,#ef4444,#b91c1c);color:#fff;box-shadow:0 8px 28px rgba(239,68,68,.25)}
+.action-btn.claim-btn{background:linear-gradient(135deg,var(--yellow),var(--orange));color:#000;box-shadow:0 8px 28px rgba(255,208,0,.3)}
+.action-btn:hover:not(:disabled){transform:translateY(-2px)}
+.action-btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+/* STATUS */
+.status-msg{padding:12px 16px;border-radius:10px;margin:12px 0;text-align:center;font-size:.88rem;font-weight:700;display:none}
+.status-msg.show{display:block}
+.status-msg.info{background:rgba(0,245,255,.08);border:1px solid rgba(0,245,255,.4);color:var(--cyan)}
+.status-msg.success{background:rgba(0,255,157,.08);border:1px solid var(--green);color:var(--green)}
+.status-msg.error{background:rgba(239,68,68,.08);border:1px solid #ef4444;color:#ef4444}
+.status-msg.pending{background:rgba(255,208,0,.08);border:1px solid var(--yellow);color:var(--yellow)}
+/* POSITIONS TABLE */
+.positions-card{background:var(--card);border:1px solid var(--border);border-radius:22px;padding:28px;margin-bottom:22px;box-shadow:0 16px 60px rgba(0,0,0,.55)}
+.pos-row{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:16px;margin:12px 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;align-items:center}
+.pos-item .label{font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:3px}
+.pos-item .value{font-weight:800;color:var(--text);font-size:.92rem}
+.pos-item .value.green{color:var(--green)}
+.pos-item .value.yellow{color:var(--yellow)}
+.pos-badge{display:inline-block;padding:3px 10px;border-radius:50px;font-size:.7rem;font-weight:900}
+.pos-badge.live{background:rgba(0,255,157,.15);color:var(--green);border:1px solid rgba(0,255,157,.4)}
+.pos-badge.locked{background:rgba(255,208,0,.12);color:var(--yellow);border:1px solid rgba(255,208,0,.35)}
+.pos-actions{display:flex;gap:8px;flex-wrap:wrap}
+.pos-btn{padding:7px 14px;border:none;border-radius:8px;font-family:'Nunito',sans-serif;font-weight:800;font-size:.8rem;cursor:pointer;transition:all .2s}
+.pos-btn.claim{background:linear-gradient(135deg,var(--yellow),var(--orange));color:#000}
+.pos-btn.unstake{background:linear-gradient(135deg,#ef4444,#b91c1c);color:#fff}
+.pos-btn:hover{transform:translateY(-1px);opacity:.9}
+.pos-btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
+/* BONUS TABLE */
+.bonus-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px;margin-top:14px}
+.bonus-item{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:16px}
+.bonus-item .bonus-title{font-weight:800;color:var(--yellow);margin-bottom:6px;font-size:.9rem}
+.bonus-item .bonus-desc{color:var(--muted);font-size:.82rem;line-height:1.7}
+/* HL */
+.hl{background:linear-gradient(135deg,rgba(0,255,157,.06),rgba(0,245,255,.06));border:2px solid var(--green);padding:18px;border-radius:14px;margin:18px 0}
+/* CONTRACT BOX */
+.contract-box{background:rgba(0,0,0,.3);border:1px solid rgba(0,245,255,.2);border-radius:12px;padding:14px;margin:14px 0;font-size:.82rem}
+code{background:rgba(0,0,0,.4);border:1px solid rgba(0,245,255,.18);padding:4px 9px;border-radius:7px;word-break:break-all;color:var(--cyan);font-size:.78rem}
+.copy-btn{background:rgba(0,245,255,.08);border:1px solid rgba(0,245,255,.25);color:var(--cyan);padding:4px 11px;border-radius:7px;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:700;font-size:.78rem;margin-left:6px;transition:all .2s}
+.copy-btn:hover{background:rgba(0,245,255,.18)}
+/* LOADING SPINNER */
+.spinner{display:inline-block;width:18px;height:18px;border:3px solid rgba(255,255,255,.2);border-top-color:var(--cyan);border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:6px}
+@keyframes spin{to{transform:rotate(360deg)}}
+/* TX TOAST */
+.tx-toast{position:fixed;bottom:24px;right:24px;background:rgba(20,5,50,.98);border:1px solid var(--yellow);border-radius:14px;padding:14px 20px;display:none;align-items:center;gap:12px;z-index:999;box-shadow:0 10px 40px rgba(0,0,0,.6);font-size:.85rem;max-width:320px}
+.tx-toast.show{display:flex}
+@media(max-width:700px){.pos-row{grid-template-columns:1fr 1fr}.plans-grid{grid-template-columns:1fr}.main{padding:20px 14px}}
 </style>
 </head>
 <body>
+<div class="bg-stars"></div>
+<div class="floaty" id="floaty"></div>
 
-<div class="swap-container">
-  <div class="header">
-    <div class="logo-section">
-      <h2>🐕 MNODY Swap</h2>
-      <span class="polygon-badge">🟣 Polygon</span>
-    </div>
-    <div class="header-actions">
-      <button class="icon-btn" onclick="openHistory()" title="Transaction History">📜</button>
-      <button class="icon-btn" onclick="openSettings()" title="Settings">⚙</button>
-    </div>
-  </div>
-
-  <!-- Contract Info - Polygon only -->
-  <div class="contract-info">
-    <strong>MNODY Contract (Polygon):</strong><br>
-    <a href="https://polygonscan.com/address/0x0bacbf5c435c3b0546f7cdf66f960770c7ad912c" target="_blank">
-      0x0bacbf5c435c3b0546f7cdf66f960770c7ad912c
-    </a>
-    <div style="margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(130, 71, 229, 0.2);">
-      <strong>📊 LP Pool:</strong>
-      <a href="https://polygonscan.com/address/0x3cEC491A74c924aaeb74DDe821653AaFEc7b94B9" target="_blank">
-        QuickSwap MNODY/USDT
-      </a>
-    </div>
-  </div>
-
-  <div class="price-info">
-    <div class="price-left">
-      <div>Current MNODY Price</div>
-      <button class="refresh-btn" onclick="refreshPrice()">↻ Refresh</button>
-    </div>
-    <div class="price-right" id="currentPrice">$0.000000</div>
-  </div>
-
-  <div class="active-tx" id="activeTx">
-    <div class="tx-status">
-      <div class="spinner"></div>
-      <span>Processing transaction...</span>
-    </div>
-  </div>
-
-  <div class="swap-box">
-    <div class="swap-label">From</div>
-    <div class="token-select">
-      <div class="token-icon" id="fromIcon">M</div>
-      <div class="token-info">
-        <div class="token-name" id="fromToken">MNODY</div>
-        <div class="token-chain">Polygon</div>
-      </div>
-    </div>
-    <input type="number" class="amount-input" id="fromAmount" placeholder="0" step="any">
-    <div class="balance">
-      <span class="balance-left">Balance: <span id="fromBalance">0</span></span>
-      <div class="balance-right">
-        <button class="balance-btn" onclick="setAmount(25)">25%</button>
-        <button class="balance-btn" onclick="setAmount(50)">50%</button>
-        <button class="balance-btn" onclick="setAmount(75)">75%</button>
-        <button class="balance-btn" onclick="setAmount(100)">MAX</button>
-      </div>
-    </div>
-    <div class="quick-amounts">
-      <button class="quick-btn" onclick="setQuickAmount(1000000)">1M</button>
-      <button class="quick-btn" onclick="setQuickAmount(5000000)">5M</button>
-      <button class="quick-btn" onclick="setQuickAmount(10000000)">10M</button>
-      <button class="quick-btn" onclick="setQuickAmount(15000000)">15M</button>
-    </div>
-  </div>
-
-  <div class="swap-arrow">
-    <div class="swap-arrow-btn" onclick="reverseSwap()">↓</div>
-  </div>
-
-  <div class="swap-box">
-    <div class="swap-label">To (Estimated)</div>
-    <div class="token-select">
-      <div class="token-icon" id="toIcon" style="background: linear-gradient(135deg, #26a17b, #22c55e);">U</div>
-      <div class="token-info">
-        <div class="token-name" id="toToken">USDT</div>
-        <div class="token-chain">Polygon</div>
-      </div>
-    </div>
-    <input type="number" class="amount-input" id="toAmount" placeholder="0" readonly>
-    <div class="balance">
-      <span class="balance-left">Balance: <span id="toBalance">0</span></span>
-    </div>
-  </div>
-
-  <div class="swap-details" id="swapDetails" style="display: none;">
-    <div class="detail-row">
-      <span class="detail-label">Exchange Rate</span>
-      <span class="detail-value" id="rate">1 MNODY = 0.00 USDT</span>
-    </div>
-    <div class="detail-row">
-      <span class="detail-label">Price Impact</span>
-      <span class="detail-value" id="priceImpact">< 0.01%</span>
-    </div>
-    <div class="detail-row">
-      <span class="detail-label">Minimum Received</span>
-      <span class="detail-value" id="minReceived">0.00</span>
-    </div>
-    <div class="detail-row">
-      <span class="detail-label">Slippage Tolerance</span>
-      <span class="detail-value" id="slippageDisplay">0.5%</span>
-    </div>
-    <div class="detail-row">
-      <span class="detail-label">Network Fee</span>
-      <span class="detail-value">~$0.01 - $0.05</span>
-    </div>
-  </div>
-
-  <button class="swap-btn connect-btn" id="swapBtn" onclick="handleSwap()">Connect Wallet</button>
-
-  <div class="status" id="statusMsg"></div>
-</div>
-
-<!-- Settings Modal -->
-<div class="settings-modal" id="settingsModal">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h3>Settings</h3>
-      <button class="close-btn" onclick="closeSettings()">×</button>
-    </div>
-    <div class="setting-row">
-      <div class="setting-label">Slippage Tolerance (%)</div>
-      <input type="number" class="setting-input" id="slippageInput" value="0.5" step="0.1" min="0.1" max="50">
-      <div style="font-size: 11px; color: #8f8f9f; margin-top: 4px;">
-        Higher slippage = less chance of failure, but worse price
-      </div>
-    </div>
-    <div class="setting-row">
-      <div class="setting-label">Transaction Deadline (minutes)</div>
-      <input type="number" class="setting-input" id="deadlineInput" value="20" step="1" min="1" max="60">
-      <div style="font-size: 11px; color: #8f8f9f; margin-top: 4px;">
-        Transaction will revert if pending for longer than this
-      </div>
-    </div>
-    <div class="setting-row">
-      <div class="setting-label">Gas Price</div>
-      <select class="setting-input" id="gasSpeed">
-        <option value="standard">Standard</option>
-        <option value="fast">Fast</option>
-        <option value="instant">Instant</option>
-      </select>
-    </div>
+<div class="topbar">
+  <a href="index.html" class="topbar-logo">
+    <img src="https://plum-top-lamprey-24.mypinata.cloud/ipfs/bafybeig32vvtms3362676kum4zl2rxu37ghnt4e3uccpidyn32my5q5v6y" alt="MNODY"/>
+    <span>MyNodyDog</span>
+  </a>
+  <div class="topbar-nav">
+    <a href="index.html">Home</a>
+    <a href="mnody_swap.html">🔄 Swap</a>
+    <a href="mynody_airdrop.html">🎁 Airdrop</a>
+    <a href="mnody_staking.html" class="active">💰 Staking</a>
+    <a href="https://t.me/MyNody" target="_blank">💬 Telegram</a>
   </div>
 </div>
 
-<!-- History Modal -->
-<div class="history-modal" id="historyModal">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h3>Transaction History</h3>
-      <button class="close-btn" onclick="closeHistory()">×</button>
-    </div>
-    <div id="historyList"></div>
+<div class="main">
+  <a href="index.html" class="back-btn">← Back to Home</a>
+
+  <!-- HERO -->
+  <div class="hero">
+    <img src="https://plum-top-lamprey-24.mypinata.cloud/ipfs/bafybeig32vvtms3362676kum4zl2rxu37ghnt4e3uccpidyn32my5q5v6y" class="hero-logo" alt="MNODY"/>
+    <h1>💰 MNODY Staking</h1>
+    <p>Stake your MNODY and earn passive rewards. Pool-based, sustainable, fully on Polygon.</p>
+    <span class="apy-big">Up to 170% APY</span>
+    <div style="color:var(--muted);font-size:.88rem">500,000,000 MNODY Rewards Pool • Polygon Mainnet</div>
   </div>
+
+  <!-- LIVE STATS -->
+  <div class="stats-bar">
+    <div class="stat-chip">🏊 Total Staked: <strong id="totalStaked">Loading...</strong></div>
+    <div class="stat-chip">💰 Rewards Pool: <strong>500M MNODY</strong></div>
+    <div class="stat-chip">👥 Stakers: <strong id="totalStakers">Loading...</strong></div>
+    <div class="stat-chip">📊 Pool Share: <strong id="poolShare">—</strong></div>
+  </div>
+
+  <!-- WALLET BAR -->
+  <div class="wallet-bar" id="walletBar">
+    <div>
+      <div style="font-size:.7rem;color:var(--muted);font-weight:700;margin-bottom:2px">CONNECTED WALLET</div>
+      <div class="wallet-addr" id="walletAddr">—</div>
+    </div>
+    <div class="wallet-bals">
+      <div class="bal-item">MNODY: <span style="color:var(--yellow)" id="mnodyBal">—</span></div>
+      <div class="bal-item">POL: <span style="color:var(--cyan)" id="polBal">—</span></div>
+    </div>
+  </div>
+
+  <!-- PLAN SELECTOR -->
+  <div style="font-family:'Bangers',cursive;font-size:1.8rem;letter-spacing:3px;text-align:center;margin-bottom:18px;background:linear-gradient(120deg,var(--yellow),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent">Choose Your Plan</div>
+  <div class="plans-grid">
+    <div class="plan-card featured selected" id="plan0" onclick="selectPlan(0)">
+      <div class="featured-badge">⭐ POPULAR</div>
+      <div class="plan-icon">🐾</div>
+      <div class="plan-name" style="color:var(--cyan)">Flexible</div>
+      <div class="plan-apy">40%</div>
+      <div class="plan-apy-label">Base APY</div>
+      <ul class="plan-features">
+        <li>Unstake anytime, no lock</li>
+        <li>Rewards accumulate daily</li>
+        <li>Claim anytime</li>
+        <li>Compound anytime</li>
+        <li>Max 365 days earning</li>
+      </ul>
+      <div class="plan-tag">Up to 140% with bonuses 🔥</div>
+    </div>
+
+    <div class="plan-card" id="plan1" onclick="selectPlan(1)">
+      <div class="plan-icon">🔒</div>
+      <div class="plan-name" style="color:var(--yellow)">30-Day Lock</div>
+      <div class="plan-apy">70%</div>
+      <div class="plan-apy-label">Base APY</div>
+      <ul class="plan-features">
+        <li>30-day lock period</li>
+        <li>Higher base rewards</li>
+        <li>Claim rewards anytime</li>
+        <li>Auto-compound option</li>
+        <li>Early unstake: 15% penalty</li>
+      </ul>
+      <div class="plan-tag">Up to 170% with bonuses 🚀</div>
+    </div>
+  </div>
+
+  <!-- STAKING INTERFACE -->
+  <div class="stake-interface">
+    <div class="interface-title">
+      <span id="planLabel">🐾 Flexible Staking</span>
+      <span style="font-family:'Nunito',sans-serif;font-size:.85rem;color:var(--muted);font-weight:700" id="planApyLabel">Base 40% APY</span>
+    </div>
+
+    <div class="tabs">
+      <button class="tab active" id="tab-stake" onclick="switchTab('stake')">📥 Stake</button>
+      <button class="tab" id="tab-unstake" onclick="switchTab('unstake')">📤 Unstake</button>
+      <button class="tab" id="tab-claim" onclick="switchTab('claim')">🎁 Claim Rewards</button>
+    </div>
+
+    <!-- STAKE TAB -->
+    <div id="tabStake">
+      <div class="input-section">
+        <div class="input-label">
+          <span>Amount to Stake</span>
+          <div style="display:flex;align-items:center;gap:8px"><span id="stakeBalLabel">Balance: —</span><button class="max-btn" onclick="setMax('stakeAmt')">MAX</button></div>
+        </div>
+        <div class="amount-box">
+          <input class="amount-input" id="stakeAmt" type="number" placeholder="0.00" min="0" oninput="calcStake()"/>
+          <div class="tok-badge">🐶 MNODY</div>
+        </div>
+        <div class="quick-btns">
+          <button class="qbtn" onclick="setPct('stakeAmt',25)">25%</button>
+          <button class="qbtn" onclick="setPct('stakeAmt',50)">50%</button>
+          <button class="qbtn" onclick="setPct('stakeAmt',75)">75%</button>
+          <button class="qbtn" onclick="setPct('stakeAmt',100)">MAX</button>
+        </div>
+      </div>
+
+      <div class="calc-box" id="stakeCalc" style="display:none">
+        <div class="calc-row highlight"><span class="label">Base APY</span><span class="val" id="calcBaseApy">40%</span></div>
+        <div class="calc-row"><span class="label">Staking Amount</span><span class="val" id="calcAmt">—</span></div>
+        <div class="calc-row"><span class="label">Est. Daily Rewards</span><span class="val" id="calcDaily">—</span></div>
+        <div class="calc-row"><span class="label">Est. Monthly Rewards</span><span class="val" id="calcMonthly">—</span></div>
+        <div class="calc-row total-row"><span class="label">Est. Yearly Rewards</span><span class="val" id="calcYearly">—</span></div>
+      </div>
+
+      <div class="status-msg" id="stakeStatus"></div>
+      <button class="action-btn connect-btn" id="stakeBtn" onclick="handleStake()">🦊 Connect MetaMask to Stake</button>
+
+      <div class="contract-box" style="margin-top:16px">
+        <span style="font-weight:800;color:var(--text)">Staking Contract (Polygon): </span>
+        <code>0x7C5adb8d3F98F97Ff23A41E738Bac40E3b3aeA53</code>
+        <button class="copy-btn" onclick="copyText('0x7C5adb8d3F98F97Ff23A41E738Bac40E3b3aeA53',this)">Copy</button>
+      </div>
+    </div>
+
+    <!-- UNSTAKE TAB -->
+    <div id="tabUnstake" style="display:none">
+      <div class="input-section">
+        <div class="input-label">
+          <span>Amount to Unstake</span>
+          <div style="display:flex;align-items:center;gap:8px"><span id="unstakeBalLabel">Staked: —</span><button class="max-btn" onclick="setMax('unstakeAmt')">MAX</button></div>
+        </div>
+        <div class="amount-box">
+          <input class="amount-input" id="unstakeAmt" type="number" placeholder="0.00" min="0"/>
+          <div class="tok-badge">🐶 MNODY</div>
+        </div>
+      </div>
+      <div class="hl" id="earlyWarn" style="display:none">
+        <p style="color:var(--yellow);font-size:.88rem;margin:0">⚠️ <strong>Early Unstake Penalty:</strong> Unstaking before the lock period ends incurs a 15% penalty on your staked amount. This penalty goes back to the rewards pool.</p>
+      </div>
+      <div class="status-msg" id="unstakeStatus"></div>
+      <button class="action-btn unstake-btn" id="unstakeBtn" onclick="handleUnstake()">🦊 Connect MetaMask to Unstake</button>
+    </div>
+
+    <!-- CLAIM TAB -->
+    <div id="tabClaim" style="display:none">
+      <div class="calc-box">
+        <div class="calc-row highlight"><span class="label">Pending Rewards</span><span class="val" id="pendingRewards">—</span></div>
+        <div class="calc-row"><span class="label">Total Staked</span><span class="val" id="myStaked">—</span></div>
+        <div class="calc-row"><span class="label">Staking Since</span><span class="val" id="stakingSince">—</span></div>
+        <div class="calc-row"><span class="label">Current APY</span><span class="val" id="myApy">—</span></div>
+      </div>
+      <div class="status-msg" id="claimStatus"></div>
+      <button class="action-btn claim-btn" id="claimBtn" onclick="handleClaim()">🦊 Connect & Claim Rewards</button>
+      <button class="action-btn" style="background:linear-gradient(135deg,var(--purple),var(--pink));color:#fff;margin-top:8px" id="compoundBtn" onclick="handleCompound()">🔄 Compound Rewards</button>
+    </div>
+  </div>
+
+  <!-- MY POSITIONS -->
+  <div class="positions-card" id="positionsCard" style="display:none">
+    <div style="font-family:'Bangers',cursive;font-size:1.8rem;letter-spacing:2px;margin-bottom:18px;color:var(--yellow)">📋 My Staking Positions</div>
+    <div id="positionsList"><p style="color:var(--muted);text-align:center;padding:20px">No active positions</p></div>
+  </div>
+
+  <!-- BONUS SECTION -->
+  <div class="positions-card">
+    <div style="font-family:'Bangers',cursive;font-size:1.8rem;letter-spacing:2px;margin-bottom:6px;color:var(--green)">🎁 Bonus APY System</div>
+    <p style="color:var(--muted);font-size:.88rem;margin-bottom:18px">Stack bonuses on top of your base APY for maximum returns</p>
+    <div class="bonus-grid">
+      <div class="bonus-item">
+        <div class="bonus-title">🐣 Early Bird Bonus</div>
+        <div class="bonus-desc">+50% APY bonus for stakers in the first 30 days after platform launch. The earlier you stake, the longer you earn at boosted rates.</div>
+      </div>
+      <div class="bonus-item">
+        <div class="bonus-title">🐋 Whale Bonus</div>
+        <div class="bonus-desc">
+          10M+ MNODY → +10% APY<br>
+          25M+ MNODY → +20% APY<br>
+          50M+ MNODY → +30% APY<br>
+          Larger stakes earn proportionally more.
+        </div>
+      </div>
+      <div class="bonus-item">
+        <div class="bonus-title">🔄 Compound Loyalty</div>
+        <div class="bonus-desc">
+          2+ compounds → +5% APY<br>
+          5+ compounds → +10% APY<br>
+          10+ compounds → +20% APY<br>
+          Reward compounders for staying active.
+        </div>
+      </div>
+      <div class="bonus-item">
+        <div class="bonus-title">📊 Max APY Example</div>
+        <div class="bonus-desc">
+          30-Day Lock: 70% base<br>
+          + Early Bird: +50%<br>
+          + Whale (50M+): +30%<br>
+          + Compound (10+): +20%<br>
+          = <strong style="color:var(--yellow)">170% Total APY 🚀</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <div class="positions-card">
+    <div style="font-family:'Bangers',cursive;font-size:1.8rem;letter-spacing:2px;margin-bottom:18px;color:var(--cyan)">⚙️ How Staking Works</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px">
+      <div style="background:rgba(255,255,255,.04);border:1px solid rgba(0,255,157,.2);border-radius:14px;padding:18px">
+        <h4 style="color:var(--green);margin-bottom:8px">1️⃣ Choose a Plan</h4>
+        <p style="color:#c0b0e0;font-size:.88rem;line-height:1.7">Select Flexible (40% base) or 30-Day Lock (70% base). You can have multiple positions.</p>
+      </div>
+      <div style="background:rgba(255,255,255,.04);border:1px solid rgba(0,245,255,.2);border-radius:14px;padding:18px">
+        <h4 style="color:var(--cyan);margin-bottom:8px">2️⃣ Approve & Stake</h4>
+        <p style="color:#c0b0e0;font-size:.88rem;line-height:1.7">Connect MetaMask on Polygon. Approve once, then stake your MNODY. Gas fees are minimal on Polygon.</p>
+      </div>
+      <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,208,0,.2);border-radius:14px;padding:18px">
+        <h4 style="color:var(--yellow);margin-bottom:8px">3️⃣ Earn Daily</h4>
+        <p style="color:#c0b0e0;font-size:.88rem;line-height:1.7">Rewards accumulate every block. View pending rewards in real-time. Claim or compound whenever you want.</p>
+      </div>
+      <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,60,172,.2);border-radius:14px;padding:18px">
+        <h4 style="color:var(--pink);margin-bottom:8px">4️⃣ Compound & Boost</h4>
+        <p style="color:#c0b0e0;font-size:.88rem;line-height:1.7">Compound rewards back into your stake to maximize APY. Loyalty bonus rewards frequent compounders.</p>
+      </div>
+    </div>
+  </div>
+
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+<!-- TX TOAST -->
+<div class="tx-toast" id="txToast">
+  <div style="width:20px;height:20px;border:3px solid rgba(255,208,0,.2);border-top-color:var(--yellow);border-radius:50%;animation:spin .7s linear infinite;flex-shrink:0"></div>
+  <span id="toastMsg">Processing...</span>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/web3@1.9.0/dist/web3.min.js"></script>
 <script>
-const POLYGON = {
-  chainId: '0x89',
-  name: 'Polygon',
-  rpc: 'https://polygon-rpc.com',
-  explorer: 'https://polygonscan.com',
-  mnody: '0x0bacbf5c435c3b0546f7cdf66f960770c7ad912c',
-  usdt: '0xc2132D05D31c914a87C6611C10748AEb04B58e8F',
-  router: '0xa5E0829CaCEd8fFDD4De3c43696c57F7D7A678ff',
-  pair: '0x3cEC491A74c924aaeb74DDe821653AaFEc7b94B9'
-};
+const POLYGON_RPC='https://polygon-rpc.com';
+const POLYGON_CHAIN='0x89';
+const MNODY='0x0bacbf5c435c3b0546f7cdf66f960770c7ad912c';
+const STAKING_CONTRACT='0x7C5adb8d3F98F97Ff23A41E738Bac40E3b3aeA53';
+const ERC20_ABI=['function balanceOf(address) view returns(uint256)','function allowance(address,address) view returns(uint256)','function approve(address,uint256) returns(bool)','function decimals() view returns(uint8)'];
+const STAKING_ABI=['function stake(uint256 amount,bool lock) external','function unstake(uint256 amount) external','function claimRewards() external','function compound() external','function pendingRewards(address) view returns(uint256)','function stakedBalance(address) view returns(uint256)','function totalStaked() view returns(uint256)','function totalStakers() view returns(uint256)','function isLocked(address) view returns(bool)','function lockEnd(address) view returns(uint256)','function stakeTimestamp(address) view returns(uint256)'];
 
-let provider, signer, account;
-let swapDirection = 'mnodyToUsdt';
-let slippageTolerance = 0.5;
-let deadlineMinutes = 20;
-let gasSpeed = 'standard';
-let swapHistory = [];
+let web3,account,selectedPlan=0,activeTab='stake',mnodyBalance=0,stakedBal=0,currentApy=40;
 
-const PAIR_ABI = [
-  "function getReserves() view returns (uint112 reserve0, uint112 reserve1, uint32 blockTimestampLast)",
-  "function token0() view returns (address)",
-  "function token1() view returns (address)"
-];
+function copyText(t,btn){navigator.clipboard.writeText(t).then(()=>{const o=btn.innerText;btn.innerText='✓';setTimeout(()=>btn.innerText=o,1400);});}
 
-const ERC20_ABI = [
-  "function balanceOf(address) view returns (uint256)",
-  "function approve(address spender, uint256 amount) returns (bool)",
-  "function allowance(address owner, address spender) view returns (uint256)",
-  "function decimals() view returns (uint8)"
-];
+// Floating emojis
+const emojis=['🐶','💰','🌙','💎','🔥','⭐','✨','🪙','🎯','🐾'];
+const fc=document.getElementById('floaty');
+for(let i=0;i<18;i++){const el=document.createElement('span');el.className='fe';el.textContent=emojis[Math.floor(Math.random()*emojis.length)];el.style.left=Math.random()*100+'%';el.style.animationDuration=(14+Math.random()*18)+'s';el.style.animationDelay=(Math.random()*18)+'s';el.style.fontSize=(1+Math.random()*1.2)+'rem';fc.appendChild(el);}
 
-const ROUTER_ABI = [
-  "function getAmountsOut(uint amountIn, address[] memory path) view returns (uint[] memory amounts)",
-  "function swapExactTokensForTokens(uint amountIn, uint amountOutMin, address[] calldata path, address to, uint deadline) returns (uint[] memory amounts)"
-];
-
-function loadHistory() {
-  const saved = localStorage.getItem('mnody_swap_history');
-  if (saved) swapHistory = JSON.parse(saved);
+function selectPlan(idx){
+  selectedPlan=idx;
+  document.getElementById('plan0').classList.toggle('selected',idx===0);
+  document.getElementById('plan1').classList.toggle('selected',idx===1);
+  currentApy=idx===0?40:70;
+  document.getElementById('planLabel').textContent=idx===0?'🐾 Flexible Staking':'🔒 30-Day Lock Staking';
+  document.getElementById('planApyLabel').textContent='Base '+(idx===0?'40%':'70%')+' APY';
+  document.getElementById('calcBaseApy').textContent=idx===0?'40%':'70%';
+  document.getElementById('earlyWarn').style.display=idx===1?'block':'none';
+  calcStake();
 }
 
-function saveHistory() {
-  localStorage.setItem('mnody_swap_history', JSON.stringify(swapHistory));
-}
-
-function openSettings() {
-  document.getElementById('settingsModal').classList.add('show');
-  document.getElementById('slippageInput').value = slippageTolerance;
-  document.getElementById('deadlineInput').value = deadlineMinutes;
-  document.getElementById('gasSpeed').value = gasSpeed;
-}
-
-function closeSettings() {
-  document.getElementById('settingsModal').classList.remove('show');
-  slippageTolerance = parseFloat(document.getElementById('slippageInput').value);
-  deadlineMinutes = parseInt(document.getElementById('deadlineInput').value);
-  gasSpeed = document.getElementById('gasSpeed').value;
-  document.getElementById('slippageDisplay').textContent = slippageTolerance + '%';
-  const fromAmount = document.getElementById('fromAmount').value;
-  if (fromAmount && parseFloat(fromAmount) > 0 && account) getQuote(fromAmount);
-}
-
-function openHistory() {
-  loadHistory();
-  const historyList = document.getElementById('historyList');
-  if (swapHistory.length === 0) {
-    historyList.innerHTML = '<div class="no-history">No transactions yet</div>';
-  } else {
-    historyList.innerHTML = swapHistory.map(item => `
-      <div class="history-item">
-        <div class="history-header">
-          <span class="history-type">${item.type}</span>
-          <span class="history-time">${item.time}</span>
-        </div>
-        <div class="history-details">
-          ${item.fromAmount} ${item.fromToken} → ${item.toAmount} ${item.toToken}
-        </div>
-        <div class="history-link">
-          <a href="${POLYGON.explorer}/tx/${item.hash}" target="_blank">View on PolygonScan ↗</a>
-        </div>
-      </div>
-    `).join('');
-  }
-  document.getElementById('historyModal').classList.add('show');
-}
-
-function closeHistory() {
-  document.getElementById('historyModal').classList.remove('show');
-}
-
-async function connectWallet() {
-  if (!window.ethereum) {
-    showStatus('Please install MetaMask', 'error');
-    return false;
-  }
-  try {
-    await window.ethereum.request({
-      method: 'wallet_switchEthereumChain',
-      params: [{ chainId: POLYGON.chainId }]
-    });
-  } catch (e) {
-    if (e.code === 4902) {
-      await window.ethereum.request({
-        method: 'wallet_addEthereumChain',
-        params: [{
-          chainId: POLYGON.chainId,
-          chainName: POLYGON.name,
-          rpcUrls: [POLYGON.rpc],
-          nativeCurrency: { name: 'MATIC', symbol: 'MATIC', decimals: 18 },
-          blockExplorerUrls: [POLYGON.explorer]
-        }]
-      });
-    }
-  }
-  provider = new ethers.providers.Web3Provider(window.ethereum);
-  const accounts = await provider.send("eth_requestAccounts", []);
-  account = accounts[0];
-  signer = provider.getSigner();
-  document.getElementById('swapBtn').textContent = 'Enter Amount';
-  document.getElementById('swapBtn').classList.remove('connect-btn');
-  await updateBalances();
-  await refreshPrice();
-  return true;
-}
-
-async function updateBalances() {
-  if (!account) return;
-  try {
-    const mnodyContract = new ethers.Contract(POLYGON.mnody, ERC20_ABI, provider);
-    const usdtContract = new ethers.Contract(POLYGON.usdt, ERC20_ABI, provider);
-    const mnodyBal = await mnodyContract.balanceOf(account);
-    const usdtBal = await usdtContract.balanceOf(account);
-    const mnodyFormatted = parseFloat(ethers.utils.formatEther(mnodyBal)).toFixed(2);
-    const usdtFormatted = parseFloat(ethers.utils.formatUnits(usdtBal, 6)).toFixed(2);
-    if (swapDirection === 'mnodyToUsdt') {
-      document.getElementById('fromBalance').textContent = mnodyFormatted + ' MNODY';
-      document.getElementById('toBalance').textContent = usdtFormatted + ' USDT';
-    } else {
-      document.getElementById('fromBalance').textContent = usdtFormatted + ' USDT';
-      document.getElementById('toBalance').textContent = mnodyFormatted + ' MNODY';
-    }
-  } catch (e) {
-    console.error('Balance fetch error:', e);
-  }
-}
-
-async function refreshPrice() {
-  if (!provider) provider = new ethers.providers.JsonRpcProvider(POLYGON.rpc);
-  try {
-    const pairContract = new ethers.Contract(POLYGON.pair, PAIR_ABI, provider);
-    const reserves = await pairContract.getReserves();
-    const token0 = await pairContract.token0();
-    let mnodyReserve, usdtReserve;
-    if (token0.toLowerCase() === POLYGON.mnody.toLowerCase()) {
-      mnodyReserve = reserves[0];
-      usdtReserve = reserves[1];
-    } else {
-      mnodyReserve = reserves[1];
-      usdtReserve = reserves[0];
-    }
-    const mnodyReserveFormatted = parseFloat(ethers.utils.formatEther(mnodyReserve));
-    const usdtReserveFormatted = parseFloat(ethers.utils.formatUnits(usdtReserve, 6));
-    const price = usdtReserveFormatted / mnodyReserveFormatted;
-    document.getElementById('currentPrice').textContent = '$' + price.toFixed(8);
-  } catch (e) {
-    console.error('Price fetch error:', e);
-    document.getElementById('currentPrice').textContent = '$0.000000';
-  }
-}
-
-function setAmount(percentage) {
-  if (!account) { showStatus('Please connect wallet first', 'error'); return; }
-  const balanceText = document.getElementById('fromBalance').textContent;
-  const balanceValue = parseFloat(balanceText.split(' ')[0]);
-  if (balanceValue > 0) {
-    const amount = (balanceValue * percentage / 100).toFixed(2);
-    document.getElementById('fromAmount').value = amount;
-    getQuote(amount);
-  }
-}
-
-function setQuickAmount(amount) {
-  document.getElementById('fromAmount').value = amount;
-  if (account) getQuote(amount);
-}
-
-async function getQuote(amountIn) {
-  if (!amountIn || amountIn <= 0) return;
-  if (!provider) provider = new ethers.providers.JsonRpcProvider(POLYGON.rpc);
-  try {
-    const router = new ethers.Contract(POLYGON.router, ROUTER_ABI, provider);
-    const A = swapDirection === 'mnodyToUsdt' ? POLYGON.mnody : POLYGON.usdt;
-    const B = swapDirection === 'mnodyToUsdt' ? POLYGON.usdt : POLYGON.mnody;
-    const decimalsIn = swapDirection === 'mnodyToUsdt' ? 18 : 6;
-    const decimalsOut = swapDirection === 'mnodyToUsdt' ? 6 : 18;
-    const amountInWei = ethers.utils.parseUnits(amountIn.toString(), decimalsIn);
-    const amounts = await router.getAmountsOut(amountInWei, [A, B]);
-    const amountOut = ethers.utils.formatUnits(amounts[1], decimalsOut);
-    const formattedOut = parseFloat(amountOut).toFixed(decimalsOut === 6 ? 6 : 2);
-    document.getElementById('toAmount').value = formattedOut;
-    if (swapDirection === 'mnodyToUsdt') {
-      document.getElementById('rate').textContent = `1 MNODY = ${(parseFloat(amountOut) / amountIn).toFixed(8)} USDT`;
-    } else {
-      document.getElementById('rate').textContent = `1 USDT = ${(parseFloat(amountOut) / amountIn).toFixed(2)} MNODY`;
-    }
-    const minReceived = (parseFloat(amountOut) * (1 - slippageTolerance / 100)).toFixed(decimalsOut === 6 ? 6 : 2);
-    document.getElementById('minReceived').textContent = minReceived + (swapDirection === 'mnodyToUsdt' ? ' USDT' : ' MNODY');
-    document.getElementById('swapDetails').style.display = 'block';
-    document.getElementById('swapBtn').textContent = 'Swap';
-    document.getElementById('swapBtn').disabled = false;
-  } catch (e) {
-    console.error('Quote error:', e);
-    document.getElementById('toAmount').value = '0';
-    showStatus('Unable to get quote. Check liquidity.', 'error');
-  }
-}
-
-document.getElementById('fromAmount').addEventListener('input', (e) => {
-  const val = e.target.value;
-  if (val && parseFloat(val) > 0) {
-    getQuote(val);
-  } else {
-    document.getElementById('toAmount').value = '';
-    document.getElementById('swapDetails').style.display = 'none';
-  }
-});
-
-function reverseSwap() {
-  swapDirection = swapDirection === 'mnodyToUsdt' ? 'usdtToMnody' : 'mnodyToUsdt';
-  if (swapDirection === 'mnodyToUsdt') {
-    document.getElementById('fromToken').textContent = 'MNODY';
-    document.getElementById('toToken').textContent = 'USDT';
-    document.getElementById('fromIcon').textContent = 'M';
-    document.getElementById('fromIcon').style.background = 'linear-gradient(135deg, #ff6b9d, #feca57)';
-    document.getElementById('toIcon').textContent = 'U';
-    document.getElementById('toIcon').style.background = 'linear-gradient(135deg, #26a17b, #22c55e)';
-  } else {
-    document.getElementById('fromToken').textContent = 'USDT';
-    document.getElementById('toToken').textContent = 'MNODY';
-    document.getElementById('fromIcon').textContent = 'U';
-    document.getElementById('fromIcon').style.background = 'linear-gradient(135deg, #26a17b, #22c55e)';
-    document.getElementById('toIcon').textContent = 'M';
-    document.getElementById('toIcon').style.background = 'linear-gradient(135deg, #ff6b9d, #feca57)';
-  }
-  document.getElementById('fromAmount').value = '';
-  document.getElementById('toAmount').value = '';
-  document.getElementById('swapDetails').style.display = 'none';
-  if (account) updateBalances();
-}
-
-async function handleSwap() {
-  const btn = document.getElementById('swapBtn');
-  if (btn.textContent === 'Connect Wallet') {
-    await connectWallet();
-    return;
-  }
-  const amountIn = document.getElementById('fromAmount').value;
-  if (!amountIn || parseFloat(amountIn) <= 0) {
-    showStatus('Please enter an amount', 'error');
-    return;
-  }
-  try {
-    showActiveTx();
-    showStatus('Checking allowance...', 'pending');
-    const tokenIn = swapDirection === 'mnodyToUsdt' ? POLYGON.mnody : POLYGON.usdt;
-    const decimalsIn = swapDirection === 'mnodyToUsdt' ? 18 : 6;
-    const amountInWei = ethers.utils.parseUnits(amountIn, decimalsIn);
-    const tokenContract = new ethers.Contract(tokenIn, ERC20_ABI, signer);
-    const allowance = await tokenContract.allowance(account, POLYGON.router);
-    if (allowance.lt(amountInWei)) {
-      showStatus('Please approve token spending...', 'pending');
-      const approveTx = await tokenContract.approve(POLYGON.router, ethers.constants.MaxUint256);
-      showStatus('Approving... Please wait', 'pending');
-      await approveTx.wait();
-    }
-    showStatus('Executing swap...', 'pending');
-    const router = new ethers.Contract(POLYGON.router, ROUTER_ABI, signer);
-    const A = swapDirection === 'mnodyToUsdt' ? POLYGON.mnody : POLYGON.usdt;
-    const B = swapDirection === 'mnodyToUsdt' ? POLYGON.usdt : POLYGON.mnody;
-    const amountOut = document.getElementById('toAmount').value;
-    const decimalsOut = swapDirection === 'mnodyToUsdt' ? 6 : 18;
-    const slippageMultiplier = 1 - (slippageTolerance / 100);
-    const amountOutMin = ethers.utils.parseUnits(
-      (parseFloat(amountOut) * slippageMultiplier).toFixed(decimalsOut),
-      decimalsOut
-    );
-    const deadline = Math.floor(Date.now() / 1000) + 60 * deadlineMinutes;
-    let gasLimit = 300000;
-    if (gasSpeed === 'fast') gasLimit = 350000;
-    if (gasSpeed === 'instant') gasLimit = 400000;
-    const tx = await router.swapExactTokensForTokens(
-      amountInWei, amountOutMin, [A, B], account, deadline, { gasLimit }
-    );
-    showStatus('Transaction sent! Waiting for confirmation...', 'pending');
-    const receipt = await tx.wait();
-    hideActiveTx();
-    showStatus(`✅ Swap successful! <a href="${POLYGON.explorer}/tx/${receipt.transactionHash}" target="_blank" style="color:#8247e5;text-decoration:underline">View on PolygonScan</a>`, 'success');
-    const historyItem = {
-      type: swapDirection === 'mnodyToUsdt' ? 'MNODY → USDT' : 'USDT → MNODY',
-      fromAmount: amountIn,
-      fromToken: swapDirection === 'mnodyToUsdt' ? 'MNODY' : 'USDT',
-      toAmount: amountOut,
-      toToken: swapDirection === 'mnodyToUsdt' ? 'USDT' : 'MNODY',
-      hash: receipt.transactionHash,
-      time: new Date().toLocaleString()
-    };
-    swapHistory.unshift(historyItem);
-    if (swapHistory.length > 10) swapHistory.pop();
-    saveHistory();
-    document.getElementById('fromAmount').value = '';
-    document.getElementById('toAmount').value = '';
-    document.getElementById('swapDetails').style.display = 'none';
-    await updateBalances();
-    await refreshPrice();
-  } catch (e) {
-    console.error('Swap error:', e);
-    hideActiveTx();
-    if (e.code === 4001) {
-      showStatus('Transaction rejected by user', 'error');
-    } else {
-      showStatus('Swap failed: ' + (e.reason || e.message), 'error');
-    }
-  }
-}
-
-function showStatus(msg, type) {
-  const status = document.getElementById('statusMsg');
-  status.innerHTML = msg;
-  status.className = 'status ' + type;
-}
-
-function showActiveTx() {
-  document.getElementById('activeTx').classList.add('show');
-}
-
-function hideActiveTx() {
-  setTimeout(() => document.getElementById('activeTx').classList.remove('show'), 2000);
-}
-
-// Auto-refresh price every 30 seconds
-setInterval(() => { if (provider) refreshPrice(); }, 30000);
-
-// Initialize
-loadHistory();
-if (window.ethereum) {
-  window.ethereum.request({ method: 'eth_accounts' }).then(accounts => {
-    if (accounts.length > 0) connectWallet();
-    else refreshPrice();
+function switchTab(t){
+  activeTab=t;
+  ['stake','unstake','claim'].forEach(tab=>{
+    document.getElementById('tab-'+tab).classList.toggle('active',tab===t);
+    document.getElementById('tab'+tab.charAt(0).toUpperCase()+tab.slice(1)).style.display=tab===t?'block':'none';
   });
-} else {
-  refreshPrice();
+  if(t==='claim'&&account)loadUserData();
 }
+
+function calcStake(){
+  const v=parseFloat(document.getElementById('stakeAmt').value)||0;
+  if(v<=0){document.getElementById('stakeCalc').style.display='none';return;}
+  document.getElementById('stakeCalc').style.display='block';
+  const apy=currentApy/100;
+  const daily=v*apy/365,monthly=v*apy/12,yearly=v*apy;
+  document.getElementById('calcAmt').textContent=v.toLocaleString()+' MNODY';
+  document.getElementById('calcDaily').textContent=daily.toFixed(2)+' MNODY';
+  document.getElementById('calcMonthly').textContent=monthly.toFixed(2)+' MNODY';
+  document.getElementById('calcYearly').textContent=yearly.toFixed(2)+' MNODY';
+}
+
+function setMax(id){
+  if(!account){showToast('Connect wallet first');return;}
+  if(id==='stakeAmt'){document.getElementById('stakeAmt').value=mnodyBalance.toFixed(2);calcStake();}
+  else if(id==='unstakeAmt'){document.getElementById('unstakeAmt').value=stakedBal.toFixed(2);}
+}
+function setPct(id,pct){
+  const src=id==='stakeAmt'?mnodyBalance:stakedBal;
+  const v=(src*pct/100).toFixed(2);
+  document.getElementById(id).value=v;
+  if(id==='stakeAmt')calcStake();
+}
+
+async function ensurePolygon(){
+  try{await window.ethereum.request({method:'wallet_switchEthereumChain',params:[{chainId:POLYGON_CHAIN}]});}
+  catch(e){if(e.code===4902)await window.ethereum.request({method:'wallet_addEthereumChain',params:[{chainId:'0x89',chainName:'Polygon Mainnet',rpcUrls:['https://polygon-rpc.com'],nativeCurrency:{name:'POL',symbol:'POL',decimals:18},blockExplorerUrls:['https://polygonscan.com']}]});}
+}
+
+async function connectWallet(){
+  if(!window.ethereum){showStatusOnTab('Please install MetaMask','error');return false;}
+  try{
+    await ensurePolygon();
+    const accs=await window.ethereum.request({method:'eth_requestAccounts'});
+    account=accs[0];
+    web3=new Web3(window.ethereum);
+    const short=account.slice(0,6)+'...'+account.slice(-4);
+    document.getElementById('walletAddr').textContent=short;
+    document.getElementById('walletBar').classList.add('show');
+    // Update all action buttons
+    document.getElementById('stakeBtn').textContent='📥 Stake MNODY';
+    document.getElementById('stakeBtn').className='action-btn stake-btn';
+    document.getElementById('unstakeBtn').textContent='📤 Unstake MNODY';
+    document.getElementById('unstakeBtn').className='action-btn unstake-btn';
+    document.getElementById('claimBtn').textContent='🎁 Claim Rewards';
+    document.getElementById('claimBtn').className='action-btn claim-btn';
+    document.getElementById('compoundBtn').style.display='block';
+    await loadBalances();
+    await loadUserData();
+    await loadGlobalStats();
+    document.getElementById('positionsCard').style.display='block';
+    return true;
+  }catch(e){showStatusOnTab('Connection failed: '+e.message,'error');return false;}
+}
+
+async function loadBalances(){
+  if(!account||!web3)return;
+  try{
+    const tc=new web3.eth.Contract(ERC20_ABI,MNODY);
+    const mb=await tc.methods.balanceOf(account).call();
+    mnodyBalance=mb/1e18;
+    const pb=await web3.eth.getBalance(account);
+    document.getElementById('mnodyBal').textContent=mnodyBalance.toFixed(2);
+    document.getElementById('polBal').textContent=(pb/1e18).toFixed(4);
+    document.getElementById('stakeBalLabel').textContent='Balance: '+mnodyBalance.toFixed(2)+' MNODY';
+  }catch(e){console.error('Balance error',e);}
+}
+
+async function loadUserData(){
+  if(!account||!web3)return;
+  try{
+    const sc=new web3.eth.Contract(STAKING_ABI,STAKING_CONTRACT);
+    const [sb,pr,ts]=await Promise.all([
+      sc.methods.stakedBalance(account).call().catch(()=>'0'),
+      sc.methods.pendingRewards(account).call().catch(()=>'0'),
+      sc.methods.stakeTimestamp(account).call().catch(()=>'0'),
+    ]);
+    stakedBal=parseFloat(sb)/1e18;
+    const pend=parseFloat(pr)/1e18;
+    document.getElementById('myStaked').textContent=stakedBal.toFixed(2)+' MNODY';
+    document.getElementById('pendingRewards').textContent=pend.toFixed(4)+' MNODY';
+    document.getElementById('unstakeBalLabel').textContent='Staked: '+stakedBal.toFixed(2)+' MNODY';
+    document.getElementById('myApy').textContent=currentApy+'% base';
+    if(ts&&ts!=='0'){const d=new Date(parseInt(ts)*1000);document.getElementById('stakingSince').textContent=d.toLocaleDateString();}
+    // Pool share
+    try{const tot=await sc.methods.totalStaked().call();const share=tot>0?(stakedBal/(tot/1e18)*100).toFixed(3)+'%':'0%';document.getElementById('poolShare').textContent=share;}catch{}
+    // Render positions
+    if(stakedBal>0){
+      document.getElementById('positionsList').innerHTML=`
+        <div class="pos-row">
+          <div class="pos-item"><div class="label">Plan</div><div class="value">${selectedPlan===0?'🐾 Flexible':'🔒 30-Day Lock'}</div></div>
+          <div class="pos-item"><div class="label">Staked</div><div class="value yellow">${stakedBal.toFixed(2)} MNODY</div></div>
+          <div class="pos-item"><div class="label">Pending</div><div class="value green">${pend.toFixed(4)} MNODY</div></div>
+          <div class="pos-item"><div class="label">APY</div><div class="value">${currentApy}%</div></div>
+          <div class="pos-item"><div class="label">Status</div><div><span class="pos-badge live">● LIVE</span></div></div>
+          <div class="pos-item">
+            <div class="pos-actions">
+              <button class="pos-btn claim" onclick="handleClaim()">Claim</button>
+              <button class="pos-btn unstake" onclick="switchTab('unstake')">Unstake</button>
+            </div>
+          </div>
+        </div>`;
+    }else{document.getElementById('positionsList').innerHTML='<p style="color:var(--muted);text-align:center;padding:20px">No active positions. Stake MNODY to start earning!</p>';}
+  }catch(e){console.error('Load user data error',e);}
+}
+
+async function loadGlobalStats(){
+  if(!web3)return;
+  try{
+    const sc=new web3.eth.Contract(STAKING_ABI,STAKING_CONTRACT);
+    const [ts,tn]=await Promise.all([sc.methods.totalStaked().call().catch(()=>'0'),sc.methods.totalStakers().call().catch(()=>'0')]);
+    document.getElementById('totalStaked').textContent=(parseFloat(ts)/1e18).toLocaleString(undefined,{maximumFractionDigits:0})+' MNODY';
+    document.getElementById('totalStakers').textContent=tn;
+  }catch{document.getElementById('totalStaked').textContent='N/A';document.getElementById('totalStakers').textContent='N/A';}
+}
+
+async function handleStake(){
+  if(!account){const ok=await connectWallet();if(!ok)return;}
+  const amtVal=document.getElementById('stakeAmt').value;
+  const amt=parseFloat(amtVal);
+  if(!amt||amt<=0){showStatusOnTab('Enter a valid amount to stake','error');return;}
+  if(amt>mnodyBalance){showStatusOnTab('Insufficient MNODY balance','error');return;}
+  try{
+    document.getElementById('stakeBtn').disabled=true;
+    showStatusOnTab('Checking approval...','info');showToast('Checking approval...');
+    const tc=new web3.eth.Contract(ERC20_ABI,MNODY);
+    const amtWei=web3.utils.toBN(Math.floor(amt*1e18).toString());
+    const allow=await tc.methods.allowance(account,STAKING_CONTRACT).call();
+    if(web3.utils.toBN(allow).lt(amtWei)){
+      showStatusOnTab('Approve MNODY in MetaMask...','pending');showToast('Approve MNODY...');
+      await tc.methods.approve(STAKING_CONTRACT,'115792089237316195423570985008687907853269984665640564039457584007913129639935').send({from:account,gas:100000});
+      showStatusOnTab('Approved! Staking now...','info');
+    }
+    showStatusOnTab('Confirm stake in MetaMask...','pending');showToast('Staking...');
+    const sc=new web3.eth.Contract(STAKING_ABI,STAKING_CONTRACT);
+    const isLock=selectedPlan===1;
+    const tx=await sc.methods.stake(amtWei.toString(),isLock).send({from:account,gas:300000});
+    showStatusOnTab(`✅ Successfully staked ${amt.toFixed(2)} MNODY! <a href="https://polygonscan.com/tx/${tx.transactionHash}" target="_blank" style="color:var(--cyan)">View ↗</a>`,'success');
+    document.getElementById('stakeAmt').value='';document.getElementById('stakeCalc').style.display='none';
+    await loadBalances();await loadUserData();
+  }catch(e){let m='❌ Stake failed. ';if(e.code===4001)m+='Cancelled.';else m+=e.reason||e.message;showStatusOnTab(m,'error');}
+  finally{document.getElementById('stakeBtn').disabled=false;hideToast();}
+}
+
+async function handleUnstake(){
+  if(!account){const ok=await connectWallet();if(!ok)return;}
+  const amt=parseFloat(document.getElementById('unstakeAmt').value);
+  if(!amt||amt<=0){showStatusOnTab('Enter a valid amount','error');return;}
+  if(amt>stakedBal){showStatusOnTab('Exceeds your staked balance','error');return;}
+  try{
+    document.getElementById('unstakeBtn').disabled=true;
+    showStatusOnTab('Confirm unstake in MetaMask...','pending');showToast('Unstaking...');
+    const sc=new web3.eth.Contract(STAKING_ABI,STAKING_CONTRACT);
+    const amtWei=web3.utils.toBN(Math.floor(amt*1e18).toString());
+    const tx=await sc.methods.unstake(amtWei.toString()).send({from:account,gas:300000});
+    showStatusOnTab(`✅ Unstaked ${amt.toFixed(2)} MNODY! <a href="https://polygonscan.com/tx/${tx.transactionHash}" target="_blank" style="color:var(--cyan)">View ↗</a>`,'success');
+    document.getElementById('unstakeAmt').value='';
+    await loadBalances();await loadUserData();
+  }catch(e){let m='❌ Unstake failed. ';if(e.code===4001)m+='Cancelled.';else m+=e.reason||e.message;showStatusOnTab(m,'error');}
+  finally{document.getElementById('unstakeBtn').disabled=false;hideToast();}
+}
+
+async function handleClaim(){
+  if(!account){const ok=await connectWallet();if(!ok)return;}
+  try{
+    document.getElementById('claimBtn').disabled=true;
+    showStatusOnTab('Claim rewards in MetaMask...','pending');showToast('Claiming...');
+    const sc=new web3.eth.Contract(STAKING_ABI,STAKING_CONTRACT);
+    const tx=await sc.methods.claimRewards().send({from:account,gas:250000});
+    showStatusOnTab(`🎁 Rewards claimed! <a href="https://polygonscan.com/tx/${tx.transactionHash}" target="_blank" style="color:var(--cyan)">View ↗</a>`,'success');
+    await loadBalances();await loadUserData();
+  }catch(e){let m='❌ Claim failed. ';if(e.code===4001)m+='Cancelled.';else m+=e.reason||e.message;showStatusOnTab(m,'error');}
+  finally{document.getElementById('claimBtn').disabled=false;hideToast();}
+}
+
+async function handleCompound(){
+  if(!account){const ok=await connectWallet();if(!ok)return;}
+  try{
+    document.getElementById('compoundBtn').disabled=true;
+    showStatusOnTab('Compounding in MetaMask...','pending');showToast('Compounding...');
+    const sc=new web3.eth.Contract(STAKING_ABI,STAKING_CONTRACT);
+    const tx=await sc.methods.compound().send({from:account,gas:280000});
+    showStatusOnTab(`🔄 Compounded! <a href="https://polygonscan.com/tx/${tx.transactionHash}" target="_blank" style="color:var(--cyan)">View ↗</a>`,'success');
+    await loadBalances();await loadUserData();
+  }catch(e){let m='❌ Compound failed. ';if(e.code===4001)m+='Cancelled.';else m+=e.reason||e.message;showStatusOnTab(m,'error');}
+  finally{document.getElementById('compoundBtn').disabled=false;hideToast();}
+}
+
+function showStatusOnTab(msg,type){
+  const ids={stake:'stakeStatus',unstake:'unstakeStatus',claim:'claimStatus'};
+  const el=document.getElementById(ids[activeTab]);
+  if(el){el.innerHTML=msg;el.className='status-msg show '+type;}
+}
+let toastTimer;
+function showToast(msg){const t=document.getElementById('txToast');t.classList.add('show');document.getElementById('toastMsg').textContent=msg;}
+function hideToast(){toastTimer=setTimeout(()=>document.getElementById('txToast').classList.remove('show'),2500);}
+
+// Auto-connect if already connected
+window.addEventListener('load',async()=>{
+  if(window.ethereum){
+    const accs=await window.ethereum.request({method:'eth_accounts'});
+    if(accs.length>0)await connectWallet();
+    window.ethereum.on('accountsChanged',()=>location.reload());
+    window.ethereum.on('chainChanged',()=>location.reload());
+  }
+  // Load public stats even without wallet
+  try{const w=new Web3(POLYGON_RPC);const sc=new w.eth.Contract(STAKING_ABI,STAKING_CONTRACT);const [ts,tn]=await Promise.all([sc.methods.totalStaked().call().catch(()=>'0'),sc.methods.totalStakers().call().catch(()=>'0')]);document.getElementById('totalStaked').textContent=(parseFloat(ts)/1e18).toLocaleString(undefined,{maximumFractionDigits:0})+' MNODY';document.getElementById('totalStakers').textContent=tn;}catch{document.getElementById('totalStaked').textContent='N/A';document.getElementById('totalStakers').textContent='N/A';}
+});
 </script>
 </body>
 </html>
