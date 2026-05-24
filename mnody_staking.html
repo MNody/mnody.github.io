@@ -350,7 +350,8 @@ const ERC20_ABI = [
 ];
 
 // ── Exact ABI from deployed MnodyStaking contract ──────────────────────────
-// Plan 0 = 30-day lock (70% APY), Plan 1 = Flexible (40% APY)
+// Contract: Plan 0 = 30-day lock (70% APY), Plan 1 = Flexible (40% APY)
+// UI selectedPlan: 0 = Flexible → maps to contract planId 1, 1 = 30DayLock → maps to contract planId 0
 const STAKING_ABI = [
   // Staking
   'function stake(uint256 amount, uint8 planId) external',
@@ -526,24 +527,33 @@ async function refreshUserData(){
   if(!account||!provider) return;
   try{
     const sc = new ethers.Contract(CFG.staking, STAKING_ABI, provider);
-    // Wrap each call to handle if contract not yet live
-    const safe = fn => fn.catch(()=>ethers.BigNumber.from(0));
-    const [sb, pr, ts] = await Promise.all([
-      safe(sc.userStaked(account)),
-      safe(sc.pendingReward(account)),
-      safe(sc.userStakeTime(account))
+    const safe = fn => fn.catch(()=>null);
+    // Use correct contract functions from MnodyStaking
+    const [pr, activeStakes] = await Promise.all([
+      safe(sc.getTotalPendingRewards(account)),
+      safe(sc.getUserStakes(account))
     ]);
-    stakedAmount  = parseFloat(ethers.utils.formatUnits(sb, CFG.dec));
-    pendingAmount = parseFloat(ethers.utils.formatUnits(pr, CFG.dec));
+    let totalStakedUser = ethers.BigNumber.from(0);
+    let earliestStart = null;
+    if(activeStakes && activeStakes.length > 0){
+      for(const s of activeStakes){
+        if(s.isActive){
+          totalStakedUser = totalStakedUser.add(s.amount);
+          const st = s.startTime.toNumber();
+          if(!earliestStart || st < earliestStart) earliestStart = st;
+        }
+      }
+    }
+    stakedAmount  = parseFloat(ethers.utils.formatUnits(totalStakedUser, CFG.dec));
+    pendingAmount = pr ? parseFloat(ethers.utils.formatUnits(pr, CFG.dec)) : 0;
     document.getElementById('myStakedBal').textContent  = fmtBal(stakedAmount)+' MNODY';
     document.getElementById('myPendingBal').textContent = fmtBal(pendingAmount)+' MNODY';
     document.getElementById('unstakeBalLbl').textContent = 'Staked: '+fmtBal(stakedAmount)+' MNODY';
-    // Claim pane
     document.getElementById('claimPending').textContent = fmtBal(pendingAmount)+' MNODY';
     document.getElementById('claimStaked').textContent  = fmtBal(stakedAmount)+' MNODY';
     document.getElementById('claimApy').textContent     = (selectedPlan===0?40:70)+'% base';
-    if(ts && !ts.isZero()){
-      document.getElementById('claimSince').textContent = new Date(ts.toNumber()*1000).toLocaleDateString();
+    if(earliestStart){
+      document.getElementById('claimSince').textContent = new Date(earliestStart*1000).toLocaleDateString();
     }
     // Render position
     renderPosition();
@@ -575,10 +585,15 @@ async function fetchGlobalStats(){
     const prov = provider || new ethers.providers.JsonRpcProvider(CFG.rpc);
     const sc   = new ethers.Contract(CFG.staking, STAKING_ABI, prov);
     const safe = fn => fn.catch(()=>ethers.BigNumber.from(0));
-    const [ts, tn] = await Promise.all([safe(sc.totalStaked()), safe(sc.totalUsers())]);
+    const [ts, stats] = await Promise.all([
+      safe(sc.totalStaked()),
+      safe(sc.getStats())
+    ]);
     const tsNum = parseFloat(ethers.utils.formatUnits(ts, CFG.dec));
     document.getElementById('totalStaked').textContent  = fmtBal(tsNum)+' MNODY';
-    document.getElementById('totalStakers').textContent = tn.toString();
+    // getStats returns (totalStaked, rewardPool, totalPaid, totalStakes, stakingActive)
+    const totalStakesCount = stats ? stats[3].toString() : '—';
+    document.getElementById('totalStakers').textContent = totalStakesCount;
   }catch(e){
     document.getElementById('totalStaked').textContent  = 'N/A';
     document.getElementById('totalStakers').textContent = 'N/A';
@@ -598,7 +613,8 @@ async function handleStake(){
     showStatus('stake','Checking allowance...','info');
     const mnodyC  = new ethers.Contract(CFG.mnody, ERC20_ABI, signer);
     const stakingC= new ethers.Contract(CFG.staking, STAKING_ABI, signer);
-    const amtWei  = ethers.utils.parseUnits(amt.toFixed(CFG.dec), CFG.dec);
+    // toFixed(6) prevents float precision issues that cause invalid BigNumber
+    const amtWei  = ethers.utils.parseUnits(amt.toFixed(6), CFG.dec);
     const allowed = await mnodyC.allowance(account, CFG.staking);
     if(allowed.lt(amtWei)){
       showStatus('stake','Approve MNODY in MetaMask...','pending');
@@ -610,8 +626,9 @@ async function handleStake(){
     }
     showStatus('stake','Confirm stake in MetaMask...','pending');
     showToast('Staking MNODY...');
-    const isLock = selectedPlan===1;
-    const tx = await stakingC.stake(amtWei, isLock);
+    // selectedPlan: 0=Flexible(UI) → contract planId 1, 1=30DayLock(UI) → contract planId 0
+    const contractPlanId = selectedPlan === 0 ? 1 : 0;
+    const tx = await stakingC.stake(amtWei, contractPlanId);
     showStatus('stake','Transaction sent, confirming...','pending');
     const receipt = await tx.wait();
     hideToast();
@@ -644,8 +661,13 @@ async function handleUnstake(){
     showStatus('unstake','Confirm unstake in MetaMask...','pending');
     showToast('Unstaking...');
     const stakingC = new ethers.Contract(CFG.staking, STAKING_ABI, signer);
-    const amtWei   = ethers.utils.parseUnits(amt.toFixed(CFG.dec), CFG.dec);
-    const tx       = await stakingC.unstake(amtWei);
+    const amtWei   = ethers.utils.parseUnits(amt.toFixed(6), CFG.dec);
+    // withdraw(stakeIndex) - withdraw first active stake
+    const sc2 = new ethers.Contract(CFG.staking, STAKING_ABI, signer);
+    const allStakes = await sc2.getUserStakes(account);
+    let firstActive = 0;
+    for(let i=0;i<allStakes.length;i++){if(allStakes[i].isActive){firstActive=i;break;}}
+    const tx       = await stakingC.withdraw(firstActive);
     showStatus('unstake','Waiting for confirmation...','pending');
     const receipt  = await tx.wait();
     hideToast();
@@ -672,7 +694,7 @@ async function handleClaim(){
     showStatus('claim','Confirm claim in MetaMask...','pending');
     showToast('Claiming rewards...');
     const stakingC = new ethers.Contract(CFG.staking, STAKING_ABI, signer);
-    const tx       = await stakingC.claimRewards();
+    const tx       = await stakingC.claimAllRewards();
     showStatus('claim','Waiting for confirmation...','pending');
     const receipt  = await tx.wait();
     hideToast();
@@ -697,7 +719,8 @@ async function handleCompound(){
     showStatus('claim','Confirm compound in MetaMask...','pending');
     showToast('Compounding...');
     const stakingC = new ethers.Contract(CFG.staking, STAKING_ABI, signer);
-    const tx       = await stakingC.compound();
+    // compoundReward takes stakeIndex; compound first active stake (index 0)
+    const tx       = await stakingC.compoundReward(0);
     const receipt  = await tx.wait();
     hideToast();
     showStatus('claim',`🔄 Compounded! <a href="${CFG.explorer}/tx/${receipt.transactionHash}" target="_blank" style="color:var(--cyan)">View ↗</a>`,'success');
