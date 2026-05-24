@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>MNODY Swap — Polygon</title>
+<link href="https://fonts.googleapis.com/css2?family=Bangers&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+:root{--pink:#ff3cac;--yellow:#ffd000;--cyan:#00f5ff;--green:#00ff9d;--purple:#7b2fff;--orange:#ff6a00;--bg:#08001a;--card:rgba(20,5,50,0.95);--border:rgba(255,60,172,0.3);--text:#f0e6ff;--muted:#9980c4}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column}
+.bg-stars{position:fixed;inset:0;z-index:-1;background:radial-gradient(ellipse at 20% 20%,rgba(123,47,255,.22) 0%,transparent 55%),radial-gradient(ellipse at 80% 80%,rgba(255,60,172,.18) 0%,transparent 55%),var(--bg)}
+
+/* TOP BAR */
+.topbar{background:rgba(8,0,26,.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:12px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.topbar-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.topbar-logo img{width:38px;height:38px;border-radius:50%;border:2px solid var(--pink);box-shadow:0 0 14px rgba(255,60,172,.5)}
+.topbar-logo span{font-family:'Bangers',cursive;font-size:1.5rem;letter-spacing:2px;background:linear-gradient(135deg,var(--pink),var(--yellow));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.topbar-nav{display:flex;gap:6px;margin-left:auto;flex-wrap:wrap}
+.topbar-nav a{color:var(--muted);text-decoration:none;padding:6px 14px;border-radius:50px;font-weight:700;font-size:.82rem;transition:all .2s}
+.topbar-nav a:hover,.topbar-nav a.active{background:rgba(255,60,172,.18);color:var(--pink)}
+.poly-badge{background:linear-gradient(135deg,#8247e5,#6b21a8);padding:4px 12px;border-radius:50px;font-size:.75rem;font-weight:800;margin-left:6px}
+
+/* MAIN */
+main{flex:1;display:flex;align-items:flex-start;justify-content:center;padding:30px 20px;gap:24px;flex-wrap:wrap}
+
+/* PRICE TICKER */
+.price-ticker{background:rgba(255,60,172,.07);border:1px solid var(--border);border-radius:14px;padding:12px 18px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;font-size:.9rem}
+.price-val{font-family:'Bangers',cursive;font-size:1.5rem;letter-spacing:2px;color:var(--pink)}
+.price-chg-pos{color:var(--green);font-weight:800}
+.price-chg-neg{color:#ff6a6a;font-weight:800}
+
+/* SWAP CARD */
+.swap-card{background:var(--card);border:1px solid var(--border);border-radius:24px;padding:24px;width:100%;max-width:460px;box-shadow:0 20px 60px rgba(0,0,0,.6)}
+.swap-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+.swap-title{font-family:'Bangers',cursive;font-size:1.6rem;letter-spacing:2px;color:var(--text)}
+.icon-btn{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);color:#fff;width:38px;height:38px;border-radius:10px;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.icon-btn:hover{background:rgba(255,255,255,.12)}
+
+/* TOKEN BOX */
+.swap-box{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:16px;margin:6px 0;transition:border-color .2s}
+.swap-box:focus-within{border-color:rgba(0,245,255,.35)}
+.box-label{font-size:.78rem;color:var(--muted);font-weight:700;margin-bottom:10px;text-transform:uppercase;letter-spacing:1px}
+.token-row{display:flex;align-items:center;gap:10px}
+.tok-icon{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:.85rem;flex-shrink:0}
+.tok-info{flex:1}
+.tok-name{font-size:1rem;font-weight:800}
+.tok-chain{font-size:.72rem;color:var(--muted)}
+.amount-input{background:transparent;border:none;color:#fff;font-size:1.8rem;font-weight:700;width:100%;margin-top:10px;outline:none;font-family:'Nunito',sans-serif}
+.amount-input::placeholder{color:rgba(255,255,255,.2)}
+.bal-row{display:flex;justify-content:space-between;align-items:center;margin-top:8px;font-size:.78rem;color:var(--muted)}
+.quick-btns{display:flex;gap:5px}
+.qbtn{background:rgba(255,60,172,.12);border:1px solid rgba(255,60,172,.25);color:var(--pink);padding:3px 8px;border-radius:6px;cursor:pointer;font-size:.72rem;font-weight:800;font-family:'Nunito',sans-serif;transition:all .2s}
+.qbtn:hover{background:rgba(255,60,172,.22)}
+
+/* SWAP FLIP */
+.flip-btn{display:flex;justify-content:center;margin:4px 0;position:relative;z-index:1}
+.flip-btn button{background:rgba(255,60,172,.15);border:2px solid var(--border);color:var(--pink);width:40px;height:40px;border-radius:50%;cursor:pointer;font-size:1.2rem;transition:all .3s;display:flex;align-items:center;justify-content:center}
+.flip-btn button:hover{transform:rotate(180deg);background:rgba(255,60,172,.3)}
+
+/* SWAP DETAILS */
+.swap-details{background:rgba(0,0,0,.25);border-radius:12px;padding:14px;margin:12px 0;display:none;font-size:.82rem}
+.detail-row{display:flex;justify-content:space-between;color:var(--muted);margin:5px 0}
+.detail-row strong{color:var(--text)}
+
+/* SWAP BTN */
+.swap-btn{width:100%;padding:16px;border:none;border-radius:14px;font-size:1.1rem;font-weight:900;cursor:pointer;margin-top:12px;font-family:'Nunito',sans-serif;transition:all .2s;background:linear-gradient(135deg,var(--green),#059669);color:#000;box-shadow:0 8px 28px rgba(0,255,157,.3)}
+.swap-btn:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 12px 36px rgba(0,255,157,.45)}
+.swap-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.swap-btn.connect{background:linear-gradient(135deg,var(--pink),var(--orange));color:#fff;box-shadow:0 8px 28px rgba(255,60,172,.3)}
+.swap-btn.buy-mode{background:linear-gradient(135deg,var(--green),#059669);color:#000}
+.swap-btn.sell-mode{background:linear-gradient(135deg,#ef4444,#b91c1c);color:#fff}
+
+/* STATUS */
+.status{padding:12px;border-radius:10px;margin:10px 0;text-align:center;font-size:.88rem;display:none}
+.status.success{background:rgba(0,255,157,.1);border:1px solid var(--green);color:var(--green);display:block}
+.status.error{background:rgba(239,68,68,.1);border:1px solid #ef4444;color:#ef4444;display:block}
+.status.pending{background:rgba(255,208,0,.1);border:1px solid var(--yellow);color:var(--yellow);display:block}
+
+/* ACTIVE TX */
+.active-tx{position:fixed;bottom:24px;right:24px;background:rgba(20,5,50,.98);border:1px solid var(--yellow);border-radius:14px;padding:14px 20px;display:none;align-items:center;gap:12px;z-index:999;box-shadow:0 10px 40px rgba(0,0,0,.6);font-size:.88rem}
+.active-tx.show{display:flex}
+.tx-spinner{width:20px;height:20px;border:3px solid rgba(255,208,0,.2);border-top-color:var(--yellow);border-radius:50%;animation:spin .8s linear infinite;flex-shrink:0}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* CONTRACT INFO */
+.contract-box{background:rgba(0,245,255,.05);border:1px solid rgba(0,245,255,.2);border-radius:12px;padding:12px 14px;margin:14px 0;font-size:.78rem}
+.contract-box a{color:var(--cyan);text-decoration:none;word-break:break-all}
+.contract-box a:hover{text-decoration:underline}
+
+/* SETTINGS MODAL */
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:1000;justify-content:center;align-items:center;padding:20px}
+.modal.show{display:flex}
+.modal-content{background:rgba(20,5,50,.98);border:1px solid var(--border);border-radius:20px;padding:24px;width:100%;max-width:380px;max-height:80vh;overflow-y:auto}
+.modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+.modal-header h3{font-family:'Bangers',cursive;font-size:1.5rem;letter-spacing:2px;color:var(--yellow)}
+.close-btn{background:none;border:none;color:#fff;font-size:1.6rem;cursor:pointer}
+.setting-row{margin:14px 0}
+.setting-label{font-size:.8rem;color:var(--muted);margin-bottom:6px;font-weight:700}
+.setting-input{width:100%;background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:10px;color:#fff;font-size:.95rem;font-family:'Nunito',sans-serif}
+.slip-btns{display:flex;gap:6px}
+.slip-btn{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);color:var(--muted);padding:7px 12px;border-radius:8px;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:700;font-size:.82rem;transition:all .2s}
+.slip-btn.active,.slip-btn:hover{background:rgba(255,60,172,.2);border-color:var(--pink);color:var(--pink)}
+
+/* HISTORY */
+.history-item{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:12px;margin:8px 0;font-size:.82rem}
+.history-item a{color:var(--cyan);text-decoration:none}
+
+/* INFO PANEL */
+.info-panel{width:100%;max-width:340px}
+.info-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:22px;margin-bottom:16px;box-shadow:0 10px 40px rgba(0,0,0,.4)}
+.info-card h4{font-family:'Bangers',cursive;font-size:1.3rem;letter-spacing:2px;color:var(--yellow);margin-bottom:12px}
+.stat-row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:.85rem}
+.stat-row:last-child{border-bottom:none}
+.stat-label{color:var(--muted)}
+.stat-val{font-weight:800;color:var(--text)}
+.back-btn{display:inline-flex;align-items:center;gap:6px;color:var(--muted);text-decoration:none;font-size:.85rem;font-weight:700;margin-bottom:14px;transition:color .2s}
+.back-btn:hover{color:var(--pink)}
+</style>
+</head>
+<body>
+<div class="bg-stars"></div>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <a href="index.html" class="topbar-logo">
+    <img src="https://plum-top-lamprey-24.mypinata.cloud/ipfs/bafybeig32vvtms3362676kum4zl2rxu37ghnt4e3uccpidyn32my5q5v6y" alt="MNODY"/>
+    <span>MyNodyDog</span>
+  </a>
+  <span class="poly-badge">🟣 Polygon</span>
+  <div class="topbar-nav">
+    <a href="index.html">Home</a>
+    <a href="mnody_swap.html" class="active">🔄 Swap</a>
+    <a href="mynody_airdrop.html">🎁 Airdrop</a>
+    <a href="mnody_staking.html">💰 Staking</a>
+    <a href="https://t.me/MyNody" target="_blank">💬 Telegram</a>
+  </div>
+</div>
+
+<main>
+  <!-- LEFT: SWAP -->
+  <div style="width:100%;max-width:460px">
+    <a href="index.html" class="back-btn">← Back to Home</a>
+
+    <!-- PRICE -->
+    <div class="price-ticker" style="margin-bottom:16px">
+      <div>
+        <div style="font-size:.72rem;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:1px">MNODY / USDT</div>
+        <div class="price-val" id="livePrice">Loading...</div>
+      </div>
+      <div id="priceChange" style="font-size:.9rem"></div>
+      <div style="margin-left:auto;font-size:.72rem;color:var(--muted)" id="lastUpdate"></div>
+    </div>
+
+    <!-- SWAP CARD -->
+    <div class="swap-card">
+      <div class="swap-header">
+        <div class="swap-title">Swap MNODY</div>
+        <div style="display:flex;gap:6px">
+          <button class="icon-btn" onclick="openHistory()" title="History">📋</button>
+          <button class="icon-btn" onclick="openSettings()" title="Settings">⚙️</button>
+        </div>
+      </div>
+
+      <div class="wallet-info" id="walletInfo" style="display:none;background:rgba(0,255,157,.08);border:1px solid rgba(0,255,157,.25);border-radius:10px;padding:8px 12px;font-size:.8rem;color:var(--green);margin-bottom:14px;display:none"></div>
+
+      <!-- FROM -->
+      <div class="swap-box">
+        <div class="box-label">From</div>
+        <div class="token-row">
+          <div class="tok-icon" id="fromIcon" style="background:linear-gradient(135deg,#26a17b,#22c55e)">U</div>
+          <div class="tok-info">
+            <div class="tok-name" id="fromToken">USDT</div>
+            <div class="tok-chain">Polygon Mainnet</div>
+          </div>
+        </div>
+        <input class="amount-input" id="fromAmount" type="number" placeholder="0.00" min="0"/>
+        <div class="bal-row">
+          <span id="fromBalance">Balance: —</span>
+          <div class="quick-btns">
+            <button class="qbtn" onclick="setAmt(25)">25%</button>
+            <button class="qbtn" onclick="setAmt(50)">50%</button>
+            <button class="qbtn" onclick="setAmt(75)">75%</button>
+            <button class="qbtn" onclick="setAmt(100)">MAX</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- FLIP -->
+      <div class="flip-btn"><button onclick="reverseSwap()" title="Flip">⇅</button></div>
+
+      <!-- TO -->
+      <div class="swap-box">
+        <div class="box-label">To</div>
+        <div class="token-row">
+          <div class="tok-icon" id="toIcon" style="background:linear-gradient(135deg,var(--pink),var(--yellow))">M</div>
+          <div class="tok-info">
+            <div class="tok-name" id="toToken">MNODY</div>
+            <div class="tok-chain">Polygon Mainnet</div>
+          </div>
+        </div>
+        <input class="amount-input" id="toAmount" type="number" placeholder="0.00" readonly/>
+        <div class="bal-row"><span id="toBalance">Balance: —</span></div>
+      </div>
+
+      <!-- DETAILS -->
+      <div class="swap-details" id="swapDetails">
+        <div class="detail-row"><span>Rate</span><strong id="rate">—</strong></div>
+        <div class="detail-row"><span>Slippage</span><strong id="slippageDisplay">1%</strong></div>
+        <div class="detail-row"><span>Min Received</span><strong id="minReceived">—</strong></div>
+        <div class="detail-row"><span>Tax</span><strong style="color:var(--green)">0%</strong></div>
+      </div>
+
+      <div class="status" id="statusMsg"></div>
+
+      <button class="swap-btn connect" id="swapBtn" onclick="handleSwap()">🦊 Connect MetaMask</button>
+
+      <div class="contract-box">
+        <div style="color:var(--muted);font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:5px">MNODY Contract (Polygon)</div>
+        <a href="https://polygonscan.com/token/0x0bacbf5c435c3b0546f7cdf66f960770c7ad912c" target="_blank">0x0bacbf5c435c3b0546f7cdf66f960770c7ad912c</a>
+        <div style="margin-top:6px;color:var(--muted)">QuickSwap • MNODY/USDT • 0% Tax</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT: INFO -->
+  <div class="info-panel">
+    <div class="info-card">
+      <h4>📊 Market Info</h4>
+      <div class="stat-row"><span class="stat-label">Price</span><span class="stat-val" id="infoPrice">Loading...</span></div>
+      <div class="stat-row"><span class="stat-label">24h Change</span><span class="stat-val" id="info24h">—</span></div>
+      <div class="stat-row"><span class="stat-label">24h Volume</span><span class="stat-val" id="infoVol">—</span></div>
+      <div class="stat-row"><span class="stat-label">Liquidity</span><span class="stat-val" id="infoLiq">—</span></div>
+      <div class="stat-row"><span class="stat-label">Effective Supply</span><span class="stat-val">4.5B</span></div>
+      <div class="stat-row"><span class="stat-label">Tax</span><span class="stat-val" style="color:var(--green)">0 / 0</span></div>
+      <div class="stat-row"><span class="stat-label">Network</span><span class="stat-val">Polygon 🟣</span></div>
+    </div>
+
+    <div class="info-card">
+      <h4>ℹ️ How to Swap</h4>
+      <div style="font-size:.82rem;color:var(--muted);line-height:1.8">
+        1️⃣ Connect MetaMask (Polygon network)<br>
+        2️⃣ Enter amount to buy or sell<br>
+        3️⃣ Review the rate and min received<br>
+        4️⃣ Approve tokens (first time only)<br>
+        5️⃣ Confirm swap in MetaMask<br><br>
+        <strong style="color:var(--yellow)">Need MATIC for gas?</strong><br>
+        Get MATIC from any exchange before swapping.
+      </div>
+    </div>
+
+    <div class="info-card">
+      <h4>⚠️ Safety</h4>
+      <div style="font-size:.82rem;color:var(--muted);line-height:1.8">
+        ✅ Always verify contract address<br>
+        ✅ Connected to Polygon Mainnet<br>
+        ✅ Zero tax — no hidden fees<br>
+        ✅ LP locked until 2031<br><br>
+        <a href="index.html#supply-story" style="color:var(--cyan)">Read full supply story →</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- ACTIVE TX -->
+<div class="active-tx" id="activeTx">
+  <div class="tx-spinner"></div>
+  <span id="txMessage">Processing...</span>
+</div>
+
+<!-- SETTINGS MODAL -->
+<div class="modal" id="settingsModal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3>⚙️ Settings</h3>
+      <button class="close-btn" onclick="closeSettings()">✕</button>
+    </div>
+    <div class="setting-row">
+      <div class="setting-label">Slippage Tolerance</div>
+      <div class="slip-btns">
+        <button class="slip-btn" onclick="setSlippage(0.5,this)">0.5%</button>
+        <button class="slip-btn active" onclick="setSlippage(1,this)">1%</button>
+        <button class="slip-btn" onclick="setSlippage(2,this)">2%</button>
+        <button class="slip-btn" onclick="setSlippage(3,this)">3%</button>
+      </div>
+    </div>
+    <div class="setting-row">
+      <div class="setting-label">Deadline (minutes)</div>
+      <input class="setting-input" id="deadlineInput" type="number" value="20" min="1" max="60"/>
+    </div>
+    <div class="setting-row">
+      <div class="setting-label">Gas Speed</div>
+      <div class="slip-btns">
+        <button class="slip-btn" onclick="setGas('standard',this)">Standard</button>
+        <button class="slip-btn active" onclick="setGas('fast',this)">Fast</button>
+        <button class="slip-btn" onclick="setGas('instant',this)">Instant</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HISTORY MODAL -->
+<div class="modal" id="historyModal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3>📋 History</h3>
+      <button class="close-btn" onclick="closeHistory()">✕</button>
+    </div>
+    <div id="historyList"><p style="color:var(--muted);text-align:center;padding:20px">No transactions yet</p></div>
+    <button onclick="clearHistory()" style="background:rgba(239,68,68,.1);border:1px solid #ef4444;color:#ef4444;padding:8px 16px;border-radius:8px;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:700;font-size:.82rem;margin-top:10px;width:100%">Clear History</button>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/web3@1.9.0/dist/web3.min.js"></script>
+<script>
+const POLYGON={
+  chainId:'0x89',
+  chainName:'Polygon Mainnet',
+  rpcUrls:['https://polygon-rpc.com'],
+  nativeCurrency:{name:'POL',symbol:'POL',decimals:18},
+  blockExplorerUrls:['https://polygonscan.com'],
+  rpc:'https://polygon-rpc.com',
+  explorer:'https://polygonscan.com',
+  mnody:'0x0bacbf5c435c3b0546f7cdf66f960770c7ad912c',
+  usdt:'0xc2132D05D31c914a87C6611C10748AEb04B58e8F',
+  router:'0xa5E0829CaCEd8fFDD4De3c43696c57F7D7A678ff', // QuickSwap v2
+  pair:'0x3cec491a74c924aaeb74dde821653aafec7b94b9'
+};
+const ROUTER_ABI=['function getAmountsOut(uint amountIn,address[] calldata path) external view returns(uint[] memory amounts)','function swapExactTokensForTokens(uint amountIn,uint amountOutMin,address[] calldata path,address to,uint deadline) external returns(uint[] memory amounts)'];
+const ERC20_ABI=['function balanceOf(address) view returns(uint)','function allowance(address owner,address spender) view returns(uint)','function approve(address spender,uint amount) returns(bool)','function decimals() view returns(uint8)'];
+const PAIR_ABI=['function getReserves() view returns(uint112,uint112,uint32)','function token0() view returns(address)'];
+
+let web3,account,swapDir='buy',slip=1,gasSpd='fast',deadline=20,swapHistory=[],currentPrice=0;
+
+// Load history
+function loadHistory(){try{swapHistory=JSON.parse(localStorage.getItem('mnody_history')||'[]');}catch{swapHistory=[];}}
+function saveHistory(){try{localStorage.setItem('mnody_history',JSON.stringify(swapHistory));}catch{}}
+function clearHistory(){swapHistory=[];saveHistory();renderHistory();}
+
+async function ensurePolygon(){
+  try{await window.ethereum.request({method:'wallet_switchEthereumChain',params:[{chainId:'0x89'}]});}
+  catch(e){if(e.code===4902){await window.ethereum.request({method:'wallet_addEthereumChain',params:[{chainId:'0x89',chainName:'Polygon Mainnet',rpcUrls:['https://polygon-rpc.com'],nativeCurrency:{name:'POL',symbol:'POL',decimals:18},blockExplorerUrls:['https://polygonscan.com']}]});}}
+}
+
+async function connectWallet(){
+  if(!window.ethereum){showStatus('Please install MetaMask','error');return;}
+  try{
+    await ensurePolygon();
+    const accs=await window.ethereum.request({method:'eth_requestAccounts'});
+    account=accs[0];
+    web3=new Web3(window.ethereum);
+    const short=account.slice(0,6)+'...'+account.slice(-4);
+    document.getElementById('walletInfo').style.display='block';
+    document.getElementById('walletInfo').textContent='✅ Connected: '+short;
+    const btn=document.getElementById('swapBtn');
+    btn.textContent=swapDir==='buy'?'🟢 Buy MNODY':'🔴 Sell MNODY';
+    btn.className='swap-btn '+(swapDir==='buy'?'buy-mode':'sell-mode');
+    await updateBalances();
+    await refreshPrice();
+  }catch(e){showStatus('Connection failed: '+e.message,'error');}
+}
+
+async function updateBalances(){
+  if(!account||!web3)return;
+  try{
+    const mn=new web3.eth.Contract(ERC20_ABI,POLYGON.mnody);
+    const ut=new web3.eth.Contract(ERC20_ABI,POLYGON.usdt);
+    const mb=await mn.methods.balanceOf(account).call();
+    const ub=await ut.methods.balanceOf(account).call();
+    const mf=(mb/1e18).toFixed(2),uf=(ub/1e6).toFixed(2);
+    document.getElementById('fromBalance').textContent='Balance: '+(swapDir==='buy'?uf+' USDT':mf+' MNODY');
+    document.getElementById('toBalance').textContent='Balance: '+(swapDir==='buy'?mf+' MNODY':uf+' USDT');
+  }catch{}
+}
+
+async function refreshPrice(){
+  try{
+    const res=await fetch('https://api.dexscreener.com/latest/dex/pairs/polygon/'+POLYGON.pair);
+    const d=await res.json();
+    const p=d.pair||d.pairs?.[0];
+    if(p&&p.priceUsd){
+      currentPrice=parseFloat(p.priceUsd);
+      document.getElementById('livePrice').textContent='$'+currentPrice.toFixed(10).replace(/\.?0+$/,'');
+      document.getElementById('infoPrice').textContent='$'+currentPrice.toFixed(10).replace(/\.?0+$/,'');
+      const c=p.priceChange?.h24;
+      if(c!=null){const el=document.getElementById('priceChange');el.textContent=(c>=0?'▲+':'▼')+c.toFixed(2)+'%';el.className=c>=0?'price-chg-pos':'price-chg-neg';const el2=document.getElementById('info24h');el2.textContent=(c>=0?'+':'')+c.toFixed(2)+'%';el2.style.color=c>=0?'var(--green)':'#ff6a6a';}
+      if(p.volume?.h24)document.getElementById('infoVol').textContent='$'+formatNum(p.volume.h24);
+      if(p.liquidity?.usd)document.getElementById('infoLiq').textContent='$'+formatNum(p.liquidity.usd);
+      document.getElementById('lastUpdate').textContent='Updated '+new Date().toLocaleTimeString();
+    }
+  }catch(e){
+    // Fallback: try on-chain price
+    try{
+      if(!web3)web3=new Web3(POLYGON.rpc);
+      const pr=new web3.eth.Contract(PAIR_ABI,POLYGON.pair);
+      const [r,t0]=await Promise.all([pr.methods.getReserves().call(),pr.methods.token0().call()]);
+      const isM=t0.toLowerCase()===POLYGON.mnody.toLowerCase();
+      const mr=isM?r[0]:r[1],ur=isM?r[1]:r[0];
+      currentPrice=(ur/1e6)/(mr/1e18);
+      document.getElementById('livePrice').textContent='$'+currentPrice.toFixed(10).replace(/\.?0+$/,'');
+      document.getElementById('infoPrice').textContent='$'+currentPrice.toFixed(10).replace(/\.?0+$/,'');
+    }catch{}
+  }
+}
+
+function formatNum(n){if(n>=1e6)return(n/1e6).toFixed(2)+'M';if(n>=1e3)return(n/1e3).toFixed(2)+'K';return n.toFixed(2);}
+
+function setSlippage(v,el){slip=v;document.querySelectorAll('.slip-btn').forEach(b=>{if(b.closest('#settingsModal'))b.classList.remove('active')});el.classList.add('active');document.getElementById('slippageDisplay').textContent=v+'%';}
+function setGas(v,el){gasSpd=v;document.querySelectorAll('.slip-btn').forEach(b=>{if(b.closest('#settingsModal')&&['Standard','Fast','Instant'].includes(b.textContent))b.classList.remove('active')});el.classList.add('active');}
+function openSettings(){document.getElementById('settingsModal').classList.add('show');}
+function closeSettings(){document.getElementById('settingsModal').classList.remove('show');}
+function openHistory(){renderHistory();document.getElementById('historyModal').classList.add('show');}
+function closeHistory(){document.getElementById('historyModal').classList.remove('show');}
+
+function renderHistory(){
+  const el=document.getElementById('historyList');
+  if(!swapHistory.length){el.innerHTML='<p style="color:var(--muted);text-align:center;padding:20px">No transactions yet</p>';return;}
+  el.innerHTML=swapHistory.map(h=>`<div class="history-item">${h.type}: ${h.fromAmount} ${h.fromToken} → ${h.toAmount} ${h.toToken}<br><span style="color:var(--muted)">${h.time}</span> • <a href="${POLYGON.explorer}/tx/${h.hash}" target="_blank">View ↗</a></div>`).join('');
+}
+
+async function getQuote(amtIn){
+  if(!amtIn||amtIn<=0){document.getElementById('toAmount').value='';document.getElementById('swapDetails').style.display='none';return;}
+  try{
+    if(!web3)web3=new Web3(POLYGON.rpc);
+    const router=new web3.eth.Contract(ROUTER_ABI,POLYGON.router);
+    const path=swapDir==='buy'?[POLYGON.usdt,POLYGON.mnody]:[POLYGON.mnody,POLYGON.usdt];
+    const dIn=swapDir==='buy'?6:18,dOut=swapDir==='buy'?18:6;
+    const amtWei=web3.utils.toBN(Math.floor(parseFloat(amtIn)*Math.pow(10,dIn)));
+    const amts=await router.methods.getAmountsOut(amtWei.toString(),path).call();
+    const out=amts[1]/Math.pow(10,dOut);
+    document.getElementById('toAmount').value=out.toFixed(dOut===6?6:2);
+    document.getElementById('rate').textContent=swapDir==='buy'?`1 USDT = ${(out/parseFloat(amtIn)).toFixed(2)} MNODY`:`1 MNODY = ${(out/parseFloat(amtIn)).toFixed(8)} USDT`;
+    document.getElementById('minReceived').textContent=(out*(1-slip/100)).toFixed(dOut===6?6:2)+(swapDir==='buy'?' MNODY':' USDT');
+    document.getElementById('swapDetails').style.display='block';
+    if(account){const btn=document.getElementById('swapBtn');btn.textContent=swapDir==='buy'?'🟢 Buy MNODY':'🔴 Sell MNODY';btn.disabled=false;}
+  }catch{document.getElementById('toAmount').value='0';showStatus('Could not get quote — check your amount','error');}
+}
+
+function setAmt(pct){
+  if(!account){showStatus('Connect wallet first','error');return;}
+  const bal=document.getElementById('fromBalance').textContent.replace(/[^0-9.]/g,'');
+  const v=parseFloat(bal);
+  if(v>0){const a=(v*pct/100).toFixed(swapDir==='buy'?6:2);document.getElementById('fromAmount').value=a;getQuote(a);}
+}
+
+function reverseSwap(){
+  swapDir=swapDir==='buy'?'sell':'buy';
+  if(swapDir==='buy'){document.getElementById('fromToken').textContent='USDT';document.getElementById('toToken').textContent='MNODY';document.getElementById('fromIcon').textContent='U';document.getElementById('fromIcon').style.background='linear-gradient(135deg,#26a17b,#22c55e)';document.getElementById('toIcon').textContent='M';document.getElementById('toIcon').style.background='linear-gradient(135deg,var(--pink),var(--yellow))';}
+  else{document.getElementById('fromToken').textContent='MNODY';document.getElementById('toToken').textContent='USDT';document.getElementById('fromIcon').textContent='M';document.getElementById('fromIcon').style.background='linear-gradient(135deg,var(--pink),var(--yellow))';document.getElementById('toIcon').textContent='U';document.getElementById('toIcon').style.background='linear-gradient(135deg,#26a17b,#22c55e)';}
+  document.getElementById('fromAmount').value='';document.getElementById('toAmount').value='';document.getElementById('swapDetails').style.display='none';
+  if(account){updateBalances();const btn=document.getElementById('swapBtn');btn.textContent=swapDir==='buy'?'🟢 Buy MNODY':'🔴 Sell MNODY';btn.className='swap-btn '+(swapDir==='buy'?'buy-mode':'sell-mode');}
+}
+
+async function handleSwap(){
+  if(!account){await connectWallet();return;}
+  const amtIn=document.getElementById('fromAmount').value;
+  if(!amtIn||parseFloat(amtIn)<=0){showStatus('Enter an amount','error');return;}
+  try{
+    showActiveTx('Checking approval...');showStatus('Checking approval...','pending');
+    const tokenIn=swapDir==='buy'?POLYGON.usdt:POLYGON.mnody;
+    const dIn=swapDir==='buy'?6:18;
+    const amtWei=web3.utils.toBN(Math.floor(parseFloat(amtIn)*Math.pow(10,dIn)));
+    const tc=new web3.eth.Contract(ERC20_ABI,tokenIn);
+    const allow=await tc.methods.allowance(account,POLYGON.router).call();
+    if(web3.utils.toBN(allow).lt(amtWei)){showActiveTx('Approving...');showStatus('Approve in MetaMask...','pending');const appTx=await tc.methods.approve(POLYGON.router,'115792089237316195423570985008687907853269984665640564039457584007913129639935').send({from:account,gas:100000});showStatus('Approved! Swapping...','pending');}
+    showActiveTx('Swapping...');showStatus('Confirm in MetaMask...','pending');
+    const router=new web3.eth.Contract(ROUTER_ABI,POLYGON.router);
+    const path=swapDir==='buy'?[POLYGON.usdt,POLYGON.mnody]:[POLYGON.mnody,POLYGON.usdt];
+    const amtOut=document.getElementById('toAmount').value;
+    const dOut=swapDir==='buy'?18:6;
+    const amtOutMin=web3.utils.toBN(Math.floor(parseFloat(amtOut)*(1-slip/100)*Math.pow(10,dOut)));
+    const dl=Math.floor(Date.now()/1000)+60*deadline;
+    let gp=await web3.eth.getGasPrice();
+    if(gasSpd==='fast')gp=Math.floor(gp*1.1);if(gasSpd==='instant')gp=Math.floor(gp*1.2);
+    const tx=await router.methods.swapExactTokensForTokens(amtWei.toString(),amtOutMin.toString(),path,account,dl).send({from:account,gas:350000,gasPrice:gp});
+    hideActiveTx();
+    showStatus(`✅ Swap done! <a href="${POLYGON.explorer}/tx/${tx.transactionHash}" target="_blank" style="color:var(--cyan)">View ↗</a>`,'success');
+    swapHistory.unshift({type:swapDir==='buy'?'USDT→MNODY':'MNODY→USDT',fromAmount:amtIn,fromToken:swapDir==='buy'?'USDT':'MNODY',toAmount:amtOut,toToken:swapDir==='buy'?'MNODY':'USDT',hash:tx.transactionHash,time:new Date().toLocaleString()});
+    if(swapHistory.length>10)swapHistory.pop();saveHistory();
+    document.getElementById('fromAmount').value='';document.getElementById('toAmount').value='';document.getElementById('swapDetails').style.display='none';
+    await updateBalances();await refreshPrice();
+  }catch(e){hideActiveTx();showStatus(e.code===4001?'❌ Cancelled':'❌ Failed: '+(e.reason||e.message),'error');}
+}
+
+function showStatus(msg,type){const s=document.getElementById('statusMsg');s.innerHTML=msg;s.className='status '+type;}
+function showActiveTx(msg){document.getElementById('activeTx').classList.add('show');if(msg)document.getElementById('txMessage').textContent=msg;}
+function hideActiveTx(){setTimeout(()=>document.getElementById('activeTx').classList.remove('show'),2000);}
+
+document.getElementById('fromAmount').addEventListener('input',e=>{const v=e.target.value;if(v&&parseFloat(v)>0)getQuote(v);else{document.getElementById('toAmount').value='';document.getElementById('swapDetails').style.display='none';}});
+
+setInterval(()=>{refreshPrice();},30000);
+loadHistory();
+window.addEventListener('load',async()=>{
+  refreshPrice();
+  if(window.ethereum){const accs=await window.ethereum.request({method:'eth_accounts'});if(accs.length>0)await connectWallet();}
+});
+if(window.ethereum){
+  window.ethereum.on('accountsChanged',()=>location.reload());
+  window.ethereum.on('chainChanged',()=>location.reload());
+}
+</script>
+</body>
+</html>
+HTMLEOF
