@@ -73,6 +73,9 @@ code{background:rgba(0,0,0,.4);border:1px solid rgba(0,245,255,.18);padding:3px 
 .stat-val{font-weight:800}
 .back-btn{display:inline-flex;align-items:center;gap:5px;color:var(--muted);text-decoration:none;font-size:.82rem;font-weight:700;margin-bottom:14px;transition:color .2s}
 .back-btn:hover{color:var(--pink)}
+.tok-sel-bar{display:flex;gap:6px;margin-bottom:14px;background:rgba(255,255,255,.04);border-radius:12px;padding:4px}
+.tok-sel-btn{flex:1;padding:8px;border:none;border-radius:9px;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:800;font-size:.82rem;transition:all .2s;background:transparent;color:var(--muted)}
+.tok-sel-btn.active{background:linear-gradient(135deg,var(--purple),var(--pink));color:#fff;box-shadow:0 4px 14px rgba(123,47,255,.28)}
 .toast{position:fixed;bottom:22px;right:22px;background:rgba(20,5,50,.98);border:1px solid var(--yellow);border-radius:13px;padding:13px 18px;display:none;align-items:center;gap:10px;z-index:999;box-shadow:0 10px 40px rgba(0,0,0,.6);font-size:.84rem;max-width:300px}
 .toast.show{display:flex}
 .spinner{width:18px;height:18px;border:3px solid rgba(255,208,0,.2);border-top-color:var(--yellow);border-radius:50%;animation:spin .7s linear infinite;flex-shrink:0}
@@ -137,6 +140,12 @@ code{background:rgba(0,0,0,.4);border:1px solid rgba(0,245,255,.18);padding:3px 
           <button class="icon-btn" onclick="openHistory()" title="History">📋</button>
           <button class="icon-btn" onclick="openSettings()" title="Settings">⚙️</button>
         </div>
+      </div>
+
+      <!-- TOKEN PAIR SELECTOR -->
+      <div class="tok-sel-bar">
+        <button class="tok-sel-btn active" id="selUSDT" onclick="setQuoteToken('USDT')">💵 USDT/MNODY</button>
+        <button class="tok-sel-btn" id="selPOL" onclick="setQuoteToken('POL')">🟣 POL/MNODY</button>
       </div>
 
       <!-- FROM -->
@@ -294,12 +303,15 @@ const CFG = {
   chainIdHex: '0x89',
   rpc: 'https://polygon-rpc.com',
   explorer: 'https://polygonscan.com',
-  mnody: '0x0bacbf5c435c3b0546f7cdf66f960770c7ad912c',
-  usdt:  '0xc2132D05D31c914a87C6611C10748AEb04B58e8F',
-  router:'0xa5E0829CaCEd8fFDD4De3c43696c57F7D7A678ff', // QuickSwap V2
-  pair:  '0x3cec491a74c924aaeb74dde821653aafec7b94b9',
+  mnody:   '0x0bacbf5c435c3b0546f7cdf66f960770c7ad912c',
+  usdt:    '0xc2132D05D31c914a87C6611C10748AEb04B58e8F',
+  wpol:    '0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270', // WMATIC/WPOL for router path
+  router:  '0xa5E0829CaCEd8fFDD4De3c43696c57F7D7A678ff', // QuickSwap V2
+  pairUSDT:'0x3cec491a74c924aaeb74dde821653aafec7b94b9', // MNODY/USDT
+  pair:    '0x3cec491a74c924aaeb74dde821653aafec7b94b9', // default
   mnodyDec: 18,
-  usdtDec: 6
+  usdtDec:  6,
+  polDec:   18
 };
 
 const ERC20 = [
@@ -310,7 +322,10 @@ const ERC20 = [
 ];
 const ROUTER = [
   'function getAmountsOut(uint256,address[]) view returns (uint256[])',
-  'function swapExactTokensForTokens(uint256,uint256,address[],address,uint256) returns (uint256[])'
+  'function swapExactTokensForTokens(uint256,uint256,address[],address,uint256) returns (uint256[])',
+  'function swapExactTokensForTokensSupportingFeeOnTransferTokens(uint256,uint256,address[],address,uint256) returns (uint256[])',
+  'function swapExactETHForTokensSupportingFeeOnTransferTokens(uint256,address[],address,uint256) payable returns (uint256[])',
+  'function swapExactTokensForETHSupportingFeeOnTransferTokens(uint256,uint256,address[],address,uint256) returns (uint256[])'
 ];
 const PAIR_ABI = [
   'function getReserves() view returns (uint112,uint112,uint32)',
@@ -319,7 +334,8 @@ const PAIR_ABI = [
 
 // ─── STATE ─────────────────────────────────────────────────────────────────
 let provider, signer, account;
-let isBuy = true;   // buy = USDT→MNODY, sell = MNODY→USDT
+let isBuy    = true;   // buy = quote→MNODY, sell = MNODY→quote
+let quoteToken = 'USDT'; // 'USDT' or 'POL'
 let slippage = 1;   // percent
 let history = [];
 let quoteTimer = null;
@@ -410,22 +426,27 @@ async function fetchBalances(){
   try{
     const mnodyC = new ethers.Contract(CFG.mnody, ERC20, provider);
     const usdtC  = new ethers.Contract(CFG.usdt,  ERC20, provider);
-    const [mb, ub] = await Promise.all([
+    const [mb, ub, pb] = await Promise.all([
       mnodyC.balanceOf(account),
-      usdtC.balanceOf(account)
+      usdtC.balanceOf(account),
+      provider.getBalance(account)   // native POL balance
     ]);
     const mnodyBal = parseFloat(ethers.utils.formatUnits(mb, CFG.mnodyDec));
     const usdtBal  = parseFloat(ethers.utils.formatUnits(ub, CFG.usdtDec));
+    const polBal   = parseFloat(ethers.utils.formatEther(pb));
+    window._mnodyBal = mnodyBal;
+    window._usdtBal  = usdtBal;
+    window._polBal   = polBal;
+    const quoteSym   = quoteToken === 'POL' ? 'POL' : 'USDT';
+    const quoteBal   = quoteToken === 'POL' ? polBal : usdtBal;
+    const quoteFmt   = quoteToken === 'POL' ? quoteBal.toFixed(4) : quoteBal.toFixed(4);
     if(isBuy){
-      document.getElementById('fromBal').textContent = 'Balance: '+usdtBal.toFixed(4)+' USDT';
+      document.getElementById('fromBal').textContent = 'Balance: '+quoteFmt+' '+quoteSym;
       document.getElementById('toBal').textContent   = 'Balance: '+mnodyBal.toFixed(2)+' MNODY';
     }else{
       document.getElementById('fromBal').textContent = 'Balance: '+mnodyBal.toFixed(2)+' MNODY';
-      document.getElementById('toBal').textContent   = 'Balance: '+usdtBal.toFixed(4)+' USDT';
+      document.getElementById('toBal').textContent   = 'Balance: '+quoteFmt+' '+quoteSym;
     }
-    // Store for setPct
-    window._mnodyBal = mnodyBal;
-    window._usdtBal  = usdtBal;
   }catch(e){console.error('Balance fetch error:',e);}
 }
 
@@ -482,20 +503,27 @@ async function getQuote(amtStr){
     return;
   }
   try{
-    // Use public RPC if wallet not connected yet
     const prov = provider || new ethers.providers.JsonRpcProvider(CFG.rpc);
     const router = new ethers.Contract(CFG.router, ROUTER, prov);
-    const path = isBuy ? [CFG.usdt, CFG.mnody] : [CFG.mnody, CFG.usdt];
-    const inDec = isBuy ? CFG.usdtDec : CFG.mnodyDec;
-    const outDec= isBuy ? CFG.mnodyDec: CFG.usdtDec;
-    const amtIn  = ethers.utils.parseUnits(amt.toFixed(Math.min(inDec,6)), inDec);
+    // Build path based on quoteToken
+    const isPOL  = quoteToken === 'POL';
+    const inDec  = isBuy ? (isPOL ? CFG.polDec : CFG.usdtDec) : CFG.mnodyDec;
+    const outDec = isBuy ? CFG.mnodyDec : (isPOL ? CFG.polDec : CFG.usdtDec);
+    const quoteSym = isPOL ? 'POL' : 'USDT';
+    // For POL: use WPOL address in path (router wraps/unwraps automatically)
+    const quoteAddr = isPOL ? CFG.wpol : CFG.usdt;
+    const path = isBuy ? [quoteAddr, CFG.mnody] : [CFG.mnody, quoteAddr];
+    const amtIn   = ethers.utils.parseUnits(amt.toFixed(Math.min(inDec,6)), inDec);
     const amounts = await router.getAmountsOut(amtIn, path);
     const outAmt  = parseFloat(ethers.utils.formatUnits(amounts[1], outDec));
-    document.getElementById('toAmt').value = outAmt.toFixed(outDec===6?4:2);
-    const rate = isBuy ? `1 USDT ≈ ${(outAmt/amt).toFixed(2)} MNODY` : `1 MNODY ≈ ${(outAmt/amt).toFixed(6)} USDT`;
+    const outFmt  = outAmt.toFixed(outDec===18 ? 4 : 4);
+    document.getElementById('toAmt').value = outFmt;
+    const rate = isBuy
+      ? `1 ${quoteSym} ≈ ${(outAmt/amt).toFixed(2)} MNODY`
+      : `1 MNODY ≈ ${(outAmt/amt).toFixed(8)} ${quoteSym}`;
     document.getElementById('rateText').textContent   = rate;
     document.getElementById('impactText').textContent = '< 1%';
-    document.getElementById('minText').textContent    = (outAmt*(1-slippage/100)).toFixed(outDec===6?4:2)+(isBuy?' MNODY':' USDT');
+    document.getElementById('minText').textContent    = (outAmt*(1-slippage/100)).toFixed(4)+(isBuy?' MNODY':' '+quoteSym);
     document.getElementById('slipText').textContent   = slippage+'%';
     document.getElementById('swapDetails').style.display='block';
     clearStatus();
@@ -512,23 +540,48 @@ async function getQuote(amtStr){
 }
 
 // ─── FLIP ──────────────────────────────────────────────────────────────────
-function flipTokens(){
-  isBuy = !isBuy;
+function getQuoteSymbol(){ return quoteToken; }
+function getQuoteIcon(){ return quoteToken==='POL'?{txt:'P',bg:'linear-gradient(135deg,#8247e5,#6b21a8)'}:{txt:'U',bg:'linear-gradient(135deg,#26a17b,#22c55e)'}; }
+function getMnodyIcon(){ return {txt:'M',bg:'linear-gradient(135deg,var(--pink),var(--yellow))'}; }
+
+function applyTokenDisplay(){
+  const qi = getQuoteIcon();
+  const mi = getMnodyIcon();
+  const qs = getQuoteSymbol();
   if(isBuy){
-    document.getElementById('fromName').textContent='USDT';
+    document.getElementById('fromName').textContent=qs;
     document.getElementById('toName').textContent='MNODY';
-    document.getElementById('fromIcon').textContent='U';
-    document.getElementById('fromIcon').style.background='linear-gradient(135deg,#26a17b,#22c55e)';
-    document.getElementById('toIcon').textContent='M';
-    document.getElementById('toIcon').style.background='linear-gradient(135deg,var(--pink),var(--yellow))';
+    document.getElementById('fromIcon').textContent=qi.txt;
+    document.getElementById('fromIcon').style.background=qi.bg;
+    document.getElementById('toIcon').textContent=mi.txt;
+    document.getElementById('toIcon').style.background=mi.bg;
   }else{
     document.getElementById('fromName').textContent='MNODY';
-    document.getElementById('toName').textContent='USDT';
-    document.getElementById('fromIcon').textContent='M';
-    document.getElementById('fromIcon').style.background='linear-gradient(135deg,var(--pink),var(--yellow))';
-    document.getElementById('toIcon').textContent='U';
-    document.getElementById('toIcon').style.background='linear-gradient(135deg,#26a17b,#22c55e)';
+    document.getElementById('toName').textContent=qs;
+    document.getElementById('fromIcon').textContent=mi.txt;
+    document.getElementById('fromIcon').style.background=mi.bg;
+    document.getElementById('toIcon').textContent=qi.txt;
+    document.getElementById('toIcon').style.background=qi.bg;
   }
+}
+
+function setQuoteToken(tok){
+  quoteToken = tok;
+  document.getElementById('selUSDT').classList.toggle('active', tok==='USDT');
+  document.getElementById('selPOL').classList.toggle('active',  tok==='POL');
+  isBuy = true; // reset to buy side
+  applyTokenDisplay();
+  document.getElementById('fromAmt').value='';
+  document.getElementById('toAmt').value='';
+  document.getElementById('swapDetails').style.display='none';
+  clearStatus();
+  if(account) fetchBalances();
+  updateBtn();
+}
+
+function flipTokens(){
+  isBuy = !isBuy;
+  applyTokenDisplay();
   document.getElementById('fromAmt').value='';
   document.getElementById('toAmt').value='';
   document.getElementById('swapDetails').style.display='none';
@@ -539,11 +592,17 @@ function flipTokens(){
 
 function setPct(pct){
   if(!account){showStatus('Connect wallet first','error');return;}
-  const bal = isBuy ? (window._usdtBal||0) : (window._mnodyBal||0);
+  let bal;
+  if(isBuy){
+    bal = quoteToken==='POL' ? (window._polBal||0) : (window._usdtBal||0);
+  } else {
+    bal = window._mnodyBal||0;
+  }
   if(bal<=0){showStatus('No balance to use','error');return;}
   let amt = bal*pct/100;
-  // Leave a tiny bit for gas if POL
-  const inDec = isBuy ? CFG.usdtDec : CFG.mnodyDec;
+  // Reserve gas if POL is input
+  if(isBuy && quoteToken==='POL' && pct===100) amt = Math.max(0, amt - 0.01);
+  const inDec = isBuy ? (quoteToken==='POL' ? CFG.polDec : CFG.usdtDec) : CFG.mnodyDec;
   const fixed = amt.toFixed(Math.min(inDec,6));
   document.getElementById('fromAmt').value = fixed;
   getQuote(fixed);
@@ -570,60 +629,105 @@ async function doSwap(){
   if(!amt||amt<=0){showStatus('Enter an amount to swap','error');return;}
   if(!out||out<=0){showStatus('Get a quote first by entering amount','error');return;}
 
-  const inDec  = isBuy ? CFG.usdtDec : CFG.mnodyDec;
-  const outDec = isBuy ? CFG.mnodyDec: CFG.usdtDec;
-  const tokenIn= isBuy ? CFG.usdt : CFG.mnody;
-  const path   = isBuy ? [CFG.usdt,CFG.mnody] : [CFG.mnody,CFG.usdt];
+  const isPOL   = quoteToken === 'POL';
+  const inDec   = isBuy ? (isPOL ? CFG.polDec : CFG.usdtDec) : CFG.mnodyDec;
+  const outDec  = isBuy ? CFG.mnodyDec : (isPOL ? CFG.polDec : CFG.usdtDec);
+  const quoteAddr = isPOL ? CFG.wpol : CFG.usdt;
+  const path    = isBuy ? [quoteAddr, CFG.mnody] : [CFG.mnody, quoteAddr];
+  const quoteSym = isPOL ? 'POL' : 'USDT';
 
   try{
     const btn = document.getElementById('mainBtn');
-    btn.disabled=true;
+    btn.disabled = true;
+    const router = new ethers.Contract(CFG.router, ROUTER, signer);
+    const amtIn  = ethers.utils.parseUnits(amt.toFixed(Math.min(inDec,6)), inDec);
+    const amtOutMin = ethers.utils.parseUnits((out*(1-slippage/100)).toFixed(Math.min(outDec,6)), outDec);
+    const dl     = Math.floor(Date.now()/1000) + 60*(parseInt(document.getElementById('deadline').value)||20);
+    const feeData   = await provider.getFeeData();
+    const gasPrice  = feeData.gasPrice ? feeData.gasPrice.mul(120).div(100) : undefined;
+    const gasOpts   = gasPrice ? {gasPrice} : {};
 
-    // 1. Check & request approval
-    showStatus('Checking approval...','info');
-    const tokenC  = new ethers.Contract(tokenIn, ERC20, signer);
-    const amtIn   = ethers.utils.parseUnits(amt.toFixed(Math.min(inDec,6)), inDec);
-    const allowed = await tokenC.allowance(account, CFG.router);
-
-    if(allowed.lt(amtIn)){
-      showStatus('Please approve '+( isBuy?'USDT':'MNODY')+' in MetaMask...','pending');
-      showToast('Waiting for approval...');
-      const appTx = await tokenC.approve(CFG.router, MAX_UINT);
-      showStatus('Approval sent, waiting confirmation...','pending');
-      await appTx.wait();
+    // ── POL PATH (native coin) ──────────────────────────────────────────────
+    if(isPOL){
+      if(isBuy){
+        // POL → MNODY: swapExactETHForTokensSupportingFeeOnTransferTokens
+        showStatus('Confirm swap in MetaMask...','pending');
+        showToast('Swapping POL → MNODY...');
+        const tx = await router.swapExactETHForTokensSupportingFeeOnTransferTokens(
+          amtOutMin, path, account, dl,
+          {...gasOpts, value: amtIn}
+        );
+        showStatus('Transaction sent! Confirming...','pending');
+        const receipt = await tx.wait();
+        hideToast();
+        showStatus(`✅ Swap complete! <a href="${CFG.explorer}/tx/${receipt.transactionHash}" target="_blank" style="color:var(--cyan)">View ↗</a>`,'success');
+        recordHistory('Buy', amt.toFixed(4)+' POL', out.toFixed(2)+' MNODY', receipt.transactionHash);
+      } else {
+        // MNODY → POL: approve MNODY first, then swapExactTokensForETHSupportingFeeOnTransferTokens
+        showStatus('Checking MNODY approval...','info');
+        const mnodyC = new ethers.Contract(CFG.mnody, ERC20, signer);
+        const actualBal = await mnodyC.balanceOf(account);
+        if(actualBal.lt(amtIn)){showStatus('Insufficient MNODY balance','error');btn.disabled=false;return;}
+        const allowed = await mnodyC.allowance(account, CFG.router);
+        if(allowed.lt(amtIn)){
+          showStatus('Approve MNODY in MetaMask...','pending');
+          showToast('Approving MNODY...');
+          const appTx = await mnodyC.approve(CFG.router, ethers.constants.MaxUint256);
+          await appTx.wait();
+          hideToast();
+          await new Promise(r=>setTimeout(r,2000));
+          showStatus('Approved! Swapping...','info');
+        }
+        showStatus('Confirm swap in MetaMask...','pending');
+        showToast('Swapping MNODY → POL...');
+        const tx = await router.swapExactTokensForETHSupportingFeeOnTransferTokens(
+          amtIn, amtOutMin, path, account, dl, gasOpts
+        );
+        showStatus('Transaction sent! Confirming...','pending');
+        const receipt = await tx.wait();
+        hideToast();
+        showStatus(`✅ Swap complete! <a href="${CFG.explorer}/tx/${receipt.transactionHash}" target="_blank" style="color:var(--cyan)">View ↗</a>`,'success');
+        recordHistory('Sell', amt.toFixed(2)+' MNODY', out.toFixed(4)+' POL', receipt.transactionHash);
+      }
+    }
+    // ── USDT PATH (ERC20) ───────────────────────────────────────────────────
+    else {
+      const tokenIn = isBuy ? CFG.usdt : CFG.mnody;
+      showStatus('Checking balance...','info');
+      const tokenC    = new ethers.Contract(tokenIn, ERC20, signer);
+      const actualBal = await tokenC.balanceOf(account);
+      if(actualBal.lt(amtIn)){showStatus('Insufficient '+(isBuy?'USDT':'MNODY')+' balance','error');btn.disabled=false;return;}
+      const allowed = await tokenC.allowance(account, CFG.router);
+      if(allowed.lt(amtIn)){
+        if(allowed.gt(0)){
+          showStatus('Resetting allowance (USDT requirement)...','pending');
+          showToast('Resetting allowance...');
+          const resetTx = await tokenC.approve(CFG.router, 0);
+          await resetTx.wait();
+          hideToast();
+        }
+        showStatus('Approve '+(isBuy?'USDT':'MNODY')+' in MetaMask...','pending');
+        showToast('Approving...');
+        const appTx = await tokenC.approve(CFG.router, ethers.constants.MaxUint256);
+        await appTx.wait();
+        hideToast();
+        await new Promise(r=>setTimeout(r,2000));
+        showStatus('Approved! Swapping...','info');
+      }
+      const allowedAfter = await tokenC.allowance(account, CFG.router);
+      if(allowedAfter.lt(amtIn)){showStatus('Approval not confirmed. Try again.','error');btn.disabled=false;return;}
+      showStatus('Confirm swap in MetaMask...','pending');
+      showToast('Swapping...');
+      const tx = await router.swapExactTokensForTokensSupportingFeeOnTransferTokens(
+        amtIn, amtOutMin, path, account, dl, gasOpts
+      );
+      showStatus('Transaction sent! Confirming...','pending');
+      const receipt = await tx.wait();
       hideToast();
-      showStatus('Approved! Now swapping...','info');
+      showStatus(`✅ Swap complete! <a href="${CFG.explorer}/tx/${receipt.transactionHash}" target="_blank" style="color:var(--cyan)">View ↗</a>`,'success');
+      recordHistory(isBuy?'Buy':'Sell', amt.toFixed(4)+' '+(isBuy?'USDT':'MNODY'), out.toFixed(isBuy?2:4)+' '+(isBuy?'MNODY':'USDT'), receipt.transactionHash);
     }
 
-    // 2. Swap
-    showStatus('Confirm the swap in MetaMask...','pending');
-    showToast('Swapping...');
-    const router   = new ethers.Contract(CFG.router, ROUTER, signer);
-    const amtOutMin= ethers.utils.parseUnits((out*(1-slippage/100)).toFixed(Math.min(outDec,6)), outDec);
-    const dl       = Math.floor(Date.now()/1000) + 60*(parseInt(document.getElementById('deadline').value)||20);
-    const feeData  = await provider.getFeeData();
-    const gasPrice = feeData.gasPrice ? feeData.gasPrice.mul(110).div(100) : undefined; // +10% buffer
-
-    const tx = await router.swapExactTokensForTokens(
-      amtIn, amtOutMin, path, account, dl,
-      gasPrice ? {gasPrice} : {}
-    );
-    showStatus('Transaction sent! Waiting for confirmation...','pending');
-    const receipt = await tx.wait();
-    hideToast();
-
-    // Record history
-    history.unshift({
-      type: isBuy?'Buy':'Sell',
-      from: amt.toFixed(2)+' '+(isBuy?'USDT':'MNODY'),
-      to:   out.toFixed(2)+' '+(isBuy?'MNODY':'USDT'),
-      hash: receipt.transactionHash,
-      time: new Date().toLocaleString()
-    });
-    if(history.length>15) history.pop();
-    try{localStorage.setItem('mnody_hist',JSON.stringify(history));}catch{}
-
-    showStatus(`✅ Swap complete! <a href="${CFG.explorer}/tx/${receipt.transactionHash}" target="_blank" style="color:var(--cyan)">View on Polygonscan ↗</a>`,'success');
     document.getElementById('fromAmt').value='';
     document.getElementById('toAmt').value='';
     document.getElementById('swapDetails').style.display='none';
@@ -634,7 +738,7 @@ async function doSwap(){
     if(e.code===4001||e.code==='ACTION_REJECTED'){
       showStatus('Transaction rejected','error');
     }else if(e.message?.includes('INSUFFICIENT_OUTPUT')){
-      showStatus('Slippage too low — increase slippage in Settings','error');
+      showStatus('Slippage too low — increase in Settings ⚙️','error');
     }else if(e.message?.includes('insufficient funds')){
       showStatus('Insufficient POL for gas fees','error');
     }else{
@@ -644,6 +748,12 @@ async function doSwap(){
   }finally{
     document.getElementById('mainBtn').disabled=false;
   }
+}
+
+function recordHistory(type, from, to, hash){
+  history.unshift({type, from, to, hash, time: new Date().toLocaleString()});
+  if(history.length>15) history.pop();
+  try{localStorage.setItem('mnody_hist',JSON.stringify(history));}catch{}
 }
 
 // ─── INPUT LISTENER ────────────────────────────────────────────────────────
