@@ -332,13 +332,14 @@ code{background:rgba(0,0,0,.4);border:1px solid rgba(0,245,255,.18);padding:3px 
 <script src="https://unpkg.com/ethers@5.7.2/dist/ethers.umd.min.js"></script>
 <script>
 // ─── CONFIG ────────────────────────────────────────────────────────────────
+// ethers.utils.getAddress() converts to EIP-55 checksummed address — fixes "bad address checksum"
 const CFG = {
   chainId: 137,
   chainIdHex: '0x89',
   rpc: 'https://polygon-rpc.com',
   explorer: 'https://polygonscan.com',
-  mnody: '0x0bacbf5c435c3b0546f7cdf66f960770c7ad912c',
-  staking: '0x7C5adb8d3F98F97Ff23A41E738Bac40E3b3aeA53',
+  mnody:   ethers.utils.getAddress('0x0bacbf5c435c3b0546f7cdf66f960770c7ad912c'),
+  staking: ethers.utils.getAddress('0xe26026798f55db7296348dE7bE8c4348eF123B69'),
   dec: 18
 };
 
@@ -348,20 +349,38 @@ const ERC20_ABI = [
   'function approve(address,uint256) returns (bool)'
 ];
 
-// Staking contract ABI — these are the standard functions
-// If contract not yet deployed, all read calls gracefully return 0
+// ── Exact ABI from deployed MnodyStaking contract ──────────────────────────
+// Plan 0 = 30-day lock (70% APY), Plan 1 = Flexible (40% APY)
 const STAKING_ABI = [
-  'function stake(uint256 amount, bool lockPeriod) external',
-  'function unstake(uint256 amount) external',
-  'function claimRewards() external',
-  'function compound() external',
-  'function pendingReward(address user) view returns (uint256)',
-  'function userStaked(address user) view returns (uint256)',
-  'function userLocked(address user) view returns (bool)',
-  'function userStakeTime(address user) view returns (uint256)',
-  'function lockEndTime(address user) view returns (uint256)',
+  // Staking
+  'function stake(uint256 amount, uint8 planId) external',
+  // Claim
+  'function claimReward(uint256 stakeIndex) external',
+  'function claimAllRewards() external',
+  // Compound
+  'function compoundReward(uint256 stakeIndex) external',
+  // Withdraw
+  'function withdraw(uint256 stakeIndex) external',
+  'function emergencyWithdraw(uint256 stakeIndex) external',
+  // Pool
+  'function fundRewardPool(uint256 amount) external',
+  // Views — user
+  'function getUserStakes(address user) view returns (tuple(uint256 id,uint256 amount,uint256 startTime,uint256 unlockTime,uint256 lastClaimTime,uint8 planId,bool isActive)[])',
+  'function getActiveStakes(address user) view returns (tuple(uint256 id,uint256 amount,uint256 startTime,uint256 unlockTime,uint256 lastClaimTime,uint8 planId,bool isActive)[])',
+  'function calculateReward(address user, uint256 stakeIndex) view returns (uint256)',
+  'function getTotalPendingRewards(address user) view returns (uint256)',
+  'function activeStakeCount(address) view returns (uint256)',
+  'function userCompoundCount(address) view returns (uint256)',
+  // Views — global
   'function totalStaked() view returns (uint256)',
-  'function totalUsers() view returns (uint256)'
+  'function rewardPool() view returns (uint256)',
+  'function totalRewardsPaid() view returns (uint256)',
+  'function getStats() view returns (uint256,uint256,uint256,uint256,bool)',
+  'function getPoolHealth() view returns (uint256,uint256,bool,bool,uint256)',
+  'function stakingPaused() view returns (bool)',
+  'function claimingPaused() view returns (bool)',
+  // Plans
+  'function plans(uint256) view returns (uint256 lockDuration, uint256 baseAPY, bool isActive)'
 ];
 
 // ─── STATE ─────────────────────────────────────────────────────────────────
